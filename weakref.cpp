@@ -28,6 +28,7 @@ int main()
     printf("addrof(foo) = %p\n", foo);
     printf("sizeof(f) = %ld\n", sizeof(f));
     f = 14999999;
+    printf("addr(f) = %p\n", &f);
     printf("f = %f\n", f);
     goo();
 
