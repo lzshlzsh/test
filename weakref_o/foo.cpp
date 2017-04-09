@@ -9,16 +9,17 @@
 
 #include "foo.h"
 
-extern "C" {
 __attribute__((weak)) int a;
 int b = 10;
 int c;
-__attribute__((weak)) double f;
-}
+//__attribute__((weak)) double f;
+double f;
 
 int goo() {
     Foo foo;
     too(10);
+    f = 1.2e-19;
+    printf("addr(f) = %p\n", &f);
     printf("f = %f\n", f);
 }
 

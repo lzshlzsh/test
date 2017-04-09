@@ -72,4 +72,5 @@ constexpr: CXXFLAGS += -std=c++11
 override_final: CXXFLAGS += -std=c++11
 unordered_map_inc: CXXFLAGS += -std=c++0x
 weakref: CXXFLAGS += -I./weakref_o #--verbose
-weakref: LDFLAGS += -L./weakref_o -Wl,-dn -lweakref_o -Wl,-dy
+#weakref: LDFLAGS += -L./weakref_o -Wl,-dn -lweakref_o -Wl,-dy
+weakref: LDFLAGS += ./weakref_o/foo.o

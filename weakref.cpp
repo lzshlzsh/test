@@ -19,13 +19,9 @@
 
 #include "foo.h"
 
-extern "C" {
-
 __attribute__ ((weakref, alias("y"))) static void foo();
 
 __attribute__((weak)) int f;
-
-}
 
 int main()
 {
