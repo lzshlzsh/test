@@ -1,0 +1,36 @@
+#include <sys/mman.h>
+#include <errno.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+#define PAGE_SIZE (4 << 10)
+#define MMAP_SIZE (2 * PAGE_SIZE)
+
+int main(int argc, char **argv)
+{
+	void *addr;
+	int fd;
+
+	if ((fd = open("mmap.c", O_RDWR)) < 0){
+		perror("open");
+		exit(errno);
+	}
+
+	if ((void *)-1 == (addr = mmap(0, MMAP_SIZE, PROT_READ | PROT_WRITE | PROT_EXEC,
+					MAP_PRIVATE, fd, 0))){
+		perror("mmap");
+		exit(errno);
+	}
+
+	close(fd);
+
+	*(int *)((int)addr + PAGE_SIZE + 4) = 1;
+
+	munmap(addr, MMAP_SIZE);
+	return 0;
+}

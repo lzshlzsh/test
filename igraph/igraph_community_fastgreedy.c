@@ -1,0 +1,1 @@
+/home/lzs/github/igraph/examples/simple/igraph_community_fastgreedy.c

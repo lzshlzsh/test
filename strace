@@ -1,0 +1,59 @@
+execve("./fbtest", ["./fbtest"], [/* 35 vars */]) = 0
+brk(0)                                  = 0x8e84000
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+mmap2(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7829000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY)      = 3
+fstat64(3, {st_mode=S_IFREG|0644, st_size=46841, ...}) = 0
+mmap2(NULL, 46841, PROT_READ, MAP_PRIVATE, 3, 0) = 0xb781d000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/i686/cmov/libm.so.6", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0@4\0\0004\0\0\0P"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0644, st_size=149328, ...}) = 0
+mmap2(NULL, 151680, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xb77f7000
+mmap2(0xb781b000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x23) = 0xb781b000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/i686/cmov/libdl.so.2", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0`\n\0\0004\0\0\0H"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0644, st_size=9680, ...}) = 0
+mmap2(NULL, 12412, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xb77f3000
+mmap2(0xb77f5000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1) = 0xb77f5000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/i686/cmov/libpthread.so.0", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0000H\0\0004\0\0\0\330"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=116414, ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb77f2000
+mmap2(NULL, 98784, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xb77d9000
+mmap2(0xb77ee000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x14) = 0xb77ee000
+mmap2(0xb77f0000, 4576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0xb77f0000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/i686/cmov/libc.so.6", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\260e\1\0004\0\0\0\4"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=1413540, ...}) = 0
+mmap2(NULL, 1418864, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xb767e000
+mmap2(0xb77d3000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x155) = 0xb77d3000
+mmap2(0xb77d6000, 9840, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0xb77d6000
+close(3)                                = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb767d000
+set_thread_area({entry_number:-1 -> 6, base_addr:0xb767d6b0, limit:1048575, seg_32bit:1, contents:0, read_exec_only:0, limit_in_pages:1, seg_not_present:0, useable:1}) = 0
+mprotect(0xb77d3000, 4096, PROT_READ)   = 0
+munmap(0xb781d000, 46841)               = 0
+set_tid_address(0xb767d6f8)             = 15069
+set_robust_list(0xb767d700, 0xc)        = 0
+futex(0xbf9e8060, FUTEX_WAKE_PRIVATE, 1) = 0
+rt_sigaction(SIGRTMIN, {0xb77dd2e0, [], SA_SIGINFO}, NULL, 8) = 0
+rt_sigaction(SIGRT_1, {0xb77dd720, [], SA_RESTART|SA_SIGINFO}, NULL, 8) = 0
+rt_sigprocmask(SIG_UNBLOCK, [RTMIN RT_1], NULL, 8) = 0
+getrlimit(RLIMIT_STACK, {rlim_cur=8192*1024, rlim_max=RLIM_INFINITY}) = 0
+uname({sys="Linux", node="debian", ...}) = 0
+open("/dev/fb0", O_RDWR)                = -1 ENOENT (No such file or directory)
+ioctl(-1, FBIOGET_FSCREENINFO, 0xbf9e7f64) = -1 EBADF (Bad file descriptor)
+fstat64(1, {st_mode=S_IFREG|0664, st_size=3886, ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7828000
+write(1, "Error reading fixed information.\n"..., 33Error reading fixed information.
+) = 33
+exit_group(2)                           = ?

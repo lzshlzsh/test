@@ -1,0 +1,1068 @@
+Searching...      
+[ Results for search key : gnome ]
+[ Applications found : 133 ]
+
+*  app-accessibility/gnome-mag
+      Latest version available: 0.16.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 533 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Gnome magnification service definition
+      License:       LGPL-2
+
+*  app-accessibility/gnome-mousetrap [ Masked ]
+      Latest version available: 0.3
+      Latest version installed: [ Not Installed ]
+      Size of files: 1,417 kB
+      Homepage:      http://live.gnome.org/MouseTrap
+      Description:   Standalone application that allows users with physical impairments to move a mouse cursor
+      License:       GPL-2
+
+*  app-accessibility/gnome-speech
+      Latest version available: 0.4.25
+      Latest version installed: [ Not Installed ]
+      Size of files: 328 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Simple general API for producing text-to-speech output
+      License:       LGPL-2
+
+*  app-admin/gnome-system-tools
+      Latest version available: 2.30.2
+      Latest version installed: [ Not Installed ]
+      Size of files: 5,275 kB
+      Homepage:      http://www.gnome.org/projects/gst/
+      Description:   Tools aimed to make easy the administration of UNIX systems
+      License:       GPL-2
+
+*  app-admin/system-config-printer-gnome
+      Latest version available: 1.2.2
+      Latest version installed: [ Not Installed ]
+      Size of files: 883 kB
+      Homepage:      http://cyberelk.net/tim/software/system-config-printer/
+      Description:   GNOME frontend for a Red Hat's printer administration tool
+      License:       GPL-2
+
+*  app-cdr/gnomebaker
+      Latest version available: 0.6.4
+      Latest version installed: [ Not Installed ]
+      Size of files: 1,246 kB
+      Homepage:      http://sourceforge.net/projects/gnomebaker
+      Description:   GnomeBaker is a GTK2/Gnome cd burning application.
+      License:       GPL-2
+
+*  app-misc/gnomecatalog [ Masked ]
+      Latest version available: 0.3.4.2
+      Latest version installed: [ Not Installed ]
+      Size of files: 57 kB
+      Homepage:      http://gnomecatalog.sf.net/
+      Description:   Cataloging software for CDs and DVDs.
+      License:       GPL-2
+
+*  app-mobilephone/gnome-phone-manager
+      Latest version available: 0.65
+      Latest version installed: [ Not Installed ]
+      Size of files: 454 kB
+      Homepage:      http://live.gnome.org/PhoneManager
+      Description:   a program created to allow you to control aspects of your mobile phone from your GNOME 2 desktop
+      License:       GPL-2
+
+*  app-pda/gnome-pilot
+      Latest version available: 2.0.17-r1
+      Latest version installed: [ Not Installed ]
+      Size of files: 817 kB
+      Homepage:      http://live.gnome.org/GnomePilot
+      Description:   Gnome Palm Pilot and Palm OS Device Syncing Library
+      License:       GPL-2
+
+*  app-pda/gnome-pilot-conduits
+      Latest version available: 2.0.17
+      Latest version installed: [ Not Installed ]
+      Size of files: 482 kB
+      Homepage:      http://live.gnome.org/GnomePilot
+      Description:   Gnome Pilot Conduits
+      License:       GPL-2
+
+*  app-pda/synce-gnomevfs [ Masked ]
+      Latest version available: 0.13
+      Latest version installed: [ Not Installed ]
+      Size of files: 310 kB
+      Homepage:      http://sourceforge.net/projects/synce/
+      Description:   SynCE - Gnome VFS extensions
+      License:       MIT
+
+*  app-text/gnome-doc-utils
+      Latest version available: 0.20.1
+      Latest version installed: 0.20.1
+      Size of files: 698 kB
+      Homepage:      http://www.gnome.org/
+      Description:   A collection of documentation utilities for the Gnome project
+      License:       GPL-2 LGPL-2.1
+
+*  app-text/gnome-spell [ Masked ]
+      Latest version available: 1.0.8-r3
+      Latest version installed: [ Not Installed ]
+      Size of files: 415 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Gnome spellchecking component
+      License:       GPL-2
+
+*  dev-cpp/gnome-vfsmm
+      Latest version available: 2.26.0
+      Latest version installed: [ Not Installed ]
+      Size of files: 613 kB
+      Homepage:      http://www.gtkmm.org
+      Description:   C++ bindings for gnome-vfs
+      License:       LGPL-2.1
+
+*  dev-cpp/libgnomecanvasmm
+      Latest version available: 2.26.0
+      Latest version installed: [ Not Installed ]
+      Size of files: 319 kB
+      Homepage:      http://www.gtkmm.org
+      Description:   C++ bindings for libgnomecanvas
+      License:       LGPL-2.1
+
+*  dev-cpp/libgnomemm
+      Latest version available: 2.28.0
+      Latest version installed: [ Not Installed ]
+      Size of files: 353 kB
+      Homepage:      http://www.gtkmm.org
+      Description:   C++ bindings for libgnome
+      License:       LGPL-2.1
+
+*  dev-cpp/libgnomeuimm
+      Latest version available: 2.28.0
+      Latest version installed: [ Not Installed ]
+      Size of files: 373 kB
+      Homepage:      http://www.gtkmm.org
+      Description:   C++ bindings for libgnomeui
+      License:       LGPL-2.1
+
+*  dev-dotnet/gnome-desktop-sharp
+      Latest version available: 2.26.0-r1
+      Latest version installed: [ Not Installed ]
+      Size of files: 305 kB
+      Homepage:      http://www.mono-project.com/GtkSharp
+      Description:   GtkSharp's gnome-desktop module of the gnome-desktop-sharp tarball
+      License:       LGPL-2.1
+
+*  dev-dotnet/gnome-keyring-sharp [ Masked ]
+      Latest version available: 1.0.0-r2
+      Latest version installed: [ Not Installed ]
+      Size of files: 91 kB
+      Homepage:      http://www.mono-project.com/
+      Description:   C# implementation of gnome-keyring
+      License:       MIT
+
+*  dev-dotnet/gnome-panel-sharp
+      Latest version available: 2.24.0-r10
+      Latest version installed: [ Not Installed ]
+      Size of files: 302 kB
+      Homepage:      http://www.mono-project.com/GtkSharp
+      Description:   GtkSharp's gnome-panel module of the gnome-desktop-sharp tarball
+      License:       LGPL-2.1
+
+*  dev-dotnet/gnome-print-sharp
+      Latest version available: 2.24.0-r10
+      Latest version installed: [ Not Installed ]
+      Size of files: 302 kB
+      Homepage:      http://www.mono-project.com/GtkSharp
+      Description:   GtkSharp's gnome-print module of the gnome-desktop-sharp tarball
+      License:       LGPL-2.1
+
+*  dev-dotnet/gnome-sharp
+      Latest version available: 2.24.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 434 kB
+      Homepage:      http://www.mono-project.com/GtkSharp
+      Description:   GtkSharp's gnome module of the gnome-sharp tarball
+      License:       LGPL-2.1
+
+*  dev-dotnet/gnomevfs-sharp
+      Latest version available: 2.24.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 434 kB
+      Homepage:      http://www.mono-project.com/GtkSharp
+      Description:   GtkSharp's gnomevfs module of the gnome-sharp tarball
+      License:       LGPL-2.1
+
+*  dev-embedded/gnome-avrdude [ Masked ]
+      Latest version available: 0.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 103 kB
+      Homepage:      http://www.sourceforge.net/projects/gnome-avrdude/
+      Description:   GNOME GUI for avrdude
+      License:       GPL-2
+
+*  dev-java/java-gnome
+      Latest version available: 4.0.15
+      Latest version installed: [ Not Installed ]
+      Size of files: 896 kB
+      Homepage:      http://java-gnome.sourceforge.net/
+      Description:   Java bindings for GTK and GNOME
+      License:       GPL-2-with-linking-exception
+
+*  dev-perl/gnome2-canvas
+      Latest version available: 1.002
+      Latest version installed: [ Not Installed ]
+      Size of files: 60 kB
+      Homepage:      http://gtk2-perl.sf.net/
+      Description:   Perl interface to the Gnome Canvas
+      License:       LGPL-2
+
+*  dev-perl/gnome2-gconf
+      Latest version available: 1.043
+      Latest version installed: [ Not Installed ]
+      Size of files: 34 kB
+      Homepage:      http://search.cpan.org/~rmcfarla/
+      Description:   Perl wrappers for the GConf configuration engine.
+      License:       GPL-2
+
+*  dev-perl/gnome2-perl
+      Latest version available: 1.041
+      Latest version installed: [ Not Installed ]
+      Size of files: 77 kB
+      Homepage:      http://gtk2-perl.sourceforge.net/
+      Description:   Perl interface to the 2.x series of the Gnome libraries
+      License:       GPL-2
+
+*  dev-perl/gnome2-print
+      Latest version available: 0.94
+      Latest version installed: [ Not Installed ]
+      Size of files: 23 kB
+      Homepage:      http://search.cpan.org/~rmcfarla/
+      Description:   Perl interface to the 2.x series of the Gnome print libraries.
+      License:       GPL-2
+
+*  dev-perl/gnome2-vfs-perl
+      Latest version available: 1.061
+      Latest version installed: [ Not Installed ]
+      Size of files: 56 kB
+      Homepage:      http://search.cpan.org/~tsch/
+      Description:   Perl interface to the 2.x series of the Gnome Virtual File System libraries.
+      License:       GPL-2
+
+*  dev-perl/gnome2-wnck
+      Latest version available: 0.16
+      Latest version installed: [ Not Installed ]
+      Size of files: 24 kB
+      Homepage:      http://gtk2-perl.sourceforge.net/
+      Description:   Perl interface to the Window Navigator Construction Kit
+      License:       LGPL-2.1
+
+*  dev-python/gnome-applets-python
+      Latest version available: 2.30.2
+      Latest version installed: 2.30.2
+      Size of files: 584 kB
+      Homepage:      http://pygtk.org/
+      Description:   Python bindings for writing GNOME applets
+      License:       LGPL-2.1
+
+*  dev-python/gnome-desktop-python
+      Latest version available: 2.30.2
+      Latest version installed: 2.30.2
+      Size of files: 584 kB
+      Homepage:      http://pygtk.org/
+      Description:   Python bindings for some GNOME desktop libraries
+      License:       LGPL-2.1
+
+*  dev-python/gnome-keyring-python
+      Latest version available: 2.30.2
+      Latest version installed: 2.30.2
+      Size of files: 584 kB
+      Homepage:      http://pygtk.org/
+      Description:   Python bindings for the interfacing with the GNOME keyring
+      License:       LGPL-2.1
+
+*  dev-python/gnome-media-python
+      Latest version available: 2.30.2
+      Latest version installed: [ Not Installed ]
+      Size of files: 584 kB
+      Homepage:      http://pygtk.org/
+      Description:   Python bindings for GNOME media profiles
+      License:       LGPL-2.1
+
+*  dev-python/gnome-python
+      Latest version available: 2.28.1
+      Latest version installed: 2.28.0
+      Size of files: 0 kB
+      Homepage:      http://pygtk.org/
+      Description:   Meta package which provides python modules for GNOME 2 libraries
+      License:       LGPL-2.1
+
+*  dev-python/gnome-python-base
+      Latest version available: 2.28.1
+      Latest version installed: 2.28.1
+      Size of files: 549 kB
+      Homepage:      http://pygtk.org/
+      Description:   Provides the base files for the gnome-python bindings
+      License:       LGPL-2.1
+
+*  dev-python/gnome-python-desktop
+      Latest version available: 2.30.2
+      Latest version installed: [ Not Installed ]
+      Size of files: 0 kB
+      Homepage:      http://pygtk.org/
+      Description:   Meta build which provides python interfacing modules for some GNOME desktop libraries
+      License:       LGPL-2.1 GPL-2
+
+*  dev-python/gnome-python-desktop-base
+      Latest version available: 2.30.2
+      Latest version installed: 2.30.2
+      Size of files: 584 kB
+      Homepage:      http://pygtk.org/
+      Description:   Provides python the base files for the Gnome Python Desktop bindings
+      License:       LGPL-2.1
+
+*  dev-python/gnome-python-extras
+      Latest version available: 2.25.3
+      Latest version installed: [ Not Installed ]
+      Size of files: 0 kB
+      Homepage:      http://pygtk.org/
+      Description:   Meta build which provides python interfacing modules for some GNOME libraries
+      License:       LGPL-2.1 GPL-2
+
+*  dev-python/gnome-python-extras-base
+      Latest version available: 2.25.3
+      Latest version installed: [ Not Installed ]
+      Size of files: 361 kB
+      Homepage:      http://pygtk.org/
+      Description:   Provides python the base files for the Gnome Python Desktop bindings
+      License:       LGPL-2.1
+
+*  dev-python/gnome-vfs-python
+      Latest version available: 2.28.1
+      Latest version installed: 2.28.1
+      Size of files: 549 kB
+      Homepage:      http://pygtk.org/
+      Description:   Python bindings for the GnomeVFS library
+      License:       LGPL-2.1
+
+*  dev-python/libgnome-python
+      Latest version available: 2.28.1
+      Latest version installed: 2.28.1
+      Size of files: 549 kB
+      Homepage:      http://pygtk.org/
+      Description:   Python bindings for essential GNOME libraries
+      License:       LGPL-2.1
+
+*  dev-python/libgnomecanvas-python
+      Latest version available: 2.28.1
+      Latest version installed: 2.28.1
+      Size of files: 549 kB
+      Homepage:      http://pygtk.org/
+      Description:   Python bindings for the Gnome Canvas library
+      License:       LGPL-2.1
+
+*  dev-python/libgnomeprint-python
+      Latest version available: 2.30.2
+      Latest version installed: [ Not Installed ]
+      Size of files: 584 kB
+      Homepage:      http://pygtk.org/
+      Description:   Python bindings for GNOME printing support
+      License:       LGPL-2.1
+
+*  dev-ruby/ruby-gnome2
+      Latest version available: 0.19.4
+      Latest version installed: [ Not Installed ]
+      Size of files: 2,345 kB
+      Homepage:      http://ruby-gnome2.sourceforge.jp/
+      Description:   Ruby Gnome2 bindings
+      License:       Ruby
+
+*  dev-ruby/ruby-gnomecanvas2
+      Latest version available: 0.19.4
+      Latest version installed: [ Not Installed ]
+      Size of files: 2,345 kB
+      Homepage:      http://ruby-gnome2.sourceforge.jp/
+      Description:   Ruby GnomeCanvas2 bindings
+      License:       Ruby
+
+*  dev-ruby/ruby-gnomeprint
+      Latest version available: 0.19.4
+      Latest version installed: [ Not Installed ]
+      Size of files: 2,345 kB
+      Homepage:      http://ruby-gnome2.sourceforge.jp/
+      Description:   Ruby bindings for gnomeprint
+      License:       Ruby
+
+*  dev-ruby/ruby-gnomeprintui
+      Latest version available: 0.19.4
+      Latest version installed: [ Not Installed ]
+      Size of files: 2,345 kB
+      Homepage:      http://ruby-gnome2.sourceforge.jp/
+      Description:   Ruby bindings for gnomeprintui
+      License:       Ruby
+
+*  dev-ruby/ruby-gnomevfs
+      Latest version available: 0.19.4
+      Latest version installed: [ Not Installed ]
+      Size of files: 2,345 kB
+      Homepage:      http://ruby-gnome2.sourceforge.jp/
+      Description:   Ruby GnomeVFS bindings
+      License:       Ruby
+
+*  dev-scheme/guile-gnome-platform
+      Latest version available: 2.16.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 3,412 kB
+      Homepage:      http://www.gnu.org/software/guile-gnome
+      Description:   Guile Scheme code that wraps the GNOME developer platform
+      License:       GPL-2
+
+*  dev-util/gnome-devel-docs [ Masked ]
+      Latest version available: 2.32.0
+      Latest version installed: [ Not Installed ]
+      Size of files: 4,728 kB
+      Homepage:      http://www.gnome.org
+      Description:   Documentation for developing for the GNOME desktop environment
+      License:       FDL-1.1
+
+*  games-board/gnome-hearts
+      Latest version available: 0.3
+      Latest version installed: [ Not Installed ]
+      Size of files: 610 kB
+      Homepage:      http://www.gnome-hearts.org
+      Description:   A clone of classic hearts card game
+      License:       GPL-2 FDL-1.2
+
+*  games-board/gnome-mastermind
+      Latest version available: 0.3.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 700 kB
+      Homepage:      http://www5.autistici.org/gnome-mastermind/
+      Description:   A little Mastermind game for GNOME
+      License:       GPL-2
+
+*  games-emulation/gnomeboyadvance
+      Latest version available: 0.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 31 kB
+      Homepage:      http://developer.berlios.de/projects/gnomeboyadvance/
+      Description:   A GNOME Python frontend to VisualBoyAdvance
+      License:       GPL-2
+
+*  games-mud/gnome-mud
+      Latest version available: 0.11.2
+      Latest version installed: [ Not Installed ]
+      Size of files: 433 kB
+      Homepage:      http://live.gnome.org/GnomeMud
+      Description:   GNOME MUD client
+      License:       GPL-2
+
+*  gnome-base/gnome
+      Latest version available: 2.30.2
+      Latest version installed: 2.30.2
+      Size of files: 0 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Meta package for the GNOME desktop
+      License:       as-is
+
+*  gnome-base/gnome-applets
+      Latest version available: 2.30.0-r1
+      Latest version installed: 2.30.0-r1
+      Size of files: 9,686 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Applets for the GNOME Desktop and Panel
+      License:       GPL-2 FDL-1.1 LGPL-2
+
+*  gnome-base/gnome-common
+      Latest version available: 2.28.0
+      Latest version installed: 2.28.0
+      Size of files: 147 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Common files for development of Gnome packages
+      License:       GPL-3
+
+*  gnome-base/gnome-control-center
+      Latest version available: 2.30.1
+      Latest version installed: 2.30.1
+      Size of files: 2,763 kB
+      Homepage:      http://www.gnome.org/
+      Description:   The gnome2 Desktop configuration tool
+      License:       GPL-2
+
+*  gnome-base/gnome-desktop
+      Latest version available: 2.30.2
+      Latest version installed: 2.30.2
+      Size of files: 1,626 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Libraries for the gnome desktop that are not part of the UI
+      License:       GPL-2 FDL-1.1 LGPL-2
+
+*  gnome-base/gnome-keyring
+      Latest version available: 2.30.3
+      Latest version installed: 2.30.3
+      Size of files: 1,555 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Password and keyring managing daemon
+      License:       GPL-2 LGPL-2
+
+*  gnome-base/gnome-light
+      Latest version available: 2.30.2
+      Latest version installed: [ Not Installed ]
+      Size of files: 0 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Meta package for the GNOME desktop, merge this package to install
+      License:       as-is
+
+*  gnome-base/gnome-menus
+      Latest version available: 2.30.2-r1
+      Latest version installed: 2.30.2-r1
+      Size of files: 453 kB
+      Homepage:      http://www.gnome.org
+      Description:   The GNOME menu system, implementing the F.D.O cross-desktop spec
+      License:       GPL-2 LGPL-2
+
+*  gnome-base/gnome-mime-data
+      Latest version available: 2.18.0
+      Latest version installed: 2.18.0
+      Size of files: 592 kB
+      Homepage:      http://www.gnome.org/
+      Description:   MIME data for Gnome
+      License:       GPL-2
+
+*  gnome-base/gnome-mount
+      Latest version available: 0.8-r1
+      Latest version installed: 0.8-r1
+      Size of files: 493 kB
+      Homepage:      http://hal.freedesktop.org/
+      Description:   Wrapper for (un)mounting and ejecting disks
+      License:       GPL-2
+
+*  gnome-base/gnome-panel
+      Latest version available: 2.30.2
+      Latest version installed: 2.30.2
+      Size of files: 3,052 kB
+      Homepage:      http://www.gnome.org/
+      Description:   The GNOME panel
+      License:       GPL-2 FDL-1.1 LGPL-2
+
+*  gnome-base/gnome-session
+      Latest version available: 2.30.2
+      Latest version installed: 2.30.2
+      Size of files: 895 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Gnome session manager
+      License:       GPL-2 LGPL-2 FDL-1.1
+
+*  gnome-base/gnome-settings-daemon
+      Latest version available: 2.30.2-r1
+      Latest version installed: 2.30.2-r1
+      Size of files: 1,228 kB
+      Homepage:      http://www.gnome.org
+      Description:   Gnome Settings Daemon
+      License:       GPL-2
+
+*  gnome-base/gnome-vfs
+      Latest version available: 2.24.3-r1
+      Latest version installed: 2.24.3-r1
+      Size of files: 1,787 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Gnome Virtual Filesystem
+      License:       GPL-2 LGPL-2
+
+*  gnome-base/gnome-volume-manager
+      Latest version available: 2.24.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 365 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Daemon that enforces volume-related policies
+      License:       GPL-2
+
+*  gnome-base/libgnome
+      Latest version available: 2.30.0
+      Latest version installed: 2.30.0
+      Size of files: 2,097 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Essential Gnome Libraries
+      License:       LGPL-2
+
+*  gnome-base/libgnome-keyring
+      Latest version available: 2.30.1
+      Latest version installed: 2.30.1
+      Size of files: 793 kB
+      Homepage:      http://live.gnome.org/GnomeKeyring
+      Description:   Compatibility library for accessing secrets
+      License:       LGPL-2
+
+*  gnome-base/libgnomecanvas
+      Latest version available: 2.30.1
+      Latest version installed: 2.30.1
+      Size of files: 569 kB
+      Homepage:      http://www.gnome.org/
+      Description:   The Gnome 2 Canvas library
+      License:       LGPL-2
+
+*  gnome-base/libgnomekbd
+      Latest version available: 2.30.2
+      Latest version installed: 2.30.2
+      Size of files: 395 kB
+      Homepage:      http://www.gnome.org
+      Description:   Gnome keyboard configuration library
+      License:       LGPL-2
+
+*  gnome-base/libgnomeprint
+      Latest version available: 2.18.7
+      Latest version installed: 2.18.7
+      Size of files: 838 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Printer handling for Gnome
+      License:       GPL-2 LGPL-2.1
+
+*  gnome-base/libgnomeprintui
+      Latest version available: 2.18.5
+      Latest version installed: 2.18.5
+      Size of files: 661 kB
+      Homepage:      http://www.gnome.org/
+      Description:   User interface libraries for gnome print
+      License:       GPL-2 LGPL-2.1
+
+*  gnome-base/libgnomeui
+      Latest version available: 2.24.3
+      Latest version installed: 2.24.3
+      Size of files: 1,368 kB
+      Homepage:      http://www.gnome.org/
+      Description:   User Interface routines for Gnome
+      License:       LGPL-2
+
+*  gnome-extra/connman-gnome [ Masked ]
+      Latest version available: 0.5
+      Latest version installed: [ Not Installed ]
+      Size of files: 190 kB
+      Homepage:      http://connman.net
+      Description:   Provides a daemon for managing internet connections
+      License:       GPL-2
+
+*  gnome-extra/gnome-audio
+      Latest version available: 2.22.2
+      Latest version installed: [ Not Installed ]
+      Size of files: 1,702 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Gnome Desktop Sound Effects Package
+      License:       public-domain CCPL-Attribution-ShareAlike-2.0 CCPL-Attribution-3.0
+
+*  gnome-extra/gnome-color-chooser [ Masked ]
+      Latest version available: 0.2.4
+      Latest version installed: [ Not Installed ]
+      Size of files: 194 kB
+      Homepage:      http://gnomecc.sourceforge.net/
+      Description:   GTK+/GNOME color customization tool.
+      License:       GPL-3
+
+*  gnome-extra/gnome-device-manager [ Masked ]
+      Latest version available: 0.2
+      Latest version installed: [ Not Installed ]
+      Size of files: 416 kB
+      Homepage:      http://hal.freedesktop.org/
+      Description:   GNOME Device Manager
+      License:       GPL-2
+
+*  gnome-extra/gnome-do [ Masked ]
+      Latest version available: 0.8.3.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 1,234 kB
+      Homepage:      http://do.davebsd.com/
+      Description:   GNOME Do allows you to get things done quickly
+      License:       GPL-3
+
+*  gnome-extra/gnome-do-plugins [ Masked ]
+      Latest version available: 0.8.2-r1
+      Latest version installed: [ Not Installed ]
+      Size of files: 4,303 kB
+      Homepage:      http://do.davebsd.com/
+      Description:   Plugins to put the Do in Gnome Do
+      License:       GPL-3
+
+*  gnome-extra/gnome-games
+      Latest version available: 2.28.2
+      Latest version installed: 2.28.2
+      Size of files: 24,900 kB
+      Homepage:      http://live.gnome.org/GnomeGames/
+      Description:   Collection of games for the GNOME desktop
+      License:       GPL-2 FDL-1.1
+
+*  gnome-extra/gnome-games-extra-data
+      Latest version available: 2.26.0
+      Latest version installed: [ Not Installed ]
+      Size of files: 3,993 kB
+      Homepage:      http://live.gnome.org/GnomeGames/
+      Description:   Optional additional graphics for gnome-games
+      License:       GPL-2
+
+*  gnome-extra/gnome-hdaps-applet [ Masked ]
+      Latest version available: 20081204
+      Latest version installed: [ Not Installed ]
+      Size of files: 7 kB
+      Homepage:      http://www.zen24593.zen.co.uk/hdaps/
+      Description:   Visualization of the Hard Disc Active Protection System State as Gnome applet
+      License:       GPL-3
+
+*  gnome-extra/gnome-lirc-properties [ Masked ]
+      Latest version available: 0.5.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 672 kB
+      Homepage:      http://live.gnome.org/gnome-lirc-properties
+      Description:   GTK+ based utilty to configure LIRC remotes
+      License:       GPL-2
+
+*  gnome-extra/gnome-media
+      Latest version available: 2.30.0-r1
+      Latest version installed: 2.30.0-r1
+      Size of files: 2,644 kB
+      Homepage:      http://ronald.bitfreak.net/gnome-media.php
+      Description:   Multimedia related programs for the GNOME desktop
+      License:       LGPL-2 GPL-2 FDL-1.1
+
+*  gnome-extra/gnome-power-manager
+      Latest version available: 2.30.1
+      Latest version installed: 2.30.1
+      Size of files: 3,763 kB
+      Homepage:      http://www.gnome.org/projects/gnome-power-manager/
+      Description:   Gnome Power Manager
+      License:       GPL-2
+
+*  gnome-extra/gnome-screensaver
+      Latest version available: 2.30.0
+      Latest version installed: 2.30.0
+      Size of files: 4,704 kB
+      Homepage:      http://live.gnome.org/GnomeScreensaver
+      Description:   Replaces xscreensaver, integrating with the desktop.
+      License:       GPL-2
+
+*  gnome-extra/gnome-swallow
+      Latest version available: 1.2
+      Latest version installed: [ Not Installed ]
+      Size of files: 88 kB
+      Homepage:      http://interreality.org/~tetron/technology/swallow/
+      Description:   An applet for Gnome2 that 'swallows' normal apps. Useful for docks that are made for other DEs or WMs
+      License:       GPL-2
+
+*  gnome-extra/gnome-system-monitor
+      Latest version available: 2.28.1
+      Latest version installed: 2.28.1
+      Size of files: 2,280 kB
+      Homepage:      http://www.gnome.org/
+      Description:   The Gnome System Monitor
+      License:       GPL-2
+
+*  gnome-extra/gnome-user-docs
+      Latest version available: 2.30.1
+      Latest version installed: 2.30.1
+      Size of files: 17,594 kB
+      Homepage:      http://www.gnome.org/
+      Description:   GNOME end user documentation
+      License:       FDL-1.1
+
+*  gnome-extra/gnome-user-share
+      Latest version available: 2.30.0
+      Latest version installed: [ Not Installed ]
+      Size of files: 922 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Personal file sharing for the GNOME desktop
+      License:       GPL-2
+
+*  gnome-extra/gnome-utils
+      Latest version available: 2.30.0
+      Latest version installed: 2.30.0
+      Size of files: 7,430 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Utilities for the Gnome2 desktop
+      License:       GPL-2
+
+*  gnome-extra/gnome-web-photo
+      Latest version available: 0.9
+      Latest version installed: [ Not Installed ]
+      Size of files: 309 kB
+      Homepage:      ftp://ftp.gnome.org/pub/gnome/sources/gnome-web-photo
+      Description:   a tool to generate images and thumbnails from HTML files
+      License:       GPL-2
+
+*  gnome-extra/libgail-gnome
+      Latest version available: 1.20.3
+      Latest version installed: [ Not Installed ]
+      Size of files: 230 kB
+      Homepage:      http://developer.gnome.org/projects/gap/
+      Description:   Gail libraries for GNOME
+      License:       LGPL-2
+
+*  gnome-extra/libgnomedb
+      Latest version available: 3.0.0
+      Latest version installed: [ Not Installed ]
+      Size of files: 4,094 kB
+      Homepage:      http://www.gnome-db.org/
+      Description:   Database widget library from the GNOME-DB project
+      License:       GPL-2
+
+*  gnome-extra/policykit-gnome
+      Latest version available: 0.9.2-r1
+      Latest version installed: [ Not Installed ]
+      Size of files: 1,195 kB
+      Homepage:      http://hal.freedesktop.org/docs/PolicyKit
+      Description:   PolicyKit policies and configurations for the GNOME desktop
+      License:       LGPL-2 GPL-2
+
+*  gnome-extra/polkit-gnome
+      Latest version available: 0.96
+      Latest version installed: 0.96
+      Size of files: 354 kB
+      Homepage:      http://hal.freedesktop.org/docs/PolicyKit
+      Description:   PolicyKit policies and configurations for the GNOME desktop
+      License:       LGPL-2 GPL-2
+
+*  gnome-extra/swfdec-gnome
+      Latest version available: 2.30.0
+      Latest version installed: 2.30.0
+      Size of files: 173 kB
+      Homepage:      http://swfdec.freedesktop.org/wiki/
+      Description:   Flash player and thumbnailer for GNOME
+      License:       GPL-2
+
+*  media-gfx/gnome-raw-thumbnailer
+      Latest version available: 0.99.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 361 kB
+      Homepage:      http://libopenraw.freedesktop.org/wiki/RawThumbnailer
+      Description:   A lightweight and fast raw image thumbnailer for GNOME
+      License:       GPL-2
+
+*  media-gfx/gnome-scan [ Masked ]
+      Latest version available: 0.6.2
+      Latest version installed: [ Not Installed ]
+      Size of files: 485 kB
+      Homepage:      http://www.gnome.org/projects/gnome-scan/index
+      Description:   The Gnome Scan project aim to provide scan features every where in the desktop like print is.
+      License:       GPL-2
+
+*  media-gfx/gnome-specimen
+      Latest version available: 0.3.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 208 kB
+      Homepage:      http://uwstopia.nl
+      Description:   Font preview application
+      License:       GPL-2
+
+*  media-plugins/gst-plugins-gnomevfs
+      Latest version available: 0.10.29
+      Latest version installed: [ Not Installed ]
+      Size of files: 2,296 kB
+      Homepage:      http://gstreamer.freedesktop.org/
+      Description:   plugin for gstreamer
+      License:       GPL-2
+
+*  media-sound/gnome-alsamixer
+      Latest version available: 0.9.6
+      Latest version installed: [ Not Installed ]
+      Size of files: 91 kB
+      Homepage:      http://www.paw.za.org/projects/gnome-alsamixer
+      Description:   Gnome based ALSA Mixer
+      License:       GPL-2
+
+*  media-sound/gnomeradio
+      Latest version available: 1.8
+      Latest version installed: [ Not Installed ]
+      Size of files: 731 kB
+      Homepage:      http://projects.gnome.org/gnomeradio/
+      Description:   A FM-radio tuner for the GNOME desktop
+      License:       GPL-2
+
+*  media-sound/ifp-gnome [ Masked ]
+      Latest version available: 0.7
+      Latest version installed: [ Not Installed ]
+      Size of files: 11 kB
+      Homepage:      http://ifp-gnome.sourceforge.net
+      Description:   Gnome front-end for file management on iRiver iFP MP3 players.
+      License:       GPL-2
+
+*  media-video/gnome-mplayer
+      Latest version available: 0.9.9.2
+      Latest version installed: 0.9.9.2
+      Size of files: 808 kB
+      Homepage:      http://code.google.com/p/gnome-mplayer/
+      Description:   A GTK+ interface to MPlayer
+      License:       GPL-2
+
+*  media-video/gnome-subtitles
+      Latest version available: 0.9.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 643 kB
+      Homepage:      http://gnome-subtitles.sourceforge.net/
+      Description:   Video subtitling for the Gnome desktop
+      License:       GPL-2
+
+*  net-analyzer/gnome-netstatus
+      Latest version available: 2.28.1
+      Latest version installed: 2.28.1
+      Size of files: 558 kB
+      Homepage:      http://www.gnome.org/
+      Description:   Network interface information applet
+      License:       GPL-2
+
+*  net-analyzer/gnome-nettool
+      Latest version available: 2.30.0
+      Latest version installed: 2.30.0
+      Size of files: 636 kB
+      Homepage:      http://www.gnome.org/projects/gnome-network/
+      Description:   Collection of network tools
+      License:       GPL-2
+
+*  net-dialup/gnome-ppp
+      Latest version available: 0.3.23-r1
+      Latest version installed: [ Not Installed ]
+      Size of files: 323 kB
+      Homepage:      http://www.gnomefiles.org/app.php?soft_id=41
+      Description:   A GNOME 2 WvDial frontend
+      License:       GPL-2
+
+*  net-im/gnomeicu
+      Latest version available: 0.99.12
+      Latest version installed: [ Not Installed ]
+      Size of files: 1,630 kB
+      Homepage:      http://gnomeicu.sourceforge.net/
+      Description:   Gnome ICQ Client
+      License:       GPL-2
+
+*  net-irc/xchat-gnome
+      Latest version available: 0.26.1-r1
+      Latest version installed: [ Not Installed ]
+      Size of files: 1,893 kB
+      Homepage:      http://xchat-gnome.navi.cx/
+      Description:   GNOME frontend for the popular X-Chat IRC client
+      License:       GPL-2
+
+*  net-libs/libsoup-gnome
+      Latest version available: 2.30.2
+      Latest version installed: 2.30.2
+      Size of files: 637 kB
+      Homepage:      http://www.gnome.org/
+      Description:   GNOME plugin for libsoup
+      License:       LGPL-2
+
+*  net-misc/gnome-blog
+      Latest version available: 0.9.2
+      Latest version installed: [ Not Installed ]
+      Size of files: 184 kB
+      Homepage:      http://www.gnome.org/~seth/gnome-blog/
+      Description:   Post entries to your blog right from the Gnome panel
+      License:       GPL-2
+
+*  net-misc/gnome-rdp [ Masked ]
+      Latest version available: 0.2.3
+      Latest version installed: [ Not Installed ]
+      Size of files: 185 kB
+      Homepage:      http://sourceforge.net/projects/gnome-rdp
+      Description:   Remote Desktop Client for the GNOME desktop
+      License:       GPL-2
+
+*  net-print/gnome-cups-manager
+      Latest version available: 0.33-r1
+      Latest version installed: 0.33-r1
+      Size of files: 601 kB
+      Homepage:      http://www.gnome.org/
+      Description:   GNOME CUPS Printer Management Interface
+      License:       GPL-2
+
+*  net-print/libgnomecups
+      Latest version available: 0.2.3
+      Latest version installed: 0.2.3
+      Size of files: 348 kB
+      Homepage:      http://www.gnome.org/
+      Description:   GNOME cups library
+      License:       GPL-2 LGPL-2
+
+*  net-wireless/bluez-gnome [ Masked ]
+      Latest version available: 1.8
+      Latest version installed: [ Not Installed ]
+      Size of files: 352 kB
+      Homepage:      http://www.bluez.org/
+      Description:   Bluetooth helpers for GNOME
+      License:       GPL-2
+
+*  net-wireless/gnome-bluetooth
+      Latest version available: 2.30.0
+      Latest version installed: [ Not Installed ]
+      Size of files: 991 kB
+      Homepage:      http://live.gnome.org/GnomeBluetooth
+      Description:   Fork of bluez-gnome focused on integration with GNOME
+      License:       GPL-2 LGPL-2.1
+
+*  rox-extra/gnome-thumbnailer
+      Latest version available: 0.3
+      Latest version installed: [ Not Installed ]
+      Size of files: 89 kB
+      Homepage:      http://denver.sociol.unimi.it/~yuri/index-eng.html
+      Description:   Generates thumbnails for ROX-Filer using GNOME's thumbnailers
+      License:       GPL-2
+
+*  sys-apps/gnome-disk-utility
+      Latest version available: 2.30.1
+      Latest version installed: 2.30.1
+      Size of files: 1,957 kB
+      Homepage:      http://git.gnome.org/cgit/gnome-disk-utility/
+      Description:   Disk Utility for GNOME using devicekit-disks
+      License:       LGPL-2.1
+
+*  sys-fs/gnomevfs-mount [ Masked ]
+      Latest version available: 0.2.0
+      Latest version installed: [ Not Installed ]
+      Size of files: 66 kB
+      Homepage:      http://primates.ximian.com/~sandino/gnomevfs-mount/
+      Description:   A program for mounting gnome-vfs-uris onto the linux filesystem.
+      License:       GPL-2
+
+*  x11-terms/gnome-terminal
+      Latest version available: 2.30.2
+      Latest version installed: 2.30.2
+      Size of files: 2,197 kB
+      Homepage:      http://www.gnome.org/
+      Description:   The Gnome Terminal
+      License:       GPL-2
+
+*  x11-themes/gnome-backgrounds
+      Latest version available: 2.30.0
+      Latest version installed: 2.30.0
+      Size of files: 9,698 kB
+      Homepage:      http://www.gnome.org/
+      Description:   A set of backgrounds packaged with the GNOME desktop
+      License:       GPL-2
+
+*  x11-themes/gnome-colors-common [ Masked ]
+      Latest version available: 5.5.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 4,833 kB
+      Homepage:      http://code.google.com/p/gnome-colors/
+      Description:   Colorized icons shared between all gnome-colors iconsets
+      License:       GPL-2 public-domain
+
+*  x11-themes/gnome-colors-themes [ Masked ]
+      Latest version available: 5.5.1
+      Latest version installed: [ Not Installed ]
+      Size of files: 5,150 kB
+      Homepage:      http://code.google.com/p/gnome-colors/
+      Description:   Some gnome-colors iconsets including a Gentoo one
+      License:       GPL-2 public-domain
+
+*  x11-themes/gnome-icon-theme
+      Latest version available: 2.30.3
+      Latest version installed: 2.30.3
+      Size of files: 15,609 kB
+      Homepage:      http://www.gnome.org/
+      Description:   GNOME 2 default icon themes
+      License:       GPL-2
+
+*  x11-themes/gnome-themes
+      Latest version available: 2.30.2
+      Latest version installed: 2.30.2
+      Size of files: 1,604 kB
+      Homepage:      http://www.gnome.org/
+      Description:   A set of GNOME themes, with sets for users with limited or low vision
+      License:       LGPL-2.1
+
+*  x11-themes/gnome-themes-extras
+      Latest version available: 2.22.0-r1
+      Latest version installed: [ Not Installed ]
+      Size of files: 4,569 kB
+      Homepage:      http://librsvg.sourceforge.net/theme.php
+      Description:   Additional themes for GNOME 2.2
+      License:       LGPL-2.1 GPL-2 DSL
+

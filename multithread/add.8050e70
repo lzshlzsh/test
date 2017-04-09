@@ -1,0 +1,111 @@
+jmp    *0x80a8c40(,%edx,4)
+
+
+
+0x759a4f24 <code_gen_buffer+5284>:	lui	zero,0x805
+0x759a4f28 <code_gen_buffer+5288>:	li	zero,0xe70
+0x759a4f2c <code_gen_buffer+5292>:	daddiu	t2,t2,1
+0x759a4f30 <code_gen_buffer+5296>:	lui	a0,0x80a
+0x759a4f34 <code_gen_buffer+5300>:	ori	a0,a0,0x8c40
+0x759a4f38 <code_gen_buffer+5304>:	dsll	a1,s2,0x2
+0x759a4f3c <code_gen_buffer+5308>:	addu	a0,a1,a0
+0x759a4f40 <code_gen_buffer+5312>:	addiu	a2,a0,0
+0x759a4f44 <code_gen_buffer+5316>:	srl	a2,a2,0x10
+0x759a4f48 <code_gen_buffer+5320>:	sll	a2,a2,0x2
+0x759a4f4c <code_gen_buffer+5324>:	lui	a3,0x5310
+0x759a4f50 <code_gen_buffer+5328>:	ori	a3,a3,0x10
+0x759a4f54 <code_gen_buffer+5332>:	addu	a2,a2,a3
+0x759a4f58 <code_gen_buffer+5336>:	lw	a3,0(a2)
+0x759a4f5c <code_gen_buffer+5340>:	bnez	a3,0x759a4fbc <code_gen_buffer+5436>
+0x759a4f60 <code_gen_buffer+5344>:	nop
+0x759a4f64 <code_gen_buffer+5348>:	daddiu	sp,sp,-512
+0x759a4f68 <code_gen_buffer+5352>:	sd	ra,504(sp)
+0x759a4f6c <code_gen_buffer+5356>:	sd	v0,496(sp)
+0x759a4f70 <code_gen_buffer+5360>:	sd	t0,488(sp)
+0x759a4f74 <code_gen_buffer+5364>:	sd	v1,480(sp)
+0x759a4f78 <code_gen_buffer+5368>:	sd	t1,472(sp)
+0x759a4f7c <code_gen_buffer+5372>:	sd	at,464(sp)
+0x759a4f80 <code_gen_buffer+5376>:	sd	t2,456(sp)
+0x759a4f84 <code_gen_buffer+5380>:	sd	a0,448(sp)
+0x759a4f88 <code_gen_buffer+5384>:	lui	t9,0x7011
+0x759a4f8c <code_gen_buffer+5388>:	ori	t9,t9,0x7360
+0x759a4f90 <code_gen_buffer+5392>:	jalr	t9
+0x759a4f94 <code_gen_buffer+5396>:	nop
+0x759a4f98 <code_gen_buffer+5400>:	ld	ra,504(sp)
+0x759a4f9c <code_gen_buffer+5404>:	ld	v0,496(sp)
+0x759a4fa0 <code_gen_buffer+5408>:	ld	t0,488(sp)
+0x759a4fa4 <code_gen_buffer+5412>:	ld	v1,480(sp)
+0x759a4fa8 <code_gen_buffer+5416>:	ld	t1,472(sp)
+0x759a4fac <code_gen_buffer+5420>:	ld	at,464(sp)
+0x759a4fb0 <code_gen_buffer+5424>:	ld	t2,456(sp)
+0x759a4fb4 <code_gen_buffer+5428>:	ld	a0,448(sp)
+0x759a4fb8 <code_gen_buffer+5432>:	daddiu	sp,sp,512
+0x759a4fbc <code_gen_buffer+5436>:	ll	a2,0(a3)
+0x759a4fc0 <code_gen_buffer+5440>:	bnez	a2,0x759a4fbc <code_gen_buffer+5436>
+0x759a4fc4 <code_gen_buffer+5444>:	nop
+0x759a4fc8 <code_gen_buffer+5448>:	li	a2,1
+0x759a4fcc <code_gen_buffer+5452>:	sc	a2,0(a3)
+0x759a4fd0 <code_gen_buffer+5456>:	beqz	a2,0x759a4fbc <code_gen_buffer+5436>
+0x759a4fd4 <code_gen_buffer+5460>:	nop
+0x759a4fd8 <code_gen_buffer+5464>:	addiu	a2,a3,4
+0x759a4fdc <code_gen_buffer+5468>:	sd	t2,0(a2)
+0x759a4fe0 <code_gen_buffer+5472>:	li	gp,0
+0x759a4fe4 <code_gen_buffer+5476>:	li	a6,8
+0x759a4fe8 <code_gen_buffer+5480>:	subu	a7,gp,a6
+0x759a4fec <code_gen_buffer+5484>:	bgez	a7,0x759a50b0 <code_gen_buffer+5680>
+0x759a4ff0 <code_gen_buffer+5488>:	nop
+0x759a4ff4 <code_gen_buffer+5492>:	sll	a6,gp,0x5
+0x759a4ff8 <code_gen_buffer+5496>:	addiu	a6,a6,4
+0x759a4ffc <code_gen_buffer+5500>:	addu	a6,a6,a3
+0x759a5000 <code_gen_buffer+5504>:	beq	a6,a2,0x759a50a4 <code_gen_buffer+5668>
+0x759a5004 <code_gen_buffer+5508>:	nop
+0x759a5008 <code_gen_buffer+5512>:	ld	a7,8(a6)
+0x759a500c <code_gen_buffer+5516>:	addiu	a6,s3,776
+0x759a5010 <code_gen_buffer+5520>:	sll	t9,gp,0x3
+0x759a5014 <code_gen_buffer+5524>:	addu	a6,a6,t9
+0x759a5018 <code_gen_buffer+5528>:	ld	t9,0(a6)
+0x759a501c <code_gen_buffer+5532>:	subu	t9,a7,t9
+0x759a5020 <code_gen_buffer+5536>:	blez	t9,0x759a50a4 <code_gen_buffer+5668>
+0x759a5024 <code_gen_buffer+5540>:	nop
+0x759a5028 <code_gen_buffer+5544>:	daddiu	sp,sp,-512
+0x759a502c <code_gen_buffer+5548>:	sd	ra,504(sp)
+0x759a5030 <code_gen_buffer+5552>:	sd	v0,496(sp)
+0x759a5034 <code_gen_buffer+5556>:	sd	t0,488(sp)
+0x759a5038 <code_gen_buffer+5560>:	sd	v1,480(sp)
+0x759a503c <code_gen_buffer+5564>:	sd	t1,472(sp)
+0x759a5040 <code_gen_buffer+5568>:	sd	at,464(sp)
+0x759a5044 <code_gen_buffer+5572>:	sd	t2,456(sp)
+0x759a5048 <code_gen_buffer+5576>:	sd	a0,448(sp)
+0x759a504c <code_gen_buffer+5580>:	sd	a3,440(sp)
+0x759a5050 <code_gen_buffer+5584>:	sd	a2,432(sp)
+0x759a5054 <code_gen_buffer+5588>:	sd	a7,0(a6)
+0x759a5058 <code_gen_buffer+5592>:	addiu	a0,gp,0
+0x759a505c <code_gen_buffer+5596>:	addiu	a1,a7,0
+0x759a5060 <code_gen_buffer+5600>:	li	a2,0
+0x759a5064 <code_gen_buffer+5604>:	addiu	a3,t2,0
+0x759a5068 <code_gen_buffer+5608>:	lui	t9,0x7011
+0x759a506c <code_gen_buffer+5612>:	ori	t9,t9,0x7edc
+0x759a5070 <code_gen_buffer+5616>:	jalr	t9
+0x759a5074 <code_gen_buffer+5620>:	nop
+0x759a5078 <code_gen_buffer+5624>:	ld	ra,504(sp)
+0x759a507c <code_gen_buffer+5628>:	ld	v0,496(sp)
+0x759a5080 <code_gen_buffer+5632>:	ld	t0,488(sp)
+0x759a5084 <code_gen_buffer+5636>:	ld	v1,480(sp)
+0x759a5088 <code_gen_buffer+5640>:	ld	t1,472(sp)
+0x759a508c <code_gen_buffer+5644>:	ld	at,464(sp)
+0x759a5090 <code_gen_buffer+5648>:	ld	t2,456(sp)
+0x759a5094 <code_gen_buffer+5652>:	ld	a0,448(sp)
+0x759a5098 <code_gen_buffer+5656>:	ld	a3,440(sp)
+0x759a509c <code_gen_buffer+5660>:	ld	a2,432(sp)
+0x759a50a0 <code_gen_buffer+5664>:	daddiu	sp,sp,512
+0x759a50a4 <code_gen_buffer+5668>:	addiu	gp,gp,1
+0x759a50a8 <code_gen_buffer+5672>:	b	0x759a4fe4 <code_gen_buffer+5476>
+0x759a50ac <code_gen_buffer+5676>:	nop
+0x759a50b0 <code_gen_buffer+5680>:	lwu	s4,0(a0)
+0x759a50b4 <code_gen_buffer+5684>:	sw	zero,0(a3)
+0x759a50b8 <code_gen_buffer+5688>:	addiu	a7,s4,0
+0x759a50bc <code_gen_buffer+5692>:	lui	s8,0x759a
+0x759a50c0 <code_gen_buffer+5696>:	ori	s8,s8,0x3a80
+0x759a50c4 <code_gen_buffer+5700>:	jr	s8
+0x759a50c8 <code_gen_buffer+5704>:	nop
+

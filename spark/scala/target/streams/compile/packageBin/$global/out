@@ -1,0 +1,13 @@
+[0m[[0minfo[0m] [0mPackaging /home/lzs/programming/test/spark/scala/target/scala-2.10/sparkpi-scala_2.10-1.0.jar ...[0m
+[0m[[0mdebug[0m] [0mInput file mappings:[0m
+[0m[[0mdebug[0m] [0m	mytest[0m
+[0m[[0mdebug[0m] [0m	  /home/lzs/programming/test/spark/scala/target/scala-2.10/classes/mytest[0m
+[0m[[0mdebug[0m] [0m	mytest/SparkPi$$anonfun$2.class[0m
+[0m[[0mdebug[0m] [0m	  /home/lzs/programming/test/spark/scala/target/scala-2.10/classes/mytest/SparkPi$$anonfun$2.class[0m
+[0m[[0mdebug[0m] [0m	mytest/SparkPi$.class[0m
+[0m[[0mdebug[0m] [0m	  /home/lzs/programming/test/spark/scala/target/scala-2.10/classes/mytest/SparkPi$.class[0m
+[0m[[0mdebug[0m] [0m	mytest/SparkPi$$anonfun$1.class[0m
+[0m[[0mdebug[0m] [0m	  /home/lzs/programming/test/spark/scala/target/scala-2.10/classes/mytest/SparkPi$$anonfun$1.class[0m
+[0m[[0mdebug[0m] [0m	mytest/SparkPi.class[0m
+[0m[[0mdebug[0m] [0m	  /home/lzs/programming/test/spark/scala/target/scala-2.10/classes/mytest/SparkPi.class[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m

@@ -1,0 +1,5 @@
+= Start
+@ ./mtrace:[0x8048482] + 0x82c5498 0x1
+@ /lib/libc.so.6:(clearenv+0x7c)[0xb7744bcc] - 0x82c5008
+@ /lib/libc.so.6:[0xb77e39bf] - 0x82c50f8
+@ /lib/libc.so.6:[0xb77e39c7] - 0x82c5110

@@ -1,0 +1,19 @@
+[0m[[0minfo[0m] [0mPackaging /home/lzs/programming/test/scala/businessLocation/target/scala-2.10/businesslocation_2.10-1.0.0.jar ...[0m
+[0m[[0mdebug[0m] [0mInput file mappings:[0m
+[0m[[0mdebug[0m] [0m	ThriftServerTest$.class[0m
+[0m[[0mdebug[0m] [0m	  /home/lzs/programming/test/scala/businessLocation/target/scala-2.10/classes/ThriftServerTest$.class[0m
+[0m[[0mdebug[0m] [0m	WhereGroupBy.class[0m
+[0m[[0mdebug[0m] [0m	  /home/lzs/programming/test/scala/businessLocation/target/scala-2.10/classes/WhereGroupBy.class[0m
+[0m[[0mdebug[0m] [0m	WhereGroupBy$$anonfun$2.class[0m
+[0m[[0mdebug[0m] [0m	  /home/lzs/programming/test/scala/businessLocation/target/scala-2.10/classes/WhereGroupBy$$anonfun$2.class[0m
+[0m[[0mdebug[0m] [0m	Join$.class[0m
+[0m[[0mdebug[0m] [0m	  /home/lzs/programming/test/scala/businessLocation/target/scala-2.10/classes/Join$.class[0m
+[0m[[0mdebug[0m] [0m	WhereGroupBy$$anonfun$1.class[0m
+[0m[[0mdebug[0m] [0m	  /home/lzs/programming/test/scala/businessLocation/target/scala-2.10/classes/WhereGroupBy$$anonfun$1.class[0m
+[0m[[0mdebug[0m] [0m	Join.class[0m
+[0m[[0mdebug[0m] [0m	  /home/lzs/programming/test/scala/businessLocation/target/scala-2.10/classes/Join.class[0m
+[0m[[0mdebug[0m] [0m	WhereGroupBy$.class[0m
+[0m[[0mdebug[0m] [0m	  /home/lzs/programming/test/scala/businessLocation/target/scala-2.10/classes/WhereGroupBy$.class[0m
+[0m[[0mdebug[0m] [0m	ThriftServerTest.class[0m
+[0m[[0mdebug[0m] [0m	  /home/lzs/programming/test/scala/businessLocation/target/scala-2.10/classes/ThriftServerTest.class[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m

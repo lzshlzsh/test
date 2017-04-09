@@ -1,0 +1,60 @@
+execve("./clone", ["./clone"], [/* 52 vars */]) = 0
+brk(0)                                  = 0x94a7000
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xfffffffff770d000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY)      = 3
+fstat64(3, {st_mode=S_IFREG|0644, st_size=133549, ...}) = 0
+mmap2(NULL, 133549, PROT_READ, MAP_PRIVATE, 3, 0) = 0xfffffffff76ec000
+close(3)                                = 0
+open("/lib/libdl.so.2", O_RDONLY)       = 3
+read(3, "\177ELF\1\1\1\3\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0`\n\200\0004\0\0\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=20464, ...}) = 0
+mmap2(0x800000, 16500, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x800000
+mmap2(0x803000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2) = 0x803000
+close(3)                                = 0
+open("/lib/libpthread.so.0", O_RDONLY)  = 3
+read(3, "\177ELF\1\1\1\3\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\240\251\224\0004\0\0\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=136020, ...}) = 0
+mmap2(0x946000, 102880, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x946000
+mmap2(0x95c000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x15) = 0x95c000
+mmap2(0x95e000, 4576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x95e000
+close(3)                                = 0
+open("/lib/libc.so.6", O_RDONLY)        = 3
+read(3, "\177ELF\1\1\1\3\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\20\375i\0004\0\0\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=1814652, ...}) = 0
+mmap2(0x689000, 1526120, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x689000
+mmap2(0x7f8000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x16e) = 0x7f8000
+mmap2(0x7fb000, 10600, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fb000
+close(3)                                = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xfffffffff76eb000
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xfffffffff76ea000
+set_thread_area(0xfff82500)             = 0
+mprotect(0x7f8000, 8192, PROT_READ)     = 0
+mprotect(0x95c000, 4096, PROT_READ)     = 0
+mprotect(0x803000, 4096, PROT_READ)     = 0
+mprotect(0x685000, 4096, PROT_READ)     = 0
+munmap(0xf76ec000, 133549)              = 0
+set_tid_address(0xf76ebb88)             = 5922
+set_robust_list(0xf76ebb90, 0xc)        = 0
+futex(0xfff82640, FUTEX_WAKE_PRIVATE, 1) = 0
+futex(0xfff82640, FUTEX_WAIT_BITSET_PRIVATE|FUTEX_CLOCK_REALTIME, 1, NULL, fff82650) = -1 EAGAIN (Resource temporarily unavailable)
+rt_sigaction(SIGRTMIN, {0x94a3e0, [], SA_SIGINFO}, NULL, 8) = 0
+rt_sigaction(SIGRT_1, {0x94a870, [], SA_RESTART|SA_SIGINFO}, NULL, 8) = 0
+rt_sigprocmask(SIG_UNBLOCK, [RTMIN RT_1], NULL, 8) = 0
+getrlimit(RLIMIT_STACK, {rlim_cur=-4284481536, rlim_max=42168418408857616}) = 0
+uname({sys="Linux", node="Fedora", ...}) = 0
+clone(Process 5923 attached
+child_stack=0x804a834, flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID|SIGCHLD, parent_tidptr=0x8049840, child_tidptr=0) = 5923
+[pid  5922] futex(0x8049840, FUTEX_WAIT, 5923, NULL <unfinished ...>
+[pid  5923] gettid()                    = 5923
+[pid  5923] fstat64(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 0), ...}) = 0
+[pid  5923] mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xfffffffff770c000
+[pid  5923] write(1, "child thread 5923\n", 18) = 18
+[pid  5923] _exit(0)                    = ?
+Process 5923 detached
+<... futex resumed> )                   = 0
+gettid()                                = 5922
+write(1, "parent thread 5922\n", 19)    = ? ERESTARTSYS (To be restarted)
+--- SIGCHLD (Child exited) @ 0 (0) ---
+write(1, "parent thread 5922\n", 19)    = 19
+exit_group(0)                           = ?

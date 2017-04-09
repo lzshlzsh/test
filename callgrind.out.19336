@@ -1,0 +1,1765 @@
+version: 1
+creator: callgrind-3.8.1
+pid: 19336
+cmd:  ./test
+part: 1
+
+
+desc: I1 cache: 
+desc: D1 cache: 
+desc: LL cache: 
+
+desc: Timerange: Basic block 0 - 32172
+desc: Trigger: Program termination
+
+positions: line
+events: Ir
+summary: 154280
+
+
+ob=(2) ???
+fl=(2) ???
+fn=(288) 0x00000000004003d8
+0 2
+cob=(7) /home/lzs/programming/test/test
+cfi=(7) ???
+cfn=(290) 0x000000000040044c
+calls=1 0 
+0 6
+0 1
+cob=(7)
+cfi=(7)
+cfn=(296) 0x00000000004004e0
+calls=1 0 
+0 6
+0 1
+cob=(7)
+cfi=(7)
+cfn=(302) 0x0000000000400690
+calls=1 0 
+0 11
+0 2
+
+fn=(166) 0x000000355ca05308
+0 2
+cob=(4) /usr/lib64/libpthread-2.17.so
+cfi=(4) ???
+cfn=(168) __pthread_initialize_minimal
+calls=1 0 
+0 5674
+0 2
+
+fn=(458) 0x000000355ca10414
+0 3
+
+fn=(244) 0x000000355c600da0
+0 6
+
+fn=(378) 0x00000000004006c8
+0 2
+cob=(7)
+cfi=(7)
+cfn=(380) 0x0000000000400470
+calls=1 0 
+0 18
+0 2
+
+fn=(412) 0x00000000048017e0
+0 3
+
+fn=(258) 0x0000000004801560
+0 6
+
+fn=(438) 0x000000355c6019d0
+0 3
+
+ob=(7)
+fl=(7)
+fn=(314) main
+0 26
+cob=(3) /usr/lib64/libc-2.17.so
+cfi=(3) ???
+cfn=(320) printf
+calls=1 0 
+0 1381
+cob=(1) /usr/lib64/ld-2.17.so
+cfi=(1) ???
+cfn=(178) _dl_runtime_resolve
+calls=1 0 
+0 1014
+0 5
+cob=(3)
+cfi=(3)
+cfn=(320)
+calls=1 0 
+0 759
+0 5
+cob=(3)
+cfi=(3)
+cfn=(320)
+calls=1 0 
+0 1018
+0 2
+cfn=(364) foo
+calls=1 0 
+0 1248
+0 3
+
+fn=(364)
+0 9
+cob=(3)
+cfi=(3)
+cfn=(320)
+calls=1 0 
+0 1237
+0 2
+
+fn=(380)
+0 18
+
+fn=(296)
+0 6
+
+fn=(290)
+0 6
+
+fn=(302)
+0 11
+
+fn=(272) 0x0000000000400420
+0 11
+cob=(3)
+cfi=(3)
+cfn=(280) (below main)
+calls=1 0 
+0 10230
+cob=(1)
+cfi=(1)
+cfn=(178)
+calls=1 0 
+0 1171
+
+fn=(286) __libc_csu_init
+0 15
+cob=(2)
+cfi=(2)
+cfn=(288)
+calls=1 0 
+0 29
+0 10
+
+ob=(6) /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+fl=(6) ???
+fn=(262) 0x0000000000000670
+0 16
+
+fn=(388) 0x0000000000000630
+0 8
+cob=(3)
+cfi=(3)
+cfn=(400) __cxa_finalize
+calls=1 0 
+0 59
+cob=(1)
+cfi=(1)
+cfn=(178)
+calls=1 0 
+0 772
+0 1
+cfn=(406) 0x00000000000005c0
+calls=1 0 
+0 9
+0 3
+
+fn=(406)
+0 9
+
+ob=(3)
+fl=(3)
+fn=(194) __libc_dl_error_tsd
+0 3
+
+fn=(346) _IO_do_write@@GLIBC_2.2.5
+0 103
+cfn=(352) _IO_file_write@@GLIBC_2.2.5
+calls=4 0 
+0 176
+0 104
+
+fn=(350) __GI_mempcpy
+0 264
+
+fn=(354) write
+0 8
+cfn=(356) __write_nocancel
+calls=4 0 
+0 20
+
+fn=(366) exit
+0 4
+cfn=(368) __run_exit_handlers
+calls=1 0 
+0 4558
+
+fn=(402) __unregister_atfork
+0 39
+
+fn=(466) _IO_default_setbuf
+0 8
+cfn=(468) _IO_file_sync@@GLIBC_2.2.5
+calls=1 0 
+0 13
+0 30
+
+fn=(146) strnlen
+0 6
+
+fn=(242) intel_02_known_compare
+0 324
+
+fn=(320)
+0 76
+cfn=(322) vfprintf
+calls=4 0 
+0 4311
+0 8
+
+fn=(324) strchrnul
+0 248
+
+fn=(342) mmap
+0 6
+
+fn=(348) _IO_default_xsputn
+0 22
+cfn=(332) _IO_file_overflow@@GLIBC_2.2.5
+calls=1 0 
+0 33
+0 20
+
+fn=(468)
+0 13
+
+fn=(148) strncasecmp
+0 6
+
+fn=(200) __libc_pthread_init
+0 8
+cfn=(202) __register_atfork
+calls=1 0 
+0 50
+0 385
+
+fn=(282) __cxa_atexit
+0 8
+cfn=(284) __new_exitfn
+calls=1 0 
+0 39
+0 14
+
+fn=(284)
+0 39
+
+fn=(344) _IO_setb
+0 21
+
+fn=(368)
+0 42
+cfn=(460) _IO_cleanup
+calls=1 0 
+0 254
+0 5
+cfn=(470) _Exit
+calls=1 0 
+0 5
+0 6
+cob=(1)
+cfi=(1)
+cfn=(370) _dl_fini
+calls=1 0 
+0 4245
+0 1
+
+fn=(460)
+0 8
+cfn=(462) _IO_flush_all_lockp
+calls=1 0 
+0 88
+0 49
+cfn=(464) _IO_file_setbuf@@GLIBC_2.2.5
+calls=1 0 
+0 66
+0 43
+
+fn=(134) memset
+0 5
+cfn=(136) __init_cpu_features
+calls=1 0 
+0 70
+0 10
+
+fn=(330) _itoa_word
+0 243
+
+fn=(334) _IO_doallocbuf
+0 16
+cfn=(336) _IO_file_doallocate
+calls=1 0 
+0 94
+0 2
+
+fn=(140) strcasecmp
+0 6
+
+fn=(150) gettimeofday
+0 9
+cfn=(144) _dl_vdso_vsym
+calls=1 0 
+0 7
+0 6
+
+fn=(230) __GI_strrchr
+0 34
+
+fn=(232) __ctype_init
+0 16
+
+fn=(236) handle_intel.isra.0
+0 40
+cfn=(238) intel_check_word
+calls=2 0 
+0 1444
+0 14
+cfn=(238)
+calls=2 0 
+0 189
+0 40
+
+fn=(308) _setjmp
+0 2
+cfn=(310) __sigsetjmp
+calls=1 0 
+0 28
+
+fn=(340) _fxstat
+0 10
+
+fn=(356)
+0 20
+
+fn=(360) free
+0 56
+
+fn=(462)
+0 88
+
+fn=(142) time
+0 9
+cfn=(144)
+calls=1 0 
+0 7
+0 6
+
+fn=(226) _init
+0 27
+cfn=(144)
+calls=1 0 
+0 7
+0 8
+cfn=(144)
+calls=1 0 
+0 7
+0 10
+cfn=(228) __init_misc
+calls=1 0 
+0 58
+0 1
+cfn=(232)
+calls=1 0 
+0 16
+0 14
+
+fn=(310)
+0 19
+cfn=(312) __sigjmp_save
+calls=1 0 
+0 9
+
+fn=(338) _IO_file_stat
+0 4
+cfn=(340)
+calls=1 0 
+0 10
+
+fn=(352)
+0 88
+cfn=(354)
+calls=4 0 
+0 28
+0 60
+
+fn=(464)
+0 3
+cfn=(466)
+calls=1 0 
+0 51
+0 12
+
+fn=(136)
+0 70
+
+fn=(240) bsearch
+0 584
+cfn=(242)
+calls=54 0 
+0 324
+0 318
+
+fn=(322)
+0 133
+cfn=(324)
+calls=4 0 
+0 101
+0 48
+cfn=(328) _IO_file_xsputn@@GLIBC_2.2.5
+calls=4 0 
+0 297
+0 20
+cfn=(360)
+calls=4 0 
+0 28
+0 8
+cfn=(360)
+calls=4 0 
+0 28
+0 190
+cob=(4)
+cfi=(4)
+cfn=(362) _pthread_cleanup_pop_restore
+calls=4 0 
+0 32
+0 32
+cob=(4)
+cfi=(4)
+cfn=(326) _pthread_cleanup_push_defer
+calls=4 0 
+0 56
+0 374
+cfn=(324)
+calls=6 0 
+0 147
+0 42
+cfn=(328)
+calls=6 0 
+0 1027
+0 350
+cfn=(328)
+calls=5 0 
+0 682
+0 105
+cfn=(330)
+calls=5 0 
+0 243
+0 218
+cfn=(328)
+calls=1 0 
+0 87
+0 63
+
+fn=(332)
+0 163
+cfn=(346)
+calls=5 0 
+0 383
+0 2
+cfn=(334)
+calls=1 0 
+0 112
+0 6
+
+fn=(400)
+0 138
+cfn=(402)
+calls=3 0 
+0 39
+
+fn=(144)
+0 28
+
+fn=(228)
+0 12
+cfn=(230)
+calls=1 0 
+0 34
+0 12
+
+fn=(238)
+0 188
+cfn=(240)
+calls=8 0 
+0 1226
+0 219
+
+fn=(280)
+0 25
+cfn=(282)
+calls=1 0 
+0 61
+0 13
+cob=(7)
+cfi=(7)
+cfn=(286)
+calls=1 0 
+0 54
+0 8
+cfn=(308)
+calls=1 0 
+0 30
+0 14
+cob=(7)
+cfi=(7)
+cfn=(314)
+calls=1 0 
+0 5461
+0 2
+cfn=(366)
+calls=1 0 
+0 4562
+
+fn=(312)
+0 9
+
+fn=(336)
+0 11
+cfn=(338)
+calls=1 0 
+0 14
+0 15
+cfn=(342)
+calls=1 0 
+0 6
+0 7
+cfn=(344)
+calls=1 0 
+0 21
+0 20
+
+fn=(138) memcpy@GLIBC_2.2.5
+0 26
+
+fn=(188) getrlimit
+0 5
+
+fn=(202)
+0 50
+
+fn=(234) init_cacheinfo
+0 36
+cfn=(236)
+calls=1 0 
+0 843
+0 3
+cfn=(236)
+calls=1 0 
+0 884
+0 103
+
+fn=(328)
+0 341
+cfn=(350)
+calls=13 0 
+0 264
+0 285
+cfn=(332)
+calls=5 0 
+0 633
+0 79
+cfn=(348)
+calls=1 0 
+0 75
+0 416
+
+fn=(470)
+0 5
+
+ob=(5) /usr/lib64/libdl-2.17.so
+fl=(5) ???
+fn=(414) fini
+0 2
+cfn=(416) check_free
+calls=1 0 
+0 9
+
+fn=(418) 0x000000355c600f50
+0 8
+cob=(3)
+cfi=(3)
+cfn=(400)
+calls=1 0 
+0 59
+cob=(1)
+cfi=(1)
+cfn=(178)
+calls=1 0 
+0 1134
+0 1
+cfn=(432) 0x000000355c600ee0
+calls=1 0 
+0 9
+0 3
+
+fn=(256) init
+0 3
+
+fn=(248) 0x000000355c600f90
+0 16
+
+fn=(416)
+0 9
+
+fn=(432)
+0 9
+
+ob=(4)
+fl=(4)
+fn=(170) __libc_sigaction
+0 132
+
+fn=(168)
+0 65
+cfn=(170)
+calls=1 0 
+0 66
+0 7
+cfn=(170)
+calls=1 0 
+0 66
+0 11
+cob=(1)
+cfi=(1)
+cfn=(182) _dl_get_tls_static_info
+calls=1 0 
+0 5
+cob=(1)
+cfi=(1)
+cfn=(178)
+calls=1 0 
+0 1356
+0 12
+cob=(3)
+cfi=(3)
+cfn=(188)
+calls=1 0 
+0 5
+cob=(1)
+cfi=(1)
+cfn=(178)
+calls=1 0 
+0 1122
+0 16
+cob=(3)
+cfi=(3)
+cfn=(194)
+calls=1 0 
+0 3
+cob=(1)
+cfi=(1)
+cfn=(178)
+calls=1 0 
+0 1223
+0 2
+cob=(1)
+cfi=(1)
+cfn=(64) _dl_initial_error_catch_tsd
+calls=1 0 
+0 2
+0 22
+cob=(3)
+cfi=(3)
+cfn=(200)
+calls=1 0 
+0 443
+cob=(1)
+cfi=(1)
+cfn=(178)
+calls=1 0 
+0 1231
+0 17
+
+fn=(206) 0x000000355ca06600
+0 16
+
+fn=(362)
+0 32
+
+fn=(440) 0x000000355ca065c0
+0 8
+cob=(3)
+cfi=(3)
+cfn=(400)
+calls=1 0 
+0 59
+cob=(1)
+cfi=(1)
+cfn=(178)
+calls=1 0 
+0 1134
+0 1
+cfn=(452) 0x000000355ca06550
+calls=1 0 
+0 9
+0 3
+
+fn=(372) pthread_mutex_lock
+0 26
+
+fn=(376) pthread_mutex_unlock
+0 24
+
+fn=(326)
+0 56
+
+fn=(452)
+0 9
+
+ob=(1)
+fl=(1)
+fn=(6) _dl_sysdep_start
+0 380
+cfn=(8) brk
+calls=1 0 
+0 12
+0 7
+cfn=(12) sbrk
+calls=1 0 
+0 17
+0 11
+cfn=(14) dl_main
+calls=1 0 
+0 131899
+0 28
+cfn=(10) strlen
+calls=1 0 
+0 41
+0 2
+
+fn=(10)
+0 987
+
+fn=(12)
+0 17
+
+fn=(50) _dl_important_hwcaps
+0 83
+cfn=(28) malloc
+calls=1 0 
+0 33
+0 162
+cfn=(52) mempcpy
+calls=1 0 
+0 22
+0 5
+cfn=(52)
+calls=1 0 
+0 22
+0 4
+
+fn=(54) _dl_debug_initialize
+0 60
+
+fn=(60) do_preload
+0 17
+cfn=(62) _dl_catch_error
+calls=1 0 
+0 2516
+0 10
+
+fn=(70) _dl_map_object
+0 562
+cfn=(72) _dl_name_match_p
+calls=32 0 
+0 2184
+0 185
+cfn=(74) index
+calls=4 0 
+0 130
+0 14
+cfn=(76) expand_dynamic_string_token
+calls=1 0 
+0 243
+0 11
+cfn=(78) open_verify
+calls=1 0 
+0 447
+0 75
+cfn=(84) _dl_map_object_from_fd
+calls=4 0 
+0 6757
+0 10
+cfn=(10)
+calls=3 0 
+0 153
+0 123
+cfn=(102) _dl_load_cache_lookup
+calls=3 0 
+0 3838
+0 51
+cfn=(78)
+calls=3 0 
+0 1675
+0 15
+cfn=(10)
+calls=3 0 
+0 186
+0 12
+cfn=(28)
+calls=3 0 
+0 99
+0 21
+cfn=(34) memcpy
+calls=3 0 
+0 91
+0 263
+cfn=(42) strcmp
+calls=13 0 
+0 273
+0 26
+
+fn=(76)
+0 13
+cfn=(74)
+calls=1 0 
+0 52
+0 4
+cfn=(10)
+calls=1 0 
+0 73
+0 3
+cfn=(28)
+calls=1 0 
+0 33
+0 13
+cfn=(34)
+calls=1 0 
+0 52
+
+fn=(80) open
+0 25
+
+fn=(90) mprotect
+0 45
+
+fn=(114) _dl_check_all_versions
+0 54
+cfn=(116) _dl_check_map_versions
+calls=6 0 
+0 7386
+0 49
+
+fn=(118) match_symbol
+0 1067
+cfn=(42)
+calls=13 0 
+0 1153
+0 130
+
+fn=(154) _dl_allocate_tls_init
+0 43
+cfn=(52)
+calls=1 0 
+0 23
+0 4
+cfn=(92) memset
+calls=1 0 
+0 32
+0 30
+
+fn=(164) _dl_init
+0 143
+cob=(2)
+cfi=(2)
+cfn=(258)
+calls=1 0 
+0 6
+cob=(2)
+cfi=(2)
+cfn=(244)
+calls=1 0 
+0 6
+cob=(3)
+cfi=(3)
+cfn=(226)
+calls=1 0 
+0 148
+0 72
+cob=(6)
+cfi=(6)
+cfn=(262)
+calls=1 0 
+0 16
+cob=(5)
+cfi=(5)
+cfn=(248)
+calls=1 0 
+0 16
+cob=(3)
+cfi=(3)
+cfn=(234)
+calls=1 0 
+0 1869
+cfn=(214) init_cacheinfo
+calls=1 0 
+0 1942
+0 4
+cob=(5)
+cfi=(5)
+cfn=(256)
+calls=1 0 
+0 3
+0 67
+cob=(2)
+cfi=(2)
+cfn=(166)
+calls=1 0 
+0 5678
+0 19
+cob=(4)
+cfi=(4)
+cfn=(206)
+calls=1 0 
+0 16
+0 10
+
+fn=(374) _dl_sort_fini
+0 27
+cfn=(92)
+calls=1 0 
+0 18
+0 50
+cfn=(92)
+calls=4 0 
+0 69
+0 357
+
+fn=(72)
+0 1295
+cfn=(42)
+calls=185 0 
+0 1302
+0 2259
+cfn=(42)
+calls=197 0 
+0 3816
+0 1504
+
+fn=(78)
+0 76
+cfn=(80)
+calls=4 0 
+0 20
+0 48
+cfn=(82) read
+calls=4 0 
+0 20
+0 56
+cfn=(18) bcmp
+calls=4 0 
+0 349
+0 36
+cfn=(18)
+calls=4 0 
+0 320
+0 436
+cfn=(18)
+calls=3 0 
+0 219
+0 16
+cfn=(18)
+calls=4 0 
+0 320
+0 116
+cfn=(18)
+calls=1 0 
+0 88
+0 2
+
+fn=(88) mmap
+0 84
+
+fn=(104) _dl_sysdep_read_whole_file
+0 11
+cfn=(80)
+calls=1 0 
+0 5
+0 7
+cfn=(86) _fxstat
+calls=1 0 
+0 10
+0 8
+cfn=(94) close
+calls=1 0 
+0 5
+0 13
+cfn=(88)
+calls=1 0 
+0 6
+0 2
+
+fn=(106) _dl_cache_libcmp
+0 2623
+
+fn=(130) do_lookup_x
+0 33549
+cfn=(72)
+calls=120 0 
+0 5802
+0 9881
+cfn=(132) check_match.9336
+calls=114 0 
+0 19621
+0 570
+
+fn=(178)
+0 99
+cfn=(180) _dl_fixup
+calls=9 0 
+0 9968
+0 90
+
+fn=(0) 0x000000355ba01420
+0 2
+cfn=(2) _dl_start
+calls=1 0 
+0 132834
+0 14
+cfn=(164)
+calls=1 0 
+0 10015
+0 3
+cob=(7)
+cfi=(7)
+cfn=(272)
+calls=1 0 
+0 11412
+
+fn=(32) __libc_memalign
+0 608
+cfn=(88)
+calls=3 0 
+0 18
+0 312
+
+fn=(46) uname
+0 5
+
+fn=(92)
+0 1138
+
+fn=(116)
+0 412
+cfn=(72)
+calls=33 0 
+0 2190
+0 293
+cfn=(118)
+calls=1 0 
+0 135
+0 36
+cfn=(118)
+calls=12 0 
+0 2215
+0 666
+cfn=(24) calloc
+calls=5 0 
+0 205
+0 1234
+
+fn=(122) _dl_determine_tlsoffset
+0 56
+
+fn=(214)
+0 9
+cfn=(216) __init_cpu_features
+calls=1 0 
+0 70
+0 30
+cfn=(218) handle_intel.isra.0
+calls=1 0 
+0 843
+0 3
+cfn=(218)
+calls=1 0 
+0 884
+0 103
+
+fn=(224) intel_02_known_compare
+0 324
+
+fn=(2)
+0 379
+cfn=(4) _dl_setup_hash
+calls=1 0 
+0 23
+0 17
+cfn=(6)
+calls=1 0 
+0 132397
+0 18
+
+fn=(20) _dl_new_object
+0 75
+cfn=(10)
+calls=5 0 
+0 236
+0 95
+cfn=(24)
+calls=5 0 
+0 252
+0 60
+cfn=(34)
+calls=5 0 
+0 143
+0 295
+cfn=(10)
+calls=4 0 
+0 197
+0 114
+cfn=(52)
+calls=4 0 
+0 138
+0 308
+cfn=(28)
+calls=4 0 
+0 132
+0 20
+
+fn=(38) rtld_lock_default_lock_recursive
+0 10
+
+fn=(48) _dl_init_paths
+0 14
+cfn=(50)
+calls=1 0 
+0 331
+0 3
+cfn=(28)
+calls=1 0 
+0 33
+0 15
+cfn=(28)
+calls=1 0 
+0 33
+0 93
+
+fn=(96) access
+0 9
+
+fn=(108) _dl_next_tls_modid
+0 6
+
+fn=(370)
+0 23
+cob=(4)
+cfi=(4)
+cfn=(372)
+calls=1 0 
+0 26
+0 99
+cfn=(374)
+calls=1 0 
+0 521
+0 2
+cob=(4)
+cfi=(4)
+cfn=(376)
+calls=1 0 
+0 24
+0 99
+cob=(5)
+cfi=(5)
+cfn=(418)
+calls=1 0 
+0 1214
+0 6
+cob=(4)
+cfi=(4)
+cfn=(440)
+calls=1 0 
+0 1214
+cob=(5)
+cfi=(5)
+cfn=(414)
+calls=1 0 
+0 11
+cob=(6)
+cfi=(6)
+cfn=(388)
+calls=1 0 
+0 852
+0 36
+cob=(2)
+cfi=(2)
+cfn=(458)
+calls=1 0 
+0 3
+cob=(2)
+cfi=(2)
+cfn=(438)
+calls=1 0 
+0 3
+cob=(2)
+cfi=(2)
+cfn=(412)
+calls=1 0 
+0 3
+cob=(2)
+cfi=(2)
+cfn=(378)
+calls=1 0 
+0 22
+0 87
+
+fn=(14)
+0 40
+cfn=(16) _dl_next_ld_env_entry
+calls=1 0 
+0 330
+0 2
+cfn=(16)
+calls=1 0 
+0 6
+0 67
+cfn=(18)
+calls=1 0 
+0 26
+0 20
+cfn=(20)
+calls=1 0 
+0 241
+0 10
+cfn=(36) _dl_add_to_namespace_list
+calls=1 0 
+0 34
+0 129
+cfn=(42)
+calls=1 0 
+0 7
+0 213
+cfn=(4)
+calls=1 0 
+0 23
+0 5
+cfn=(44) _dl_discover_osversion
+calls=1 0 
+0 93
+0 77
+cfn=(18)
+calls=1 0 
+0 80
+0 7
+cfn=(48)
+calls=1 0 
+0 522
+0 3
+cfn=(54)
+calls=1 0 
+0 20
+0 70
+cfn=(96)
+calls=1 0 
+0 9
+0 20
+cfn=(98) _dl_map_object_deps
+calls=1 0 
+0 18526
+0 130
+cfn=(110) _dl_receive_error
+calls=1 0 
+0 7529
+0 5
+cfn=(120) init_tls
+calls=1 0 
+0 598
+0 153
+cfn=(126) _dl_relocate_object
+calls=5 0 
+0 92698
+0 51
+cfn=(154)
+calls=1 0 
+0 132
+0 5
+cfn=(156) _dl_sysdep_start_cleanup
+calls=1 0 
+0 1
+0 6
+cfn=(54)
+calls=1 0 
+0 8
+0 3
+cfn=(56) _dl_debug_state
+calls=1 0 
+0 1
+0 2
+cfn=(158) _dl_unload_cache
+calls=1 0 
+0 15
+0 14
+cfn=(152) _dl_add_to_slotinfo
+calls=1 0 
+0 24
+0 14
+cfn=(126)
+calls=1 0 
+0 6341
+0 14
+cfn=(10)
+calls=1 0 
+0 101
+0 8
+cfn=(34)
+calls=1 0 
+0 77
+0 10
+cfn=(58) strsep
+calls=1 0 
+0 795
+0 3
+cfn=(58)
+calls=1 0 
+0 4
+0 15
+cfn=(60)
+calls=1 0 
+0 2543
+0 5
+cfn=(56)
+calls=1 0 
+0 1
+0 13
+
+fn=(58)
+0 799
+
+fn=(62)
+0 81
+cfn=(64)
+calls=9 0 
+0 18
+0 54
+cfn=(66) __sigsetjmp
+calls=9 0 
+0 180
+0 72
+cfn=(100) openaux
+calls=8 0 
+0 15134
+cfn=(68) map_doit
+calls=1 0 
+0 2458
+0 117
+
+fn=(64)
+0 22
+
+fn=(68)
+0 9
+cfn=(70)
+calls=1 0 
+0 2446
+0 3
+
+fn=(120)
+0 11
+cfn=(24)
+calls=1 0 
+0 41
+0 49
+cfn=(122)
+calls=1 0 
+0 56
+0 1
+cfn=(124) _dl_allocate_tls_storage
+calls=1 0 
+0 424
+0 16
+
+fn=(124)
+0 7
+cfn=(32)
+calls=1 0 
+0 51
+0 315
+cfn=(24)
+calls=1 0 
+0 41
+0 10
+
+fn=(158)
+0 7
+cfn=(160) munmap
+calls=1 0 
+0 5
+0 3
+
+fn=(18)
+0 1623
+
+fn=(34)
+0 600
+
+fn=(86)
+0 50
+
+fn=(98)
+0 916
+cfn=(74)
+calls=8 0 
+0 272
+0 72
+cfn=(62)
+calls=8 0 
+0 15598
+0 166
+cfn=(28)
+calls=4 0 
+0 132
+0 44
+cfn=(34)
+calls=4 0 
+0 95
+0 16
+cfn=(34)
+calls=4 0 
+0 95
+0 84
+cfn=(28)
+calls=1 0 
+0 33
+0 93
+cfn=(92)
+calls=1 0 
+0 18
+0 314
+cfn=(92)
+calls=4 0 
+0 69
+0 459
+cfn=(34)
+calls=1 0 
+0 47
+0 3
+
+fn=(100)
+0 112
+cfn=(70)
+calls=8 0 
+0 14998
+0 24
+
+fn=(102)
+0 566
+cfn=(106)
+calls=30 0 
+0 2407
+0 155
+cfn=(104)
+calls=1 0 
+0 67
+0 10
+cfn=(18)
+calls=1 0 
+0 112
+0 15
+cfn=(18)
+calls=1 0 
+0 109
+0 43
+cfn=(106)
+calls=3 0 
+0 216
+0 138
+
+fn=(110)
+0 11
+cfn=(64)
+calls=1 0 
+0 2
+0 7
+cfn=(112) version_check_doit
+calls=1 0 
+0 7499
+0 10
+
+fn=(112)
+0 6
+cfn=(114)
+calls=1 0 
+0 7489
+0 4
+
+fn=(216)
+0 70
+
+fn=(218)
+0 40
+cfn=(220) intel_check_word
+calls=2 0 
+0 1444
+0 14
+cfn=(220)
+calls=2 0 
+0 189
+0 40
+
+fn=(42)
+0 2787
+cfn=(43) strcmp'2
+calls=279 0 
+0 16255
+0 1112
+
+fn=(43)
+0 15483
+cfn=(43)
+calls=1994 0 
+0 90581
+0 772
+
+fn=(52)
+0 205
+
+fn=(66)
+0 180
+
+fn=(94)
+0 25
+
+fn=(126)
+0 8230
+cfn=(128) _dl_lookup_symbol_x
+calls=12 0 
+0 7376
+0 800
+cfn=(128)
+calls=100 0 
+0 74844
+0 3342
+cob=(3)
+cfi=(3)
+cfn=(138)
+calls=1 0 
+0 13
+cob=(3)
+cfi=(3)
+cfn=(150)
+calls=1 0 
+0 22
+cob=(3)
+cfi=(3)
+cfn=(134)
+calls=1 0 
+0 7
+cob=(3)
+cfi=(3)
+cfn=(148)
+calls=1 0 
+0 6
+cob=(3)
+cfi=(3)
+cfn=(146)
+calls=1 0 
+0 6
+cob=(3)
+cfi=(3)
+cfn=(142)
+calls=1 0 
+0 22
+cob=(3)
+cfi=(3)
+cfn=(140)
+calls=1 0 
+0 6
+0 356
+cfn=(90)
+calls=5 0 
+0 25
+0 265
+cfn=(128)
+calls=5 0 
+0 2968
+0 575
+cob=(3)
+cfi=(3)
+cfn=(138)
+calls=1 0 
+0 13
+cob=(3)
+cfi=(3)
+cfn=(134)
+calls=1 0 
+0 78
+0 85
+
+fn=(128)
+0 20576
+cfn=(130)
+calls=126 0 
+0 69423
+0 4454
+
+fn=(156)
+0 1
+
+fn=(182)
+0 5
+
+fn=(16)
+0 336
+
+fn=(24)
+0 96
+cfn=(28)
+calls=12 0 
+0 443
+
+fn=(28)
+0 84
+cfn=(32)
+calls=28 0 
+0 887
+
+fn=(44)
+0 21
+cfn=(46)
+calls=1 0 
+0 5
+0 67
+
+fn=(56)
+0 2
+
+fn=(74)
+0 454
+
+fn=(82)
+0 20
+
+fn=(132)
+0 2554
+cfn=(42)
+calls=40 0 
+0 4091
+0 3032
+cfn=(42)
+calls=108 0 
+0 9512
+0 432
+
+fn=(152)
+0 24
+
+fn=(180)
+0 449
+cfn=(128)
+calls=9 0 
+0 9265
+0 254
+
+fn=(222) bsearch
+0 584
+cfn=(224)
+calls=54 0 
+0 324
+0 318
+
+fn=(4)
+0 138
+
+fn=(8)
+0 12
+
+fn=(36)
+0 35
+cfn=(38)
+calls=5 0 
+0 10
+0 148
+cfn=(40) rtld_lock_default_unlock_recursive
+calls=4 0 
+0 8
+0 13
+cfn=(40)
+calls=1 0 
+0 2
+0 2
+
+fn=(40)
+0 10
+
+fn=(84)
+0 72
+cfn=(54)
+calls=4 0 
+0 32
+0 20
+cfn=(86)
+calls=4 0 
+0 40
+0 218
+cfn=(20)
+calls=4 0 
+0 1824
+0 1148
+cfn=(108)
+calls=1 0 
+0 6
+0 127
+cfn=(88)
+calls=4 0 
+0 24
+0 200
+cfn=(92)
+calls=4 0 
+0 932
+0 124
+cfn=(88)
+calls=4 0 
+0 24
+0 1304
+cfn=(94)
+calls=1 0 
+0 5
+0 6
+cfn=(94)
+calls=3 0 
+0 15
+0 60
+cfn=(4)
+calls=4 0 
+0 92
+0 62
+cfn=(36)
+calls=4 0 
+0 184
+0 72
+cfn=(90)
+calls=4 0 
+0 20
+0 20
+cfn=(88)
+calls=2 0 
+0 12
+0 114
+
+fn=(160)
+0 5
+
+fn=(220)
+0 188
+cfn=(222)
+calls=8 0 
+0 1226
+0 219
+
+totals: 154280

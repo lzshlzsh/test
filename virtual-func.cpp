@@ -1,0 +1,78 @@
+#include <iostream>
+
+using namespace std;
+
+class Base
+{
+protected:
+    void goo() {}
+public:
+    Base()
+    {
+        vir_fun();
+        cout << "Base called" << endl;
+    }
+    virtual ~Base()
+    {
+        cout << "~Base called" << endl;
+    }
+
+    virtual void vir_fun()
+    {
+        cout << "Base::vir_fun" << endl;
+    }
+    void run()
+    {
+        vir_fun();
+    }
+    virtual int foo() const = 0;
+//        virtual ~Base();
+
+    static void instance();
+};
+
+/* int Base::foo() const {
+ *     return 0;
+ * }
+ */
+
+class Derived : public Base
+{
+private:
+public:
+    using Base::goo;
+    Derived()
+    {
+        cout << "Derived called" << endl;
+    }
+    virtual ~Derived()
+    {
+        cout << "~Derived called" << endl;
+    }
+
+    virtual void vir_fun()
+    {
+        cout << "Derived::vir_fun" << endl;
+        goo();
+    }
+
+    virtual int foo() const;
+};
+
+int Derived::foo() const
+{
+//    Base::foo();
+    return 0;
+}
+
+int main()
+{
+    Base *pbase = new Derived();
+
+    pbase->run();
+
+    delete pbase; /*Oops: ~Derived() not called*/
+
+    return 0;
+}
+

@@ -1,0 +1,12 @@
+/**
+ * @file auto_select.cpp
+ * @brief
+ * @version 1.0
+ * @date 03/24/2016 05:56:54 PM
+ * @author sammieliu,sammieliu@tencent.com 
+ * @copyright Copyright 1998 - 2016 Tencent. All Rights Reserved.
+ */
+
+template<typename T, typename ITV, typename ITL>
+std::pair<>
+

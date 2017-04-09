@@ -1,0 +1,57 @@
+execve("./deadlock", ["./deadlock"], [/* 59 vars */]) = 0
+brk(0)                                  = 0x8961000
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7736000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY)      = 3
+fstat64(3, {st_mode=S_IFREG|0644, st_size=109011, ...}) = 0
+mmap2(NULL, 109011, PROT_READ, MAP_PRIVATE, 3, 0) = 0xb771b000
+close(3)                                = 0
+open("/lib/libc.so.6", O_RDONLY)        = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\20m\1\0004\0\0\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=1323292, ...}) = 0
+mmap2(NULL, 1333544, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xb75d5000
+mmap2(0xb7715000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x13f) = 0xb7715000
+mmap2(0xb7718000, 10536, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0xb7718000
+close(3)                                = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb75d4000
+set_thread_area({entry_number:-1 -> 6, base_addr:0xb75d46c0, limit:1048575, seg_32bit:1, contents:0, read_exec_only:0, limit_in_pages:1, seg_not_present:0, useable:1}) = 0
+mprotect(0xb7715000, 8192, PROT_READ)   = 0
+mprotect(0x804a000, 4096, PROT_READ)    = 0
+mprotect(0xb7754000, 4096, PROT_READ)   = 0
+munmap(0xb771b000, 109011)              = 0
+creat("templock", 0644)                 = 3
+write(3, "ab", 2)                       = 2
+rt_sigaction(SIGUSR1, {0x8048d0c, [], SA_RESTART}, {SIG_DFL, [], 0}, 8) = 0
+rt_sigaction(SIGUSR2, {0x8048d0c, [], SA_RESTART}, {SIG_DFL, [], 0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [USR1 USR2], [], 8) = 0
+clone(Process 11535 attached
+child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0xb75d4728) = 11535
+[pid 11534] fcntl64(3, F_SETLKW, {type=F_WRLCK, whence=SEEK_SET, start=1, len=1}) = 0
+[pid 11534] fstat64(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 0), ...}) = 0
+[pid 11534] mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7735000
+[pid 11534] write(1, "parent: got the lock, byte 1\n", 29) = 29
+[pid 11534] kill(11535, SIGUSR1)        = 0
+[pid 11534] rt_sigsuspend([] <unfinished ...>
+[pid 11535] fcntl64(3, F_SETLKW, {type=F_WRLCK, whence=SEEK_SET, start=0, len=1}) = 0
+[pid 11535] fstat64(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 0), ...}) = 0
+[pid 11535] mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7735000
+[pid 11535] write(1, "child: got the lock, byte 0\n", 28) = 28
+[pid 11535] getppid()                   = 11534
+[pid 11535] kill(11534, SIGUSR2)        = 0
+[pid 11534] <... rt_sigsuspend resumed> ) = ? ERESTARTNOHAND (To be restarted)
+[pid 11534] --- SIGUSR2 (User defined signal 2) @ 0 (0) ---
+[pid 11534] sigreturn()                 = ? (mask now [USR1 USR2])
+[pid 11534] rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+[pid 11534] fcntl64(3, F_SETLKW, {type=F_WRLCK, whence=SEEK_SET, start=0, len=1} <unfinished ...>
+[pid 11535] rt_sigsuspend([])           = ? ERESTARTNOHAND (To be restarted)
+[pid 11535] --- SIGUSR1 (User defined signal 1) @ 0 (0) ---
+[pid 11535] sigreturn()                 = ? (mask now [USR1 USR2])
+[pid 11535] rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+[pid 11535] fcntl64(3, F_SETLKW, {type=F_WRLCK, whence=SEEK_SET, start=1, len=1}) = -1 EDEADLK (Resource deadlock avoided)
+[pid 11535] write(2, "child: writew_lock error: Resour"..., 52child: writew_lock error: Resource deadlock avoided
+) = 52
+[pid 11535] exit_group(1)               = ?
+Process 11535 detached
+<... fcntl64 resumed> )                 = 0
+write(1, "parent: got the lock, byte 0\n", 29) = 29
+exit_group(0)                           = ?

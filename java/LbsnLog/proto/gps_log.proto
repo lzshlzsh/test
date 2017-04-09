@@ -1,0 +1,28 @@
+// Copyright (c) 2014 Tencent Inc.
+// Author: erikhu (erikhu@tencent.com) 
+
+package QZAP.log;
+
+option java_package = "sng.dc.lbsn.log";
+option java_outer_classname = "GpsLogPb";
+
+message PosGpsLog {
+    optional uint64 pos_id    = 1;  // position id
+    optional uint32 site_set  = 2;  // for example: QZONE = 1, QQIM = 9
+}
+
+// Gps report log
+message GpsLog
+{
+    optional uint64 uin       = 1;  // user qq
+    optional uint32 latitude  = 2;  // latitude * 1 000 000, Mars coordinates
+    optional uint32 longitude = 3;  // longtitude * 1 000 000, Mars coordinates
+    optional uint64 date_time = 4;  // seconds since 1970-01-01 00:00:00 UTC
+    optional uint32 isp       = 5;  // client Internet Server Provider
+                                    // 1 中国移动，铁通并入中国移动
+                                    // 2 中国联通，网通并入中国联通
+                                    // 3 中国电信
+    optional bytes  ip        = 6;  // client ip
+    optional uint32 partition_datetime = 7;
+    repeated PosGpsLog pos_gps_log = 8;
+}

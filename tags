@@ -1,0 +1,22 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.7	//
+A	a.cpp	/^struct A{};$/;"	s	file:
+A	b.cpp	/^struct A{};$/;"	s	file:
+Allocator	a.cpp	/^class Allocator$/;"	c	file:
+CC	Makefile	/^CC := gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS := -g -march=pentium4 -mfpmath='sse'$/;"	m
+CXX	Makefile	/^CXX := g++$/;"	m
+CXXFLAGS	Makefile	/^CXXFLAGS := ${CFLAGS}$/;"	m
+FILES	Makefile	/^FILES := $(wildcard *.c)$/;"	m
+FILES	Makefile	/^FILES := $(wildcard *.cpp)$/;"	m
+TARGETS	Makefile	/^TARGETS := $(patsubst %.c, %, ${FILES})$/;"	m
+True	b.cpp	/^typedef A<true> True;$/;"	t	file:
+main	a.cpp	/^int main()$/;"	f	signature:()
+main	b.cpp	/^int main()$/;"	f	signature:()
+main	init.c	/^int main()$/;"	f
+main	stru_init.c	/^int main()$/;"	f
+main	test.c	/^int main()$/;"	f

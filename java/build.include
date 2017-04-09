@@ -1,0 +1,34 @@
+JAVAC := javac
+
+CLASS_DIR := class
+
+JAVAC_FLAGS := -d ${CLASS_DIR}
+ifneq "${CLASS_PATH}" ""
+JAVAC_FLAGS += -cp ${CLASS_PATH}
+endif
+
+JAR := jar
+
+JAR_FLAGS := -C ${CLASS_DIR} . 
+
+ifeq "${SRC_DIRS}" ""
+$(error "SRC_DIRS should not be empty")
+endif
+
+#usage $(mkdir,dir,...)
+mkdir = $(shell for i in ${1}; do [ -d $$i ] || mkdir -p $$i; done)
+
+__mkdir := $(call mkdir,${CLASS_DIR})
+
+.PHONY: all clean
+
+all: ${TARGET}
+
+${TARGET}: $(shell find ${SRC_DIRS} -name "*.java")
+	${JAVAC} ${JAVAC_FLAGS} $^
+	${JAR} cvf $@ ${JAR_FLAGS}
+
+clean:
+	$(RM) -r ${CLASS_DIR} ${TARGET}
+
+

@@ -1,0 +1,55 @@
+execve("./signal", ["./signal"], [/* 35 vars */]) = 0
+brk(0)                                  = 0x8c3f000
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+mmap2(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb77e8000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY)      = 3
+fstat64(3, {st_mode=S_IFREG|0644, st_size=46841, ...}) = 0
+mmap2(NULL, 46841, PROT_READ, MAP_PRIVATE, 3, 0) = 0xb77dc000
+close(3)                                = 0
+access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
+open("/lib/i686/cmov/libc.so.6", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\260e\1\0004\0\0\0\4"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=1413540, ...}) = 0
+mmap2(NULL, 1418864, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xb7681000
+mmap2(0xb77d6000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x155) = 0xb77d6000
+mmap2(0xb77d9000, 9840, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0xb77d9000
+close(3)                                = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7680000
+set_thread_area({entry_number:-1 -> 6, base_addr:0xb76806b0, limit:1048575, seg_32bit:1, contents:0, read_exec_only:0, limit_in_pages:1, seg_not_present:0, useable:1}) = 0
+mprotect(0xb77d6000, 4096, PROT_READ)   = 0
+munmap(0xb77dc000, 46841)               = 0
+rt_sigaction(SIGRT_32, {0x8048614, [], SA_RESTART}, {SIG_DFL}, 8) = 0
+rt_sigaction(SIGBUS, {0x8048614, [BUS], SA_RESTART}, {SIG_DFL}, 8) = 0
+getpid()                                = 18088
+kill(18088, SIGRT_32)                   = 0
+--- SIGRT_32 (Real-time signal 30) @ 0 (0) ---
+write(2, "sig 64 received\n"..., 16sig 64 received
+)    = 16
+sigreturn()                             = ? (mask now [])
+tkill(18088, SIGRT_32)                  = 0
+--- SIGRT_32 (Real-time signal 30) @ 0 (0) ---
+write(2, "sig 64 received\n"..., 16sig 64 received
+)    = 16
+sigreturn()                             = ? (mask now [])
+gettid()                                = 18088
+tgkill(18088, 18088, SIGRT_32)          = 0
+--- SIGRT_32 (Real-time signal 30) @ 0 (0) ---
+write(2, "sig 64 received\n"..., 16sig 64 received
+)    = 16
+sigreturn()                             = ? (mask now [])
+clone(Process 18089 attached
+child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0xb76806f8) = 18089
+[pid 18089] rt_sigaction(SIGINT, {0x8048614, [INT], SA_RESTART},  <unfinished ...>
+[pid 18088] rt_sigprocmask(SIG_BLOCK, [CHLD],  <unfinished ...>
+[pid 18089] <... rt_sigaction resumed> {SIG_DFL}, 8) = 0
+[pid 18088] <... rt_sigprocmask resumed> [], 8) = 0
+[pid 18088] rt_sigaction(SIGCHLD, NULL,  <unfinished ...>
+[pid 18089] rt_sigsuspend([HUP QUIT TRAP ABRT KILL USR1 SEGV ALRM CHLD STOP URG XCPU XFSZ VTALRM PROF WINCH IO PWR RTMIN] <unfinished ...>
+[pid 18088] <... rt_sigaction resumed> {SIG_DFL}, 8) = 0
+[pid 18088] rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+[pid 18088] nanosleep({1, 0}, {1, 0})   = 0
+[pid 18088] tkill(18089, SIGWINCH)      = 0
+[pid 18088] exit_group(0)               = ?
+Process 18089 detached
+sig 2 received

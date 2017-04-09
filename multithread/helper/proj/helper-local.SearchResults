@@ -1,0 +1,5 @@
+---- SHOW_PROCESS Matches (4 in 1 files) ----
+Helper.cpp (z:\home\lzs\programming\test\multithread\helper):#define SHOW_PROCESS
+Helper.cpp (z:\home\lzs\programming\test\multithread\helper):#ifdef SHOW_PROCESS	
+Helper.cpp (z:\home\lzs\programming\test\multithread\helper):#ifdef SHOW_PROCESS	
+Helper.cpp (z:\home\lzs\programming\test\multithread\helper):#ifdef SHOW_PROCESS	
