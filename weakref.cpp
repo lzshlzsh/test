@@ -17,16 +17,23 @@
  */
 #include <stdio.h>
 
+#include "foo.h"
+
 extern "C" {
 
 __attribute__ ((weakref, alias("y"))) static void foo();
 
-__attribute__((weakref)) int i = 20;
+__attribute__((weak)) int f;
 
 }
 
 int main()
 {
-    printf("%d\n", i);
-    foo();
+    printf("addrof(foo) = %p\n", foo);
+    printf("sizeof(f) = %ld\n", sizeof(f));
+    f = 14999999;
+    printf("f = %f\n", f);
+    goo();
+
+    return 0;
 }

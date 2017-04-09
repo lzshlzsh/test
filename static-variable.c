@@ -1,7 +1,7 @@
 
 void foo()
 {
-	static i = 1;
+	static int i = 1;
 	i++;
 }
 

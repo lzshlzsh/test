@@ -29,7 +29,7 @@ int main(int argc, char **argv)
 
 	close(fd);
 
-	*(int *)((int)addr + PAGE_SIZE + 4) = 1;
+	*(int *)((long int)addr + PAGE_SIZE + 4) = 1;
 
 	munmap(addr, MMAP_SIZE);
 	return 0;

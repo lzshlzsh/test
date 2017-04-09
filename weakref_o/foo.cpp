@@ -13,10 +13,12 @@ extern "C" {
 __attribute__((weak)) int a;
 int b = 10;
 int c;
+__attribute__((weak)) double f;
 }
 
 int goo() {
     Foo foo;
     too(10);
+    printf("f = %f\n", f);
 }
 

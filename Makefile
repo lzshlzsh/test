@@ -1,16 +1,17 @@
 TOPDIR := $(abspath $(dir $(lastword ${MAKEFILE_LIST})))
 
-CC := gcc
-CXX := g++
-CFLAGS := -Wall -g #-O2 #-std=c++11 #-Werror -msse3 -mfpmath=sse -g #-m32 #`pkg-config --cflags --libs gtk+-2.0`
+CXXFLAGS := -Wall -g #-O2 #-std=c++11 #-Werror -msse3 -mfpmath=sse -g #-m32 #`pkg-config --cflags --libs gtk+-2.0`
 LDFLAGS := #-lm -lpthread -lrt -ldl #-static
 
-CXXFLAGS := ${CFLAGS}
-
 FILES := $(wildcard *.c)
-TARGETS := $(patsubst %.c, %, ${FILES})
+COBJ := $(patsubst %.c,%.o,${FILES})
+CTARGETS := $(patsubst %.c,%,${FILES})
+
 FILES := $(wildcard *.cpp)
-TARGETS += $(patsubst %.cpp, %, ${FILES})
+CXXOBJ := $(patsubst %.cpp,%.o,${FILES})
+CXXTARGETS += $(patsubst %.cpp,%,${FILES})
+
+TARGETS := ${CTARGETS} ${CXXTARGETS}
 
 SUBDIRS := $(abspath $(dir $(shell find . -mindepth 2 -maxdepth 2 -name ?akefile)))
 FILTER_OUT_DIR := apue.2e ioctl-test igraph ld x86-32 helper multithread
@@ -34,10 +35,17 @@ subdirs_clean:
 		${MAKE} -C $$i clean; \
 		done
 
-%: %.cpp
+${CXXTARGETS}: %: %.o
 	$(CXX) ${CXXFLAGS} -o $@ $^ ${LDFLAGS}
-%: %.c
-	$(CC) ${CFLAGS} -o $@ $^ ${LDFLAGS}
+
+${CTARGETS}: %: %.o
+	$(CC) ${CXXFLAGS} -o $@ $^ ${LDFLAGS}
+
+${CXXOBJ}: %.o: %.cpp
+	$(CXX) ${CXXFLAGS} -c -o $@ $<
+
+${COBJ}: %.o: %.c
+	$(CC) ${CXXFLAGS} -c -o $@ $<
 
 pthread_create: LDFLAGS += -pthread
 sincos: LDFLAGS += -lm
@@ -48,7 +56,8 @@ pi: LDFLAGS += -lm
 no-reentrant: LDFLAGS += -lm
 boost_thread: LDFLAGS += -lboost_system -lboost_thread
 dlopen: LDFLAGS += -ldl
-dlsym: LDFLAGS += -I./test_dlsym -ldl -L./lib -L./test_dlsym -Wl,-dn -lmylib -ltest_dlsym -Wl,-dy
+dlsym: CXXFLAGS += -I./test_dlsym
+dlsym: LDFLAGS += -ldl -L./lib -L./test_dlsym -Wl,-dn -lmylib -ltest_dlsym -Wl,-dy
 test_coroutine1: CXXFLAGS += -I${HOME}/tencent/R2_proj/trunk/third_party_lib/libco
 test_coroutine1: LDFLAGS += -L${HOME}/tencent/R2_proj/trunk/third_party_lib/libco/lib -lcolib -pthread
 my-coroutine: CXXFLAGS += -I${HOME}/tencent/R2_proj/trunk/third_party_lib/libco
@@ -62,3 +71,5 @@ unordered_map_erase: CXXFLAGS += -std=c++0x
 constexpr: CXXFLAGS += -std=c++11
 override_final: CXXFLAGS += -std=c++11
 unordered_map_inc: CXXFLAGS += -std=c++0x
+weakref: CXXFLAGS += -I./weakref_o #--verbose
+weakref: LDFLAGS += -L./weakref_o -Wl,-dn -lweakref_o -Wl,-dy

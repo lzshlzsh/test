@@ -10,7 +10,7 @@ void foo(int i, void *p, int j)
 int main()
 {
 	int i = 0;
-	char *addr = alloca(18);
+	char *addr = (char *)alloca(18);
 
 	printf("%p, %p\n", &i, addr);
 	foo (1, alloca(13), 3);
