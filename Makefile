@@ -3,6 +3,9 @@ TOPDIR := $(abspath $(dir $(lastword ${MAKEFILE_LIST})))
 CXXFLAGS := -Wall -g #-O2 #-std=c++11 #-Werror -msse3 -mfpmath=sse -g #-m32 #`pkg-config --cflags --libs gtk+-2.0`
 LDFLAGS := #-lm -lpthread -lrt -ldl #-static
 
+CXXFLAGS_LIBCO := -I/data/github/libco
+LDFLAGS_LIBCO := -L/data/github/libco/lib -lcolib -pthread
+
 FILES := $(wildcard *.c)
 COBJ := $(patsubst %.c,%.o,${FILES})
 CTARGETS := $(patsubst %.c,%,${FILES})
@@ -58,8 +61,10 @@ boost_thread: LDFLAGS += -lboost_system -lboost_thread
 dlopen: LDFLAGS += -ldl
 dlsym: CXXFLAGS += -I./test_dlsym
 dlsym: LDFLAGS += -ldl -L./lib -L./test_dlsym -Wl,-dn -lmylib -ltest_dlsym -Wl,-dy
-test_coroutine1: CXXFLAGS += -I${HOME}/tencent/R2_proj/trunk/third_party_lib/libco
-test_coroutine1: LDFLAGS += -L${HOME}/tencent/R2_proj/trunk/third_party_lib/libco/lib -lcolib -pthread
+test_coroutine1: CXXFLAGS += ${CXXFLAGS_LIBCO}
+test_coroutine1: LDFLAGS += ${LDFLAGS_LIBCO}
+my-coroutine2: CXXFLAGS += ${CXXFLAGS_LIBCO}
+my-coroutine2: LDFLAGS += ${LDFLAGS_LIBCO}
 my-coroutine: CXXFLAGS += -I${HOME}/tencent/R2_proj/trunk/third_party_lib/libco
 my-coroutine: LDFLAGS += -L${HOME}/tencent/R2_proj/trunk/third_party_lib/libco/lib -lcolib -pthread
 shared_ptr: LDFLAGS += -lboost_system --std=c++0x

@@ -315,3 +315,6 @@ virtual_base_class3
 waitpid
 weakref
 xy2key
+kevent
+numeric_limits
+page_size
