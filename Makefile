@@ -70,6 +70,7 @@ my-coroutine: LDFLAGS += -L${HOME}/tencent/R2_proj/trunk/third_party_lib/libco/l
 shared_ptr: LDFLAGS += -lboost_system --std=c++0x
 shared_ptr2: LDFLAGS += -lboost_system --std=c++0x
 shared_ptr3: LDFLAGS += -lboost_system -lboost_thread --std=c++0x
+shared_ptr4: LDFLAGS += -lboost_system -lboost_thread --std=c++0x
 test_unordered_map: CXXFLAGS += -std=c++0x
 nullptr: CXXFLAGS += -std=c++0x
 unordered_map_erase: CXXFLAGS += -std=c++0x
@@ -79,3 +80,6 @@ unordered_map_inc: CXXFLAGS += -std=c++0x
 weakref: CXXFLAGS += -I./weakref_o #--verbose
 #weakref: LDFLAGS += -L./weakref_o -Wl,-dn -lweakref_o -Wl,-dy
 weakref: LDFLAGS += ./weakref_o/foo.o
+test_http_parser: CXXFLAGS += -I/data/github/http-parser
+test_http_parser: LDFLAGS += -L/data/github/http-parser -Wl,-dn -lhttp_parser -Wl,-dy
+test_lexical_cast: LDFLAGS += -lboost_system -lboost_thread --std=c++0x

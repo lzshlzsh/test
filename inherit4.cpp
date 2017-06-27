@@ -22,7 +22,15 @@ public:
      * @brief
      */
     A () {}
+
+    virtual int foo() {
+        return this->goo();
+    }
 protected:
+    virtual int goo() {
+        cout << "in A::goo()" << endl;
+        return 0;
+    }
 private:
     int i_;
 };
@@ -40,6 +48,11 @@ public:
     B () {}
     virtual ~B() {}
 protected:
+    virtual int goo() {
+        A::goo();
+        cout << "in B::goo()" << endl;
+        return 0;
+    }
 private:
     int j;
 };
@@ -50,6 +63,7 @@ int main() {
     A *pa = &b;
     cout << sizeof(A) << ',' << sizeof(B) << endl;
     cout << &b << ',' << pa << endl;
+    b.foo();
     return 0;
 }
 
