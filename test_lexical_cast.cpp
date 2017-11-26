@@ -19,6 +19,7 @@ int main() {
 
     std::cout << boost::lexical_cast<uint64_t>(str) << std::endl;
     std::cout << boost::lexical_cast<std::string>(-i) + "ex" << std::endl;
+    std::cout << boost::lexical_cast<uint64_t>("b1") << std::endl;
 
     return 0;
 }

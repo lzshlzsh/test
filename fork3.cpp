@@ -14,7 +14,7 @@
 int main(void)
 {
     int i;
-    const int N = 5;
+    const int N = 1;
 
     for(i=0; i<N; i++){
         fork();

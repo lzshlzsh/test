@@ -83,3 +83,4 @@ weakref: LDFLAGS += ./weakref_o/foo.o
 test_http_parser: CXXFLAGS += -I/data/github/http-parser
 test_http_parser: LDFLAGS += -L/data/github/http-parser -Wl,-dn -lhttp_parser -Wl,-dy
 test_lexical_cast: LDFLAGS += -lboost_system -lboost_thread --std=c++0x
+socket: LDFLAGS += -ldl

@@ -20,6 +20,24 @@ using namespace std;
 #define STR1 "abc"
 #define STR2 "efg"
 
+/**
+* @brief 
+* @class TestClass
+*/
+class TestClass
+{
+public:
+  enum {
+    UID_TYPE_IMEI_IDFA = 3,
+  };
+  /**
+   * @brief
+   */
+  TestClass () {}
+protected:
+private:
+};
+
 const char *str() {
     return STR1"/"STR2;
 }
@@ -39,12 +57,13 @@ void test() {
 
 int main(int argc, char **argv)
 {
-    A << 123 << endl; 
+  printf("%d\n", TestClass::UID_TYPE_IMEI_IDFA);
+  A << 123 << endl; 
 
-    B("asdf\n");
+  B("asdf\n");
 
-    test();
+  test();
 
-    return 0;
+  return 0;
 }
 
