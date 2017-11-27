@@ -84,3 +84,5 @@ test_http_parser: CXXFLAGS += -I/data/github/http-parser
 test_http_parser: LDFLAGS += -L/data/github/http-parser -Wl,-dn -lhttp_parser -Wl,-dy
 test_lexical_cast: LDFLAGS += -lboost_system -lboost_thread --std=c++0x
 socket: LDFLAGS += -ldl
+fork4: CXXFLAGS += -I/usr/local/boost/include -Wno-unused-local-typedefs
+fork4: LDFLAGS += -L/usr/local/boost/lib -Wl,-dn -lboost_system -lboost_thread -Wl,-dy -pthread
