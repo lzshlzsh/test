@@ -20,6 +20,8 @@
 
 #include <boost/thread/thread.hpp>
 
+#define USE_LIBC_CLONE
+
 extern char **environ;
 
 namespace {
@@ -36,56 +38,6 @@ public:
 protected:
 private:
 };
-
-int child(void *arg) {
-  ThreadArgs &args = *reinterpret_cast<ThreadArgs *>(arg);
-  int err;
-  uid_t ruid, euid, suid;
-  gid_t rgid, egid, sgid;
-
-  err = prctl(PR_SET_PDEATHSIG, SIGKILL);
-  if (err < 0) {
-    perror("prctl");
-    return -__LINE__;
-  }
-
-  err = setgid(100);
-  if (-1 == err) {
-    perror("setgid");
-    return -__LINE__;
-  }
-
-  err = setuid(1003);
-  if (-1 == err) {
-    perror("setuid");
-    return -__LINE__;
-  }
-
-  err = getresuid(&ruid, &euid, &suid);
-  if (-1 == err) {
-    perror("getresuid");
-    return -__LINE__;
-  }
-  printf("ruid: %d, euid %d, suid %d\n", ruid, euid, suid);
-  err = getresgid(&rgid, &egid, &sgid);
-  if (-1 == err) {
-    perror("getresgid");
-    return -__LINE__;
-  }
-  printf("rgid: %d, egid %d, sgid %d\n", rgid, egid, sgid);
-
-  int fd = open("/proc/1/ns/net", O_RDONLY);
-  if (fd == -1) {
-    perror("open");
-  } else {
-//    if (setns(fd, 0) == -1){
-//      perror("setns");
-//    }
-  }
-
-  execve(args.argv_[0], args.argv_, environ);
-  return -__LINE__;
-}
 
 
 /**
@@ -104,28 +56,28 @@ class Thread
     args.argc_ = argc_ - 1;
     args.argv_ = &argv_[1];
 
-#if 0
+#ifndef USE_LIBC_CLONE
     // 该方法在tlinux系统中子进程会挂死在setgid
     pid = syscall(SYS_clone, 
                   CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD|CLONE_NEWNET,
-                  0 /*child_stack*/,
+                  NULL /*child_stack*/,
                   NULL /*TID field in parent*/,
                   &child_tid /*TID field in child*/);
 #else
     char *cstack = new char[128<<10];
     char *cstack_top = cstack + (128<<10);
-    pid = clone(child, cstack_top, 
+    pid = clone(reinterpret_cast<CloneStartFunc>(&Thread::child), cstack_top, 
                 CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD|CLONE_NEWNET,
-                &args, NULL, NULL, &child_tid);
+                this, NULL, NULL, &child_tid);
     delete []cstack;
 #endif
     if (-1 == pid) {
       printf("clone failed\n");
       return;
-    }/* else if (0 == pid) {
+    } else if (0 == pid) {
       printf("child start ...\n");
       exit(child(&args));
-    } */
+    }
     printf("parent thead here..., child pid %d\n", pid);
 
     if (waitpid(pid, NULL, 0) == -1) {
@@ -137,10 +89,70 @@ class Thread
   }
  protected:
  private:
+  typedef int (*CloneStartFunc)(void *);
+
   int argc_;
   char **argv_;
-};
 
+  int child(void *arg) {
+#ifdef USE_LIBC_CLONE
+    ThreadArgs args;
+
+    args.argc_ = argc_ - 1;
+    args.argv_ = &argv_[1];
+#else
+    ThreadArgs &args = *reinterpret_cast<ThreadArgs *>(arg);
+#endif
+    int err;
+    uid_t ruid, euid, suid;
+    gid_t rgid, egid, sgid;
+
+    printf("arg = %p\n", arg);
+
+    err = prctl(PR_SET_PDEATHSIG, SIGKILL);
+    if (err < 0) {
+      perror("prctl");
+      return -__LINE__;
+    }
+
+    err = setgid(100);
+    if (-1 == err) {
+      perror("setgid");
+      return -__LINE__;
+    }
+
+    err = setuid(1003);
+    if (-1 == err) {
+      perror("setuid");
+      return -__LINE__;
+    }
+
+    err = getresuid(&ruid, &euid, &suid);
+    if (-1 == err) {
+      perror("getresuid");
+      return -__LINE__;
+    }
+    printf("ruid: %d, euid %d, suid %d\n", ruid, euid, suid);
+    err = getresgid(&rgid, &egid, &sgid);
+    if (-1 == err) {
+      perror("getresgid");
+      return -__LINE__;
+    }
+    printf("rgid: %d, egid %d, sgid %d\n", rgid, egid, sgid);
+
+    int fd = open("/proc/1/ns/net", O_RDONLY);
+    if (fd == -1) {
+      perror("open");
+    } else {
+//      if (setns(fd, 0) == -1){
+//        perror("setns");
+//      }
+    }
+
+    execve(args.argv_[0], args.argv_, environ);
+    return -__LINE__;
+  }
+};
 
 }
 
