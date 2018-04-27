@@ -24,23 +24,25 @@
 
 int main(int argc, char *argv[])
 {
-    char strCurPath[PATH_MAX];
+  char strCurPath[PATH_MAX];
 
-    if(daemon(1, 1) < 0)
-    {
-        perror("error daemon.../n");
-        exit(1);
-    }
+  if(daemon(1, 0) < 0)
+  {
+    perror("error daemon.../n");
+    exit(1);
+  }
+  sleep(10);
+
+  if(getcwd(strCurPath, PATH_MAX) == NULL)
+  {
+    perror("error getcwd");
+    exit(1);
+  }
+  printf("%s/n", strCurPath);
+
+  for (; ;) {
     sleep(10);
-
-    if(getcwd(strCurPath, PATH_MAX) == NULL)
-    {
-        perror("error getcwd");
-        exit(1);
-    }
-    printf("%s/n", strCurPath);
-
-    sleep(10);
-    return 0;
+  }
+  return 0;
 }
 

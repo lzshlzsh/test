@@ -1,6 +1,10 @@
 TOPDIR := $(abspath $(dir $(lastword ${MAKEFILE_LIST})))
 
-CXXFLAGS := -Wall -g #-O2 #-std=c++11 #-Werror -msse3 -mfpmath=sse -g #-m32 #`pkg-config --cflags --libs gtk+-2.0`
+CXX_4_8_1 := /data/gcc-build-4.8.1/bin/g++
+CXX := $(shell if [ -x ${CXX_4_8_1} ]; then echo ${CXX_4_8_1}; else echo g++; fi)
+LDFLAGS += -static-libstdc++
+
+CXXFLAGS := -Wall -g -std=c++11 #-Werror -msse3 -mfpmath=sse -g #-m32 #`pkg-config --cflags --libs gtk+-2.0`
 LDFLAGS := #-lm -lpthread -lrt -ldl #-static
 
 CXXFLAGS_LIBCO := -I/data/github/libco
@@ -86,3 +90,5 @@ test_lexical_cast: LDFLAGS += -lboost_system -lboost_thread --std=c++0x
 socket: LDFLAGS += -ldl
 fork4: CXXFLAGS += -I/usr/local/boost/include -Wno-unused-local-typedefs
 fork4: LDFLAGS += -L/usr/local/boost/lib -Wl,-dn -lboost_system -lboost_thread -Wl,-dy -pthread
+stl_pack: CXXFLAGS += -I${HOME}/tencent/common_recommend_proj/trunk/lib/grocery_cpp_api/grocery_lib_cpp_api/inc
+stl_pack: LDFLAGS += -L${HOME}/tencent/common_recommend_proj/trunk/lib/grocery_cpp_api/grocery_lib_cpp_api/lib -lgrocerycppapi

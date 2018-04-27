@@ -52,5 +52,11 @@ int main()
 
 	cout << j[0] << endl;
 
+  cout << atoi("aaf") << endl;
+  const void *p = "abc";
+  cout << "p = " << p << endl;
+  p = nullptr;
+  cout << "p = " << p << endl;
+
 	return 0;
 }
