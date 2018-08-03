@@ -92,3 +92,4 @@ fork4: CXXFLAGS += -I/usr/local/boost/include -Wno-unused-local-typedefs
 fork4: LDFLAGS += -L/usr/local/boost/lib -Wl,-dn -lboost_system -lboost_thread -Wl,-dy -pthread
 stl_pack: CXXFLAGS += -I${HOME}/tencent/common_recommend_proj/trunk/lib/grocery_cpp_api/grocery_lib_cpp_api/inc
 stl_pack: LDFLAGS += -L${HOME}/tencent/common_recommend_proj/trunk/lib/grocery_cpp_api/grocery_lib_cpp_api/lib -lgrocerycppapi
+std_async: LDFLAGS += -pthread

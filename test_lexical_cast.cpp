@@ -14,13 +14,22 @@
 #include <string>
 
 int main() {
-    std::string str = "21342";
-    uint64_t i = -1;
+  std::string str = "21342";
+  uint64_t i = -1;
 
-    std::cout << boost::lexical_cast<uint64_t>(str) << std::endl;
-    std::cout << boost::lexical_cast<std::string>(-i) + "ex" << std::endl;
-    std::cout << boost::lexical_cast<uint64_t>("b1") << std::endl;
+  std::cout << boost::lexical_cast<uint64_t>(str) << std::endl;
+  std::cout << boost::lexical_cast<std::string>(-i) + "ex" << std::endl;
+  std::cout << boost::lexical_cast<uint64_t>("1") << std::endl;
+  std::cout << boost::lexical_cast<uint64_t>("0") << std::endl;
+  std::cout << int{} << std::endl;
 
-    return 0;
+  std::cout << static_cast<bool>("") << std::endl;
+  std::cout << static_cast<bool>("0") << std::endl;
+  std::cout << static_cast<bool>(0) << std::endl;
+  std::cout << static_cast<bool>(-1) << std::endl;
+  std::cout << static_cast<bool>(0.2) << std::endl;
+  std::cout << static_cast<bool>(0.0) << std::endl;
+
+  return 0;
 }
 

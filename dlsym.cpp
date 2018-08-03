@@ -20,9 +20,23 @@ using namespace std;
 #define COUT std::cout << '[' << __FILE__ << ':' << __FUNCTION__ \
     << ':' << __LINE__ << ']'
 
+extern "C" {
+  int foo(int i, int j);
+}
+
+int foo(int i, int j) {
+  printf("i=%d,j=%d\n", i, j);
+  return i+j;
+}
+
 int main()
 {
     void *p;
+    p = dlsym(RTLD_DEFAULT, "foo");
+    COUT << "dlsym(RTLD_DEFAULT, \"foo\") = " << p << endl;
+    p = dlsym(RTLD_NEXT, "foo");
+    COUT << "dlsym(RTLD_NEXT, \"foo\") = " << p << endl;
+
     p = dlsym(RTLD_DEFAULT, "printf");
     COUT << "dlsym(RTLD_DEFAULT, \"printf\") = " << p << endl;
     p = dlsym(RTLD_NEXT, "printf");
