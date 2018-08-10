@@ -20,8 +20,8 @@ int parallel_sum(RandomIt beg, RandomIt end)
     return std::accumulate(beg, end, 0);
 
   RandomIt mid = beg + len/2;
-  auto policy = std::launch::async;
-//  auto policy = std::launch::deferred;
+//  auto policy = std::launch::async;
+  auto policy = std::launch::deferred;
   auto handle = std::async(policy, parallel_sum<RandomIt>, mid, end);
   int sum = parallel_sum(beg, mid);
 
@@ -35,7 +35,8 @@ int parallel_sum(RandomIt beg, RandomIt end)
     } else if (status == std::future_status::ready) {
       std::cout << "ready!\n";
     }
-  } while (status != std::future_status::ready);
+  } while (std::launch::deferred != policy &&
+           status != std::future_status::ready);
 
   std::cout << "=======\n";
 
@@ -46,6 +47,12 @@ int parallel_sum(RandomIt beg, RandomIt end)
     std::cout << "timeout\n";
   } else if (status == std::future_status::ready) {
     std::cout << "ready!\n";
+  }
+
+  if (handle.valid()) {
+    std::cout << "valid\n";
+  } else {
+    std::cout << "invalid\n";
   }
 
 //  handle.get();
