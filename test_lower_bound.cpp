@@ -49,8 +49,9 @@ inline void sort_mem_map_key_value(std::vector<__KeyValue<_Key, _Tp> > &a)
   std::sort(a.begin(), a.end(), __key_value_type_sort<_Key, _Tp, _ValueCompare>);
 }
 
-using KeyValue = __KeyValue<int, uint64_t>;
-using KeyRangeInfo = __KeyRangeInfo<int>;
+using KeyValue = __KeyValue<uint32_t, uint64_t>;
+using KeyRangeInfo = __KeyRangeInfo<uint32_t>;
+using KeyRangeInfoSigned = __KeyRangeInfo<int>;
 
 } // namespace
 
@@ -61,25 +62,29 @@ int main() {
 
   std::vector<KeyValue> data;
 
-  for (auto i = 0; i < 10; ++i) {
+  for (auto i = 0; i < 8; ++i) {
     KeyValue kv;
 
     kv.key_ = pool_id1 + i;
     kv.data_ = item_id++;
     data.emplace_back(kv);
+  }
+  for (auto i = 0; i < 3; ++i) {
+    KeyValue kv;
 
     kv.key_ = pool_id2 + i;
     kv.data_ = item_id++;
     data.emplace_back(kv);
   }
 
-  sort_mem_map_key_value<int, uint64_t, std::less<uint64_t> >(data); 
+
+  sort_mem_map_key_value<uint32_t, uint64_t, std::less<uint64_t> >(data); 
+  auto const key_size = data.size();
  
-  for (auto const &it: data) {
-    std::cout << it.key_ << " " << it.data_ << std::endl;
+  for (auto i = 0u; i < key_size; ++i) {
+    std::cout << i << ": " << data[i].key_ << " " << data[i].data_ << std::endl;
   } 
 
-  auto const key_size = data.size();
   auto mem = new KeyRangeInfo[key_size]; 
 
   for (auto i = 0u; i < key_size; ++i) {
@@ -90,7 +95,17 @@ int main() {
   map_key.key_ = 4293489424;
 
   auto key_range = std::lower_bound(mem, mem + key_size, map_key);
-  std::cout << key_size << " " << key_range-mem << std::endl;
+  std::cout << "try to find " << map_key.key_ << ": "
+    << key_size << " " << key_range-mem << std::endl;
+
+  KeyRangeInfoSigned map_key_s;
+  map_key_s.key_ = 4293489424;
+
+  auto mem_s = reinterpret_cast<KeyRangeInfoSigned *>(mem);
+  auto key_range_s = std::lower_bound(mem_s, mem_s + key_size, map_key_s);
+  std::cout << "try to find " << map_key_s.key_
+    << '(' << static_cast<uint32_t>(map_key_s.key_) << "): "
+    << key_size << " " << key_range_s-mem_s << std::endl;
 
   delete []mem;
   return 0;
