@@ -8,7 +8,11 @@
 */
 
 #include <vector>
+#include <map>
+#include <unordered_map>
 #include <iostream>
+
+namespace {
 
 struct A {
   A(int _i, int _j): i(_i), j(_j) {}
@@ -17,7 +21,51 @@ struct A {
   uint64_t j;
 };
 
+template <typename T>
+int test_map() {
+  T m;
+  for (auto i = 0; i < 10; ++i) {
+    m.emplace(i, i); 
+  }
+
+  for (auto const &it: m) {
+    std::cout << "delete " << it.first << std::endl;
+    m.erase(it.first);
+  }
+  std::cout << m.size() << "****" << std::endl;
+  return 0;
+}
+
+template <typename T>
+int test_map2() {
+  T m;
+  for (auto i = 0; i < 10; ++i) {
+    m.emplace(i, i); 
+  }
+
+  for (auto const &it: m) {
+    std::cout << it.first << std::endl;
+  }
+
+  for (auto it = m.begin(); it != m.end();) {
+    std::cout << "delete " << it->first << std::endl;
+    it = m.erase(it);
+  }
+
+  std::cout << m.size() << "****" << std::endl;
+  return 0;
+}
+
+} // namespace
+
 int main() {
+ 
+  test_map<std::map<int, int> >(); 
+  test_map<std::unordered_map<int, int> >(); 
+  test_map2<std::map<int, int> >(); 
+  test_map2<std::unordered_map<int, int> >(); 
+
+  return 0; 
   std::vector<A> v;
   int k = 0;
 

@@ -18,6 +18,7 @@
 
 #include <set>
 #include <iostream>
+#include <utility>
 
 using namespace std;
 
@@ -39,23 +40,41 @@ struct GpsLess {
 
 int main()
 {
-    typedef set<Gps, GpsLess> GpsSet;
+  typedef set<std::pair<int, double>> GpsSet;
+  GpsSet gps_set;
 
-    GpsSet gps_set;
+  for (int i = 50; i > 40; i--) {
+    gps_set.insert(std::make_pair(i, 50-i));
+  }
 
-    for (int i = 50; i > 40; i--) {
-        gps_set.insert(Gps(i, i+1));
-    }
+  for (auto const &it: gps_set) {
+    cout << it.first << ' ' << it.second << '\n';
+  }
 
-    for (GpsSet::const_iterator it = gps_set.begin(); it != gps_set.end(); it++) {
-        cout << it->x_ << ", " << it->y_ << endl;
-    }
-
-    for (GpsSet::iterator it = gps_set.begin(); it != gps_set.end(); ++it) {
-        gps_set.erase(it);
-    }
-
-    cout << gps_set.size() << endl;
-
-    return 0;
+  std::pair<int, double> a(1, 4), b(5, 1);
+  if (!(a >= b)) {
+    cout << "<\n";
+  } else {
+    cout << ">=\n";
+  }
+  
+//  typedef set<Gps, GpsLess> GpsSet;
+//
+//  GpsSet gps_set;
+//
+//  for (int i = 50; i > 40; i--) {
+//    gps_set.insert(Gps(i, i+1));
+//  }
+//
+//  for (GpsSet::const_iterator it = gps_set.begin(); it != gps_set.end(); it++) {
+//    cout << it->x_ << ", " << it->y_ << endl;
+//  }
+//
+//  for (GpsSet::iterator it = gps_set.begin(); it != gps_set.end(); ++it) {
+//    gps_set.erase(it);
+//  }
+//
+//  cout << gps_set.size() << endl;
+//
+  return 0;
 }

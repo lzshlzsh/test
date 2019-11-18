@@ -37,6 +37,9 @@ struct Pref {
 
 int main(int argc, char **argv)
 {
+  std::vector<std::pair<uint64_t, double> > vp;
+  vp.emplace_back(123ULL, 0.0);
+
 	vector<int> v;
 	v.push_back(1);
 	v.push_back(2);
