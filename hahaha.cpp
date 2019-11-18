@@ -23,6 +23,7 @@
 #include <errno.h>
 #include <sys/time.h>
 #include <stdint.h>
+#include <sys/wait.h>
 
 #include <iostream>
 #include <cstdlib>
@@ -177,7 +178,18 @@ static int run(const int required_percent) {
   }
 
   for (; ;) {
-    usleep(1000000);
+    int status;
+    auto pid = wait(&status);
+    if (pid == -1) {
+      std::cout << pid << " " << strerror(errno) << std::endl;
+      usleep(1000000);
+    } else {
+      std::cout << pid << " down, restart ..." << std::endl;
+      pid = fork();
+      if (pid == 0) {
+        return run(i, required_percent);
+      }
+    }
   }
 }
 
