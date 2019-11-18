@@ -30,6 +30,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <unordered_map>
 
 using namespace std;
 
@@ -170,10 +171,13 @@ static int run(const int required_percent) {
   auto max_cpu = atoi(line.substr(3).c_str()) + 1;
   std::cout << "max_cpu: " << max_cpu << std::endl;
 
+  std::unordered_map<pid_t, int> pid2cpu;
   for (auto i = 0; i < max_cpu; ++i) {
     auto pid = fork();
     if (pid == 0) {
       return run(i, required_percent);
+    } else {
+      pid2cpu[pid] = i;
     }
   }
 
@@ -185,9 +189,13 @@ static int run(const int required_percent) {
       usleep(1000000);
     } else {
       std::cout << pid << " down, restart ..." << std::endl;
+      auto const cpu_idx = pid2cpu[pid];
+      pid2cpu.erase(pid);
       pid = fork();
       if (pid == 0) {
-        return run(i, required_percent);
+        return run(cpu_idx, required_percent);
+      } else {
+        pid2cpu[pid] = cpu_idx;
       }
     }
   }
