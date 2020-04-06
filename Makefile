@@ -94,3 +94,4 @@ stl_pack: CXXFLAGS += -I${HOME}/tencent/common_recommend_proj/trunk/lib/grocery_
 stl_pack: LDFLAGS += -L${HOME}/tencent/common_recommend_proj/trunk/lib/grocery_cpp_api/grocery_lib_cpp_api/lib -lgrocerycppapi
 std_async: LDFLAGS += -pthread
 hahaha: LDFLAGS += -static
+test_regex_search: LDFLAGS += -lboost_regex
