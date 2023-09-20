@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "initia.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -17,21 +14,7 @@
 /*                                                                       */
 /*************************************************************************/
 
-
-#line 17
-#include <pthread.h>
-#line 17
-#include <sys/time.h>
-#line 17
-#include <unistd.h>
-#line 17
-#include <stdlib.h>
-#line 17
-#include <malloc.h>
-#line 17
-extern pthread_t PThreadTable[];
-#line 17
-
+EXTERN_ENV
 
 #include <math.h>
 #include <stdio.h>
@@ -119,7 +102,7 @@ void INITIA()
             for (j = 0; j < BOX_PER_SIDE; j++)
                 for (k = 0; k < BOX_PER_SIDE; k++)
                     for (m = 0; m < Part_per_box; m++) {
-                        link_ptr = (struct link *) valloc(sizeof(link_type));;
+                        link_ptr = (struct link *) G_MALLOC(sizeof(link_type));
                         link_ptr->mol.F[DISP][XDIR][O] = xrand(BOX_LENGTH * i, BOX_LENGTH * (i+1));
                         link_ptr->mol.F[DISP][XDIR][H1] = link_ptr->mol.F[DISP][XDIR][O] + WCOS;
                         link_ptr->mol.F[DISP][XDIR][H2] = link_ptr->mol.F[DISP][XDIR][H1];
@@ -176,7 +159,7 @@ void INITIA()
         /* distribute the unassigned molecules evenly among processors */
         pid = 0;
         for (i = 0; i < Unassigned; i++) {
-            link_ptr = (struct link *) valloc(sizeof(link_type));;
+            link_ptr = (struct link *) G_MALLOC(sizeof(link_type));
             link_ptr->mol.F[DISP][XDIR][O] = xrand(BOX_LENGTH * start_end[pid]->box[XDIR][FIRST], BOX_LENGTH * (start_end[pid]->box[XDIR][LAST] + 1));
             link_ptr->mol.F[DISP][XDIR][H1] = link_ptr->mol.F[DISP][XDIR][O] + WCOS;
             link_ptr->mol.F[DISP][XDIR][H2] = link_ptr->mol.F[DISP][XDIR][H1];
@@ -260,7 +243,7 @@ void INITIA()
                 YT[3]=YT[2]-WSIN;
                 Z=ZERO;
                 for (k = 0; k < NS; k++) {
-                    link_ptr = (struct link *) valloc(sizeof(link_type));;
+                    link_ptr = (struct link *) G_MALLOC(sizeof(link_type));
                     for (atom = 0; atom < NATOMS; atom++) {
 
                         /* displacements for atom */

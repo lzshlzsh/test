@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "bndry.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -17,21 +14,7 @@
 /*                                                                       */
 /*************************************************************************/
 
-
-#line 17
-#include <pthread.h>
-#line 17
-#include <sys/time.h>
-#line 17
-#include <unistd.h>
-#line 17
-#include <stdlib.h>
-#line 17
-#include <malloc.h>
-#line 17
-extern pthread_t PThreadTable[];
-#line 17
-
+EXTERN_ENV
 
 #include <stdio.h>
 #include "mdvar.h"
@@ -94,20 +77,20 @@ void BNDRY(long ProcID)     /* this routine puts the molecules back inside the b
 
                 /* Remove link from BOX[i][j][k] */
 
-                {pthread_mutex_lock(&(BOX[i][j][k].boxlock));};
+                LOCK(BOX[i][j][k].boxlock);
                 if (last_ptr != NULL)
                     last_ptr->next_mol = curr_ptr->next_mol;
                 else
                     BOX[i][j][k].list = curr_ptr->next_mol;
-                {pthread_mutex_unlock(&(BOX[i][j][k].boxlock));};
+                UNLOCK(BOX[i][j][k].boxlock);
 
                 /* Add link to BOX[X_INDEX][Y_INDEX][Z_INDEX] */
 
-                {pthread_mutex_lock(&(BOX[X_INDEX][Y_INDEX][Z_INDEX].boxlock));};
+                LOCK(BOX[X_INDEX][Y_INDEX][Z_INDEX].boxlock);
                 temp_ptr = BOX[X_INDEX][Y_INDEX][Z_INDEX].list;
                 BOX[X_INDEX][Y_INDEX][Z_INDEX].list = curr_ptr;
                 curr_ptr->next_mol = temp_ptr;
-                {pthread_mutex_unlock(&(BOX[X_INDEX][Y_INDEX][Z_INDEX].boxlock));};
+                UNLOCK(BOX[X_INDEX][Y_INDEX][Z_INDEX].boxlock);
 
             }
             else last_ptr = curr_ptr;

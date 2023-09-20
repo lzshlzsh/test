@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "predcor.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -17,21 +14,7 @@
 /*                                                                       */
 /*************************************************************************/
 
-
-#line 17
-#include <pthread.h>
-#line 17
-#include <sys/time.h>
-#line 17
-#include <unistd.h>
-#line 17
-#include <stdlib.h>
-#line 17
-#include <malloc.h>
-#line 17
-extern pthread_t PThreadTable[];
-#line 17
-
+EXTERN_ENV
 #include "mdvar.h"
 #include "parameters.h"
 #include "mddata.h"

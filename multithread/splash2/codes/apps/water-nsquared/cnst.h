@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "cnst.H"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */

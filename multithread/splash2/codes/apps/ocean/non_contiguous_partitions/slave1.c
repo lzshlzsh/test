@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "slave1.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -70,10 +67,10 @@ void slave()
 
    ressqr = lev_res[numlev-1] * lev_res[numlev-1];
 
-   {pthread_mutex_lock(&(locks->idlock));}
+   LOCK(locks->idlock)
      procid = global->id;
      global->id = global->id+1;
-   {pthread_mutex_unlock(&(locks->idlock));}
+   UNLOCK(locks->idlock)
 
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration. */
@@ -228,17 +225,9 @@ void slave()
 
 /* wait until all processes have completed the above initialization  */
 #if defined(MULTIPLE_BARRIERS)
-{
-#line 228
-	pthread_barrier_wait(&(bars->sl_prini));
-#line 228
-}
+BARRIER(bars->sl_prini,nprocs)
 #else
-{
-#line 230
-	pthread_barrier_wait(&(bars->barrier));
-#line 230
-}
+BARRIER(bars->barrier,nprocs)
 #endif
    istart = gp[procid].rel_start_y[numlev-1];
    iend = istart + gp[procid].rel_num_y[numlev-1] - 1;
@@ -295,17 +284,9 @@ void slave()
      }
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 287
-	pthread_barrier_wait(&(bars->sl_prini));
-#line 287
-}
+   BARRIER(bars->sl_prini,nprocs)
 #else
-   {
-#line 289
-	pthread_barrier_wait(&(bars->barrier));
-#line 289
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
    multig(procid);
 
@@ -315,17 +296,9 @@ void slave()
      }
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 299
-	pthread_barrier_wait(&(bars->sl_psini));
-#line 299
-}
+   BARRIER(bars->sl_psini,nprocs)
 #else
-   {
-#line 301
-	pthread_barrier_wait(&(bars->barrier));
-#line 301
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 /* update the local running sum psibipriv by summing all the resulting
    values in that process's share of the psib matrix   */
@@ -374,9 +347,9 @@ void slave()
    private and shared sum method avoids accessing the shared
    variable psibi once for every element of the matrix.  */
 
-   {pthread_mutex_lock(&(locks->psibilock));}
+   LOCK(locks->psibilock)
    global->psibi = global->psibi + psibipriv;
-   {pthread_mutex_unlock(&(locks->psibilock));}
+   UNLOCK(locks->psibilock)
 
    for(psiindex=0;psiindex<=1;psiindex++) {
      if (procid == MASTER) {
@@ -518,17 +491,9 @@ void slave()
      }
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 494
-	pthread_barrier_wait(&(bars->sl_onetime));
-#line 494
-}
+   BARRIER(bars->sl_onetime,nprocs)
 #else
-   {
-#line 496
-	pthread_barrier_wait(&(bars->barrier));
-#line 496
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 
 /***************************************************************
@@ -541,30 +506,10 @@ void slave()
        dhourflag = 0;
        if (nstep == 1) {
          if (procid == MASTER) {
-            {
-#line 509
-	struct timeval	FullTime;
-#line 509
-
-#line 509
-	gettimeofday(&FullTime, NULL);
-#line 509
-	(global->trackstart) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 509
-}
+            CLOCK(global->trackstart)
          }
          if ((procid == MASTER) || (do_stats)) {
-           {
-#line 512
-	struct timeval	FullTime;
-#line 512
-
-#line 512
-	gettimeofday(&FullTime, NULL);
-#line 512
-	(t1) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 512
-};
+           CLOCK(t1);
            gp[procid].total_time = t1;
            gp[procid].multi_time = 0;
          }
@@ -676,17 +621,7 @@ void slave()
      }
   }
   if ((procid == MASTER) || (do_stats)) {
-    {
-#line 624
-	struct timeval	FullTime;
-#line 624
-
-#line 624
-	gettimeofday(&FullTime, NULL);
-#line 624
-	(t1) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 624
-};
+    CLOCK(t1);
     gp[procid].total_time = t1-gp[procid].total_time;
   }
 }

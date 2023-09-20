@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "task.H"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -127,10 +124,10 @@ typedef struct _task {
 typedef struct {
     char pad1[PAGE_SIZE];	 	/* padding to avoid false-sharing
     and allow page-placement */
-    pthread_mutex_t (q_lock);
+    LOCKDEC(q_lock)
     Task  *top, *tail ;
     long   n_tasks ;
-    pthread_mutex_t (f_lock);
+    LOCKDEC(f_lock)
     long   n_free ;
     Task  *free ;
     char pad2[PAGE_SIZE];	 	/* padding to avoid false-sharing

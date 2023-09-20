@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "interf.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -17,21 +14,7 @@
 /*                                                                       */
 /*************************************************************************/
 
-
-#line 17
-#include <pthread.h>
-#line 17
-#include <sys/time.h>
-#line 17
-#include <unistd.h>
-#line 17
-#include <stdlib.h>
-#line 17
-#include <malloc.h>
-#line 17
-extern pthread_t PThreadTable[];
-#line 17
-
+EXTERN_ENV
 #include "math.h"
 #include "mdvar.h"
 #include "water.h"
@@ -159,9 +142,9 @@ void INTERF(long DEST, double *VIR, long ProcID)
 
     /*  accumulate the running sum from private
         per-interaction partial sums   */
-    {pthread_mutex_lock(&(gl->InterfVirLock));};
+    LOCK(gl->InterfVirLock);
     *VIR = *VIR + LVIR;
-    {pthread_mutex_unlock(&(gl->InterfVirLock));};
+    UNLOCK(gl->InterfVirLock);
 
     /* at the end of the above force-computation, comp_last */
     /* contains the number of the last molecule (no modulo) */
@@ -169,47 +152,43 @@ void INTERF(long DEST, double *VIR, long ProcID)
 
     if (comp_last > NMOL1) {
         for (mol = StartMol[ProcID]; mol < NMOL; mol++) {
-            {pthread_mutex_lock(&gl->MolLock[mol % MAXLCKS]);};
+            ALOCK(gl->MolLock, mol % MAXLCKS);
             for ( dir = XDIR; dir  <= ZDIR; dir++) {
                 temp_p = VAR[mol].F[DEST][dir];
                 temp_p[H1] += PFORCES[ProcID][mol][dir][H1];
                 temp_p[O]  += PFORCES[ProcID][mol][dir][O];
                 temp_p[H2] += PFORCES[ProcID][mol][dir][H2];
             }
-            {pthread_mutex_unlock(&gl->MolLock[mol % MAXLCKS]);};
+            AULOCK(gl->MolLock, mol % MAXLCKS);
         }
         comp = comp_last % NMOL;
         for (mol = 0; ((mol <= comp) && (mol < StartMol[ProcID])); mol++) {
-            {pthread_mutex_lock(&gl->MolLock[mol % MAXLCKS]);};
+            ALOCK(gl->MolLock, mol % MAXLCKS);
             for ( dir = XDIR; dir  <= ZDIR; dir++) {
                 temp_p = VAR[mol].F[DEST][dir];
                 temp_p[H1] += PFORCES[ProcID][mol][dir][H1];
                 temp_p[O]  += PFORCES[ProcID][mol][dir][O];
                 temp_p[H2] += PFORCES[ProcID][mol][dir][H2];
             }
-            {pthread_mutex_unlock(&gl->MolLock[mol % MAXLCKS]);};
+            AULOCK(gl->MolLock, mol % MAXLCKS);
         }
     }
     else{
         for (mol = StartMol[ProcID]; mol <= comp_last; mol++) {
-            {pthread_mutex_lock(&gl->MolLock[mol % MAXLCKS]);};
+            ALOCK(gl->MolLock, mol % MAXLCKS);
             for ( dir = XDIR; dir  <= ZDIR; dir++) {
                 temp_p = VAR[mol].F[DEST][dir];
                 temp_p[H1] += PFORCES[ProcID][mol][dir][H1];
                 temp_p[O]  += PFORCES[ProcID][mol][dir][O];
                 temp_p[H2] += PFORCES[ProcID][mol][dir][H2];
             }
-            {pthread_mutex_unlock(&gl->MolLock[mol % MAXLCKS]);};
+            AULOCK(gl->MolLock, mol % MAXLCKS);
         }
     }
 
     /* wait till all forces are updated */
 
-    {
-#line 191
-	pthread_barrier_wait(&(gl->InterfBar));
-#line 191
-};
+    BARRIER(gl->InterfBar, NumProcs);
 
     /* divide final forces by masses */
 

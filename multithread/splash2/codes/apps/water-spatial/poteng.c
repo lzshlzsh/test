@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "poteng.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -17,21 +14,7 @@
 /*                                                                       */
 /*************************************************************************/
 
-
-#line 17
-#include <pthread.h>
-#line 17
-#include <sys/time.h>
-#line 17
-#include <unistd.h>
-#line 17
-#include <stdlib.h>
-#line 17
-#include <malloc.h>
-#line 17
-extern pthread_t PThreadTable[];
-#line 17
-
+EXTERN_ENV
 
 #include "mdvar.h"
 #include "frcnst.h"
@@ -137,11 +120,7 @@ void POTENG(double *POTA, double *POTR, double *PTRF, long ProcID)
     } /* while curr_box */
 
 
-    {
-#line 123
-	pthread_barrier_wait(&(gl->PotengBar));
-#line 123
-};
+    BARRIER(gl->PotengBar, NumProcs);
 
     /*  compute inter-molecular potential energy */
 
@@ -270,10 +249,10 @@ void POTENG(double *POTA, double *POTR, double *PTRF, long ProcID)
 
     /* update shared sums from computed private sums */
 
-    {pthread_mutex_lock(&(gl->PotengSumLock));};
+    LOCK(gl->PotengSumLock);
     *POTA = *POTA + LPOTA;
     *POTR = *POTR + LPOTR;
     *PTRF = *PTRF + LPTRF;
-    {pthread_mutex_unlock(&(gl->PotengSumLock));};
+    UNLOCK(gl->PotengSumLock);
 
 } /* end of subroutine POTENG */

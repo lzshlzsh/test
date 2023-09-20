@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "slave2.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -21,21 +18,7 @@
       subroutine slave2
       ****************  */
 
-
-#line 21
-#include <pthread.h>
-#line 21
-#include <sys/time.h>
-#line 21
-#include <unistd.h>
-#line 21
-#include <stdlib.h>
-#line 21
-#include <malloc.h>
-#line 21
-extern pthread_t PThreadTable[];
-#line 21
-
+EXTERN_ENV
 
 #include <stdio.h>
 #include <math.h>
@@ -353,17 +336,9 @@ void slave2(long procid, long firstrow, long lastrow, long numrows, long firstco
      }
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 339
-	pthread_barrier_wait(&(bars->sl_phase_1));
-#line 339
-}
+   BARRIER(bars->sl_phase_1,nprocs)
 #else
-   {
-#line 341
-	pthread_barrier_wait(&(bars->barrier));
-#line 341
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 /*     *******************************************************
 
@@ -487,17 +462,9 @@ void slave2(long procid, long firstrow, long lastrow, long numrows, long firstco
      }
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 465
-	pthread_barrier_wait(&(bars->sl_phase_2));
-#line 465
-}
+   BARRIER(bars->sl_phase_2,nprocs)
 #else
-   {
-#line 467
-	pthread_barrier_wait(&(bars->barrier));
-#line 467
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 /* 	*******************************************************
 
@@ -571,17 +538,9 @@ void slave2(long procid, long firstrow, long lastrow, long numrows, long firstco
 	       firstrow,lastrow,firstcol,lastcol);
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 541
-	pthread_barrier_wait(&(bars->sl_phase_3));
-#line 541
-}
+   BARRIER(bars->sl_phase_3,nprocs)
 #else
-   {
-#line 543
-	pthread_barrier_wait(&(bars->barrier));
-#line 543
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 /*     *******************************************************
 
@@ -602,17 +561,9 @@ void slave2(long procid, long firstrow, long lastrow, long numrows, long firstco
 	       firstrow,lastrow,firstcol,lastcol);
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 564
-	pthread_barrier_wait(&(bars->sl_phase_4));
-#line 564
-}
+   BARRIER(bars->sl_phase_4,nprocs)
 #else
-   {
-#line 566
-	pthread_barrier_wait(&(bars->barrier));
-#line 566
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 /*     *******************************************************
 
@@ -749,17 +700,9 @@ void slave2(long procid, long firstrow, long lastrow, long numrows, long firstco
      }
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 703
-	pthread_barrier_wait(&(bars->sl_phase_5));
-#line 703
-}
+   BARRIER(bars->sl_phase_5,nprocs)
 #else
-   {
-#line 705
-	pthread_barrier_wait(&(bars->barrier));
-#line 705
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 /*     *******************************************************
 
@@ -835,33 +778,13 @@ void slave2(long procid, long firstrow, long lastrow, long numrows, long firstco
    }
 
    if ((procid == MASTER) || (do_stats)) {
-     {
-#line 781
-	struct timeval	FullTime;
-#line 781
-
-#line 781
-	gettimeofday(&FullTime, NULL);
-#line 781
-	(multi_start) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 781
-};
+     CLOCK(multi_start);
    }
 
    multig(procid);
 
    if ((procid == MASTER) || (do_stats)) {
-     {
-#line 787
-	struct timeval	FullTime;
-#line 787
-
-#line 787
-	gettimeofday(&FullTime, NULL);
-#line 787
-	(multi_end) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 787
-};
+     CLOCK(multi_end);
      gp[procid].multi_time += (multi_end - multi_start);
    }
 
@@ -884,17 +807,9 @@ void slave2(long procid, long firstrow, long lastrow, long numrows, long firstco
      }
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 810
-	pthread_barrier_wait(&(bars->sl_phase_6));
-#line 810
-}
+   BARRIER(bars->sl_phase_6,nprocs)
 #else
-   {
-#line 812
-	pthread_barrier_wait(&(bars->barrier));
-#line 812
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 /*     *******************************************************
 
@@ -951,21 +866,13 @@ void slave2(long procid, long firstrow, long lastrow, long numrows, long firstco
 /* after computing its private sum, every process adds that to the
    shared running sum psiai  */
 
-   {pthread_mutex_lock(&(locks->psiailock));}
+   LOCK(locks->psiailock)
    global->psiai = global->psiai + psiaipriv;
-   {pthread_mutex_unlock(&(locks->psiailock));}
+   UNLOCK(locks->psiailock)
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 873
-	pthread_barrier_wait(&(bars->sl_phase_7));
-#line 873
-}
+   BARRIER(bars->sl_phase_7,nprocs)
 #else
-   {
-#line 875
-	pthread_barrier_wait(&(bars->barrier));
-#line 875
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 /*      *******************************************************
 
@@ -1070,33 +977,13 @@ void slave2(long procid, long firstrow, long lastrow, long numrows, long firstco
    }
 
    if ((procid == MASTER) || (do_stats)) {
-     {
-#line 980
-	struct timeval	FullTime;
-#line 980
-
-#line 980
-	gettimeofday(&FullTime, NULL);
-#line 980
-	(multi_start) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 980
-};
+     CLOCK(multi_start);
    }
 
    multig(procid);
 
    if ((procid == MASTER) || (do_stats)) {
-     {
-#line 986
-	struct timeval	FullTime;
-#line 986
-
-#line 986
-	gettimeofday(&FullTime, NULL);
-#line 986
-	(multi_end) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 986
-};
+     CLOCK(multi_end);
      gp[procid].multi_time += (multi_end - multi_start);
    }
 
@@ -1110,17 +997,9 @@ void slave2(long procid, long firstrow, long lastrow, long numrows, long firstco
      }
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 1000
-	pthread_barrier_wait(&(bars->sl_phase_8));
-#line 1000
-}
+   BARRIER(bars->sl_phase_8,nprocs)
 #else
-   {
-#line 1002
-	pthread_barrier_wait(&(bars->barrier));
-#line 1002
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 /*      *******************************************************
 
@@ -1203,17 +1082,9 @@ void slave2(long procid, long firstrow, long lastrow, long numrows, long firstco
      }
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 1085
-	pthread_barrier_wait(&(bars->sl_phase_9));
-#line 1085
-}
+   BARRIER(bars->sl_phase_9,nprocs)
 #else
-   {
-#line 1087
-	pthread_barrier_wait(&(bars->barrier));
-#line 1087
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 /*      *******************************************************
 
@@ -1327,16 +1198,8 @@ void slave2(long procid, long firstrow, long lastrow, long numrows, long firstco
      }
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 1201
-	pthread_barrier_wait(&(bars->sl_phase_10));
-#line 1201
-}
+   BARRIER(bars->sl_phase_10,nprocs)
 #else
-   {
-#line 1203
-	pthread_barrier_wait(&(bars->barrier));
-#line 1203
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 }

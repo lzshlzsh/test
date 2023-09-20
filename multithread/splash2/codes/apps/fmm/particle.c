@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "particle.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -67,9 +64,9 @@ CreateDistribution (cluster_type cluster, model_type model)
    real offset = 0.0;
    particle *twin_particle;
 
-   particle_array = (particle *) valloc(Total_Particles * sizeof(particle));;
+   particle_array = (particle *) G_MALLOC(Total_Particles * sizeof(particle));
 
-   Particle_List = (particle **) valloc(Total_Particles * sizeof(particle *));;
+   Particle_List = (particle **) G_MALLOC(Total_Particles * sizeof(particle *));
    for (i = 0; i < Total_Particles; i++)
       Particle_List[i] = &particle_array[i];
 
@@ -179,11 +176,9 @@ CreateDistribution (cluster_type cluster, model_type model)
 void
 CreateParticleList (long my_id, long length)
 {
-   {pthread_mutex_lock(&(G_Memory->mal_lock));};
-   Local[my_id].Particles = (particle **) valloc(length
-#line 180
-						   * sizeof(particle *));;
-#line 182
+   LOCK(G_Memory->mal_lock);
+   Local[my_id].Particles = (particle **) G_MALLOC(length
+						   * sizeof(particle *));
 
 /* POSSIBLE ENHANCEMENT:  Here is where one might distribute the
    Particles data across physically distributed memories as desired.
@@ -202,7 +197,7 @@ CreateParticleList (long my_id, long length)
 
 */
 
-   {pthread_mutex_unlock(&(G_Memory->mal_lock));};
+   UNLOCK(G_Memory->mal_lock);
    Local[my_id].Max_Particles = length;
    Local[my_id].Num_Particles = 0;
 }

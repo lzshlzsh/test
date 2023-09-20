@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "mf.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -17,21 +14,7 @@
 /*                                                                       */
 /*************************************************************************/
 
-
-#line 17
-#include <pthread.h>
-#line 17
-#include <sys/time.h>
-#line 17
-#include <unistd.h>
-#line 17
-#include <stdlib.h>
-#line 17
-#include <malloc.h>
-#line 17
-extern pthread_t PThreadTable[];
-#line 17
-
+EXTERN_ENV
 
 #include "matrix.h"
 #define HashNum 1024
@@ -42,7 +25,7 @@ extern struct GlobalMemory *Global;
 struct Update **updateHash;
 
 struct taskQ {
-	pthread_mutex_t (taskLock);
+	LOCKDEC(taskLock)
 	struct Task *volatile taskQ; 
 	struct Task *volatile taskQlast;
 	struct Task *volatile probeQ; 
@@ -57,7 +40,7 @@ void InitTaskQueues(long P)
 
   tasks = (struct taskQ *) MyMalloc(P*sizeof(struct taskQ), DISTRIBUTED);
   for (i=0; i<P; i++) {
-    {pthread_mutex_init(&(tasks[i].taskLock), NULL);}
+    LOCKINIT(tasks[i].taskLock)
 
     tasks[i].taskQ = (struct Task *) NULL;
     tasks[i].taskQlast = (struct Task *) NULL;
@@ -116,7 +99,7 @@ void Send(long src_block, long dest_block, long desti, long destj, struct Update
   t->desti = desti; t->destj = destj; t->src = src_block; t->update = update;
   t->next = NULL;
 
-  {pthread_mutex_lock(&(tasks[procnum].taskLock));}
+  LOCK(tasks[procnum].taskLock)
 
   if (is_probe) {
     if (tasks[procnum].probeQlast)
@@ -133,7 +116,7 @@ void Send(long src_block, long dest_block, long desti, long destj, struct Update
     tasks[procnum].taskQlast = t;
   }
 
-  {pthread_mutex_unlock(&(tasks[procnum].taskLock));}
+  UNLOCK(tasks[procnum].taskLock)
 }
 
 
@@ -150,7 +133,7 @@ void GetBlock(long *desti, long *destj, long *src, struct Update **update, long 
   for (;;) {
 
     if (tasks[MyNum].taskQ || tasks[MyNum].probeQ) {
-      {pthread_mutex_lock(&(tasks[MyNum].taskLock));}
+      LOCK(tasks[MyNum].taskLock)
       t = NULL;
       if (tasks[MyNum].probeQ) {
         t = (struct Task *) tasks[MyNum].probeQ;
@@ -164,7 +147,7 @@ void GetBlock(long *desti, long *destj, long *src, struct Update **update, long 
 	if (!t->next)
 	  tasks[MyNum].taskQlast = NULL;
       }
-      {pthread_mutex_unlock(&(tasks[MyNum].taskLock));}
+      UNLOCK(tasks[MyNum].taskLock)
       if (t)
         break;
     }

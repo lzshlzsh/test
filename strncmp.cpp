@@ -28,6 +28,16 @@ int main() {
     }
     cout << str.substr(0, pos) << endl;
 
+    cout << strcmp("aab", "aa")  << endl;
+    cout << strcmp("aa", "aac")  << endl;
+    cout << strcmp("aa", "aa")  << endl;
+    cout << strcmp("aab", "aac")  << endl;
+    cout << strcmp("aac", "aab")  << endl;
+
+    const char *a = "a";
+    const char *b = "";
+    cout << a[0] - b[0] << endl;
+
     return 0;
 }
 

@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "global.H"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -24,31 +21,19 @@ by the program. */
 #define MAXLCKS	4096L
 
 struct GlobalMemory {
-    pthread_mutex_t (IOLock);
-    pthread_mutex_t (IndexLock);
-    pthread_mutex_t (IntrafVirLock);
-    pthread_mutex_t (InterfVirLock);
-    pthread_mutex_t (FXLock);
-    pthread_mutex_t (FYLock);
-    pthread_mutex_t (FZLock);
-    pthread_mutex_t (KinetiSumLock);
-    pthread_mutex_t (PotengSumLock);
-    pthread_mutex_t MolLock[MAXLCKS];
-    
-#line 34
-pthread_barrier_t	(start);
-#line 34
-
-    
-#line 35
-pthread_barrier_t	(InterfBar);
-#line 35
-
-    
-#line 36
-pthread_barrier_t	(PotengBar);
-#line 36
-
+    LOCKDEC(IOLock)
+    LOCKDEC(IndexLock)
+    LOCKDEC(IntrafVirLock)
+    LOCKDEC(InterfVirLock)
+    LOCKDEC(FXLock)
+    LOCKDEC(FYLock)
+    LOCKDEC(FZLock)
+    LOCKDEC(KinetiSumLock)
+    LOCKDEC(PotengSumLock)
+    ALOCKDEC(MolLock, MAXLCKS)
+    BARDEC(start)
+    BARDEC(InterfBar)
+    BARDEC(PotengBar)
     long Index;
     double VIR;
     double SUM[3];

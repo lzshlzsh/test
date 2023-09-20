@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "getparam.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -20,21 +17,7 @@
 /*
  * GETPARAM.C:
  */
-
-#line 20
-#include <pthread.h>
-#line 20
-#include <sys/time.h>
-#line 20
-#include <unistd.h>
-#line 20
-#include <stdlib.h>
-#line 20
-#include <malloc.h>
-#line 20
-extern pthread_t PThreadTable[];
-#line 20
-
+EXTERN_ENV
 #define global extern
 
 #include "stdinc.h"

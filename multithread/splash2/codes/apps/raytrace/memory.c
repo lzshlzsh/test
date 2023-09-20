@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "memory.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -107,7 +104,7 @@ VOID	*LocalMalloc(UINT n, CHAR *msg)
 	{
 	VOID	*p;
 
-	p = (VOID *) /*malloc*/valloc(n);;
+	p = (VOID *) /*malloc*/G_MALLOC(n);
 	if (!p)
 		{
 		printf("%s: %s cannot allocate local memory.\n", ProgName, msg);
@@ -163,7 +160,7 @@ VOID	GlobalHeapWalk()
 	{
 	NODE	huge	*curr;
 
-	{pthread_mutex_lock(&(gm->memlock));}
+	LOCK(gm->memlock)
 	curr = begmem;
 
 	printf("freelist ->\t0x%08lX\n\n", (U32)gm->freelist);
@@ -186,7 +183,7 @@ VOID	GlobalHeapWalk()
 		curr = NODE_ADD(curr, curr->size + nodesize);
 		}
 
-	{pthread_mutex_unlock(&(gm->memlock));}
+	UNLOCK(gm->memlock)
 	}
 
 
@@ -218,7 +215,7 @@ VOID	GlobalHeapWalk()
 BOOL	GlobalHeapInit(UINT size)
 	{
 	size	     = ROUND_UP(size);
-	gm->freelist = (NODE huge *)valloc(size);;
+	gm->freelist = (NODE huge *)G_MALLOC(size);
 
 	if (!gm->freelist)
 		return (FALSE);
@@ -277,7 +274,7 @@ VOID	*GlobalMalloc(UINT size, CHAR *msg)
 	if (!size)
 		return (NULL);
 
-	{pthread_mutex_lock(&(gm->memlock));}
+	LOCK(gm->memlock)
 
 	prev = NULL;
 	curr = gm->freelist;
@@ -337,7 +334,7 @@ VOID	*GlobalMalloc(UINT size, CHAR *msg)
 		prev->next   = next;
 
 
-	{pthread_mutex_unlock(&(gm->memlock));}
+	UNLOCK(gm->memlock)
 	curr->next = NULL;
 	curr->free = FALSE;
 	curr	   = NODE_ADD(curr, nodesize);
@@ -519,7 +516,7 @@ VOID	*GlobalRealloc(VOID *p, UINT size)
 	next	= NODE_ADD(p, oldsize);
 	totsize = oldsize + nodesize + next->size;
 
-	{pthread_mutex_lock(&(gm->memlock));}
+	LOCK(gm->memlock)
 	if (next < endmem && next->free && totsize >= newsize)
 		{
 		/* Find next in free list. */
@@ -552,7 +549,7 @@ VOID	*GlobalRealloc(VOID *p, UINT size)
 			next->free = FALSE;
 			pn->size   = totsize;
 
-			{pthread_mutex_unlock(&(gm->memlock));}
+			UNLOCK(gm->memlock)
 			return (p);
 			}
 		else
@@ -574,7 +571,7 @@ VOID	*GlobalRealloc(VOID *p, UINT size)
 			next->free = FALSE;
 			pn->size   = newsize;
 
-			{pthread_mutex_unlock(&(gm->memlock));}
+			UNLOCK(gm->memlock)
 			return (p);
 			}
 		}
@@ -586,7 +583,7 @@ VOID	*GlobalRealloc(VOID *p, UINT size)
 	 *	to new location.
 	 */
 
-	{pthread_mutex_unlock(&(gm->memlock));}
+	UNLOCK(gm->memlock)
 
 	s = q = GlobalMalloc(newsize, "GlobalRealloc");
 	if (!q)
@@ -653,7 +650,7 @@ VOID	GlobalFree(VOID *p)
 	pcom = FALSE;
 	prev = NULL;
 
-	{pthread_mutex_lock(&(gm->memlock));}
+	LOCK(gm->memlock)
 	if (gm->freelist)
 		{
 		/*
@@ -789,7 +786,7 @@ VOID	GlobalFree(VOID *p)
 		curr->next   = NULL;
 		}
 
-	{pthread_mutex_unlock(&(gm->memlock));}
+	UNLOCK(gm->memlock)
 	return;
 	}
 
@@ -815,7 +812,7 @@ UINT	GlobalMemAvl()
 	UINT	total;
 	NODE	huge	*curr;
 
-	{pthread_mutex_lock(&(gm->memlock));}
+	LOCK(gm->memlock)
 	total = 0;
 	curr  = gm->freelist;
 
@@ -827,7 +824,7 @@ UINT	GlobalMemAvl()
 
 	total = ROUND_DN(total);
 
-	{pthread_mutex_unlock(&(gm->memlock));}
+	UNLOCK(gm->memlock)
 	return (total);
 	}
 
@@ -854,7 +851,7 @@ UINT	GlobalMemMax()
 	UINT	max;
 	NODE	huge	*curr;
 
-	{pthread_mutex_lock(&(gm->memlock));}
+	LOCK(gm->memlock)
 	max  = 0;
 	curr = gm->freelist;
 
@@ -866,7 +863,7 @@ UINT	GlobalMemMax()
 
 	max = ROUND_DN(max);
 
-	{pthread_mutex_unlock(&(gm->memlock));}
+	UNLOCK(gm->memlock)
 	return (max);
 	}
 

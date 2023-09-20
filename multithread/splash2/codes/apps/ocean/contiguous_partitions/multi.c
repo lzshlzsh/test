@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "multi.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -22,21 +19,7 @@
    iterations, w cycles, and the method of half-injection for
    residual computation. */
 
-
-#line 22
-#include <pthread.h>
-#line 22
-#include <sys/time.h>
-#line 22
-#include <unistd.h>
-#line 22
-#include <stdlib.h>
-#line 22
-#include <malloc.h>
-#line 22
-extern pthread_t PThreadTable[];
-#line 22
-
+EXTERN_ENV
 
 #include <stdio.h>
 #include <math.h>
@@ -81,17 +64,9 @@ void multig(long my_id)
 /* barrier to make sure all procs have finished intadd or rescal   */
 /* before proceeding with relaxation                               */
 #if defined(MULTIPLE_BARRIERS)
-     {
-#line 67
-	pthread_barrier_wait(&(bars->error_barrier));
-#line 67
-}
+     BARRIER(bars->error_barrier,nprocs)
 #else
-     {
-#line 69
-	pthread_barrier_wait(&(bars->barrier));
-#line 69
-}
+     BARRIER(bars->barrier,nprocs)
 #endif
      copy_black(k,my_num);
 
@@ -99,17 +74,9 @@ void multig(long my_id)
 
 /* barrier to make sure all red computations have been performed   */
 #if defined(MULTIPLE_BARRIERS)
-     {
-#line 77
-	pthread_barrier_wait(&(bars->error_barrier));
-#line 77
-}
+     BARRIER(bars->error_barrier,nprocs)
 #else
-     {
-#line 79
-	pthread_barrier_wait(&(bars->barrier));
-#line 79
-}
+     BARRIER(bars->barrier,nprocs)
 #endif
      copy_red(k,my_num);
 
@@ -125,11 +92,11 @@ void multig(long my_id)
 
 /* update the global error if necessary                         */
 
-     {pthread_mutex_lock(&(locks->error_lock));}
+     LOCK(locks->error_lock)
      if (local_err > multi->err_multi) {
        multi->err_multi = local_err;
      }
-     {pthread_mutex_unlock(&(locks->error_lock));}
+     UNLOCK(locks->error_lock)
 
 /* a single relaxation sweep at the finest level is one unit of    */
 /* work                                                            */
@@ -138,34 +105,18 @@ void multig(long my_id)
 
 /* barrier to make sure all processors have checked local error    */
 #if defined(MULTIPLE_BARRIERS)
-     {
-#line 108
-	pthread_barrier_wait(&(bars->error_barrier));
-#line 108
-}
+     BARRIER(bars->error_barrier,nprocs)
 #else
-     {
-#line 110
-	pthread_barrier_wait(&(bars->barrier));
-#line 110
-}
+     BARRIER(bars->barrier,nprocs)
 #endif
      g_error = multi->err_multi;
 
 /* barrier to make sure master does not cycle back to top of loop  */
 /* and reset global->err before we read it and decide what to do   */
 #if defined(MULTIPLE_BARRIERS)
-     {
-#line 117
-	pthread_barrier_wait(&(bars->error_barrier));
-#line 117
-}
+     BARRIER(bars->error_barrier,nprocs)
 #else
-     {
-#line 119
-	pthread_barrier_wait(&(bars->barrier));
-#line 119
-}
+     BARRIER(bars->barrier,nprocs)
 #endif
 
      if (g_error >= lev_tol[k]) {
@@ -189,17 +140,9 @@ void multig(long my_id)
    rescal values                                                   */
 
 #if defined(MULTIPLE_BARRIERS)
-	   {
-#line 143
-	pthread_barrier_wait(&(bars->error_barrier));
-#line 143
-}
+	   BARRIER(bars->error_barrier,nprocs)
 #else
-	   {
-#line 145
-	pthread_barrier_wait(&(bars->barrier));
-#line 145
-}
+	   BARRIER(bars->barrier,nprocs)
 #endif
 
            rescal(k,my_num);

@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "grav.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -21,21 +18,7 @@
  * GRAV.C:
  */
 
-
-#line 21
-#include <pthread.h>
-#line 21
-#include <sys/time.h>
-#line 21
-#include <unistd.h>
-#line 21
-#include <stdlib.h>
-#line 21
-#include <malloc.h>
-#line 21
-extern pthread_t PThreadTable[];
-#line 21
-
+EXTERN_ENV
 #define global extern
 
 #include "stdinc.h"

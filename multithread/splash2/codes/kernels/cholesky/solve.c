@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "solve.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -34,23 +31,7 @@
 /*                                                                       */
 /*************************************************************************/
 
-
-#line 34
-#include <pthread.h>
-#line 34
-#include <sys/time.h>
-#line 34
-#include <unistd.h>
-#line 34
-#include <stdlib.h>
-#line 34
-#include <malloc.h>
-#line 34
-#define MAX_THREADS 32
-#line 34
-pthread_t PThreadTable[MAX_THREADS];
-#line 34
-
+MAIN_ENV
 
 #include <math.h>
 #include "matrix.h"
@@ -114,17 +95,7 @@ int main(int argc, char *argv[])
   unsigned long start;
   double mint, maxt, avgt;
 
-  {
-#line 98
-	struct timeval	FullTime;
-#line 98
-
-#line 98
-	gettimeofday(&FullTime, NULL);
-#line 98
-	(start) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 98
-}
+  CLOCK(start)
 
   while ((c = getopt(argc, argv, "B:C:p:D:sth")) != -1) {
     switch(c) {
@@ -152,19 +123,15 @@ int main(int argc, char *argv[])
   CS = sqrt(CS);
   BS = (long) floor(CS+0.5);
 
-  {;}
+  MAIN_INITENV(, SH_MEM_AMT)
 
-  gp = (struct gpid *) valloc(sizeof(struct gpid));;
+  gp = (struct gpid *) G_MALLOC(sizeof(struct gpid),0);
   gp->pid = 0;
   Global = (struct GlobalMemory *)
-    valloc(sizeof(struct GlobalMemory));;
-  {
-#line 132
-	pthread_barrier_init(&(Global->start), NULL, P);
-#line 132
-}
-  {pthread_mutex_init(&(Global->waitLock), NULL);}
-  {pthread_mutex_init(&(Global->memLock), NULL);}
+    G_MALLOC(sizeof(struct GlobalMemory), 0);
+  BARINIT(Global->start, P)
+  LOCKINIT(Global->waitLock)
+  LOCKINIT(Global->memLock)
 
   MallocInit(P);  
 
@@ -284,50 +251,8 @@ int main(int argc, char *argv[])
   ComputeRemainingFO();
   ComputeReceivedFO();
 
-  {
-#line 254
-	long	i, Error;
-#line 254
-
-#line 254
-	for (i = 0; i < (P) - 1; i++) {
-#line 254
-		Error = pthread_create(&PThreadTable[i], NULL, (void * (*)(void *))(Go), NULL);
-#line 254
-		if (Error != 0) {
-#line 254
-			printf("Error in pthread_create().\n");
-#line 254
-			exit(-1);
-#line 254
-		}
-#line 254
-	}
-#line 254
-
-#line 254
-	Go();
-#line 254
-};
-  {
-#line 255
-	long	i, Error;
-#line 255
-	for (i = 0; i < (P) - 1; i++) {
-#line 255
-		Error = pthread_join(PThreadTable[i], NULL);
-#line 255
-		if (Error != 0) {
-#line 255
-			printf("Error in pthread_join().\n");
-#line 255
-			exit(-1);
-#line 255
-		}
-#line 255
-	}
-#line 255
-};
+  CREATE(Go, P);
+  WAIT_FOR_END(P);
 
   printf("%.0f operations for factorization\n", work_tree[M.n]);
 
@@ -381,7 +306,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  {exit(0);}
+  MAIN_END
 }
 
 
@@ -390,17 +315,17 @@ void Go()
   long MyNum;
   struct LocalCopies *lc;
 
-  {pthread_mutex_lock(&(Global->waitLock));}
+  LOCK(Global->waitLock)
     MyNum = gp->pid;
     gp->pid++;
-  {pthread_mutex_unlock(&(Global->waitLock));}
+  UNLOCK(Global->waitLock)
 
-  {;};
+  BARINCLUDE(Global->start);
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration */
 
-  lc =(struct LocalCopies *) valloc(sizeof(struct LocalCopies)+2*PAGE_SIZE);
-#line 329
+  lc =(struct LocalCopies *) G_MALLOC(sizeof(struct LocalCopies)+2*PAGE_SIZE,
+              			       MyNum)
   lc->freeUpdate = NULL;
   lc->freeTask = NULL;
   lc->runtime = 0;
@@ -411,49 +336,21 @@ void Go()
 
   PreProcessFO(MyNum);
 
-  {
-#line 339
-	pthread_barrier_wait(&(Global->start));
-#line 339
-};
+  BARRIER(Global->start, P);
 
 /* POSSIBLE ENHANCEMENT:  Here is where one might reset the
    statistics that one is measuring about the parallel execution */
 
   if ((MyNum == 0) || (do_stats)) {
-    {
-#line 345
-	struct timeval	FullTime;
-#line 345
-
-#line 345
-	gettimeofday(&FullTime, NULL);
-#line 345
-	(lc->rs) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 345
-};
+    CLOCK(lc->rs);
   }
 
   BNumericSolveFO(MyNum,lc);
 
-  {
-#line 350
-	pthread_barrier_wait(&(Global->start));
-#line 350
-};
+  BARRIER(Global->start, P);
 
   if ((MyNum == 0) || (do_stats)) {
-    {
-#line 353
-	struct timeval	FullTime;
-#line 353
-
-#line 353
-	gettimeofday(&FullTime, NULL);
-#line 353
-	(lc->rf) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 353
-};
+    CLOCK(lc->rf);
     lc->runtime += (lc->rf-lc->rs);
   }
 
@@ -462,11 +359,7 @@ void Go()
     CheckReceived();
   }
 
-  {
-#line 362
-	pthread_barrier_wait(&(Global->start));
-#line 362
-};
+  BARRIER(Global->start, P);
 
   if ((MyNum == 0) || (do_stats)) {
     Global->runtime[MyNum] = lc->runtime;
@@ -476,11 +369,7 @@ void Go()
     gp->finish = lc->rf;
   } 
 
-  {
-#line 372
-	pthread_barrier_wait(&(Global->start));
-#line 372
-};
+  BARRIER(Global->start, P);
 
 }
 

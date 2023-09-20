@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "shade.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -189,9 +186,9 @@ VOID	Shade(VEC3 iP, VEC3 N, RAY *ray, IRECORD *hit, INT pid)
 		VecNorm(Lvec);
 		VecCopy(shad_ray.D, Lvec);
 
-		{pthread_mutex_lock(&(gm->ridlock));};
+		LOCK(gm->ridlock);
 		shad_ray.id = gm->rid++;
-		{pthread_mutex_unlock(&(gm->ridlock));};
+		UNLOCK(gm->ridlock);
 
 		NdotL = VecDot(N, Lvec);
 
@@ -268,9 +265,9 @@ VOID	Shade(VEC3 iP, VEC3 N, RAY *ray, IRECORD *hit, INT pid)
 			SpecularDirection(secondary_ray.D, N, ray->D);
 			secondary_ray.level = ray->level + 1;
 
-			{pthread_mutex_lock(&(gm->ridlock));};
+			LOCK(gm->ridlock);
 			secondary_ray.id = gm->rid++;
-			{pthread_mutex_unlock(&(gm->ridlock));};
+			UNLOCK(gm->ridlock);
 
 			secondary_ray.x = ray->x;
 			secondary_ray.y = ray->y;
@@ -288,9 +285,9 @@ VOID	Shade(VEC3 iP, VEC3 N, RAY *ray, IRECORD *hit, INT pid)
 				{
 				secondary_ray.level = ray->level + 1;
 
-				{pthread_mutex_lock(&(gm->ridlock));};
+				LOCK(gm->ridlock);
 				secondary_ray.id = gm->rid++;
-				{pthread_mutex_unlock(&(gm->ridlock));};
+				UNLOCK(gm->ridlock);
 
 				secondary_ray.x = ray->x;
 				secondary_ray.y = ray->y;

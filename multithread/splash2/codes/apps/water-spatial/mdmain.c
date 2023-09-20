@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "mdmain.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -17,21 +14,7 @@
 /*                                                                       */
 /*************************************************************************/
 
-
-#line 17
-#include <pthread.h>
-#line 17
-#include <sys/time.h>
-#line 17
-#include <unistd.h>
-#line 17
-#include <stdlib.h>
-#line 17
-#include <malloc.h>
-#line 17
-extern pthread_t PThreadTable[];
-#line 17
-
+EXTERN_ENV
 
 #include <stdio.h>
 
@@ -61,7 +44,7 @@ double MDMAIN(long NSTEP, long NPRINT, long NSAVE, long NORD1, long ProcID)
     for (i=start_end[ProcID]->box[XDIR][FIRST]; i<=start_end[ProcID]->box[XDIR][LAST]; i++) {
         for (j=start_end[ProcID]->box[YDIR][FIRST]; j<=start_end[ProcID]->box[YDIR][LAST]; j++) {
             for (k=start_end[ProcID]->box[ZDIR][FIRST]; k<=start_end[ProcID]->box[ZDIR][LAST]; k++) {
-                new_box = (box_list *) valloc(sizeof(box_list));;
+                new_box = (box_list *) G_MALLOC(sizeof(box_list));
                 new_box->coord[XDIR] = i;
                 new_box->coord[YDIR] = j;
                 new_box->coord[ZDIR] = k;
@@ -82,19 +65,11 @@ double MDMAIN(long NSTEP, long NPRINT, long NSAVE, long NORD1, long ProcID)
 
     INTRAF(&gl->VIR,ProcID);
 
-    {
-#line 68
-	pthread_barrier_wait(&(gl->start));
-#line 68
-};
+    BARRIER(gl->start,NumProcs);
 
     INTERF(ACC,&gl->VIR,ProcID);
 
-    {
-#line 72
-	pthread_barrier_wait(&(gl->start));
-#line 72
-};
+    BARRIER(gl->start, NumProcs);
 
     /* MOLECULAR DYNAMICS LOOP */
 
@@ -110,17 +85,7 @@ double MDMAIN(long NSTEP, long NPRINT, long NSAVE, long NORD1, long ProcID)
         if (ProcID == 0) {
             long dir;
             if (i >= 2) {
-                {
-#line 88
-	struct timeval	FullTime;
-#line 88
-
-#line 88
-	gettimeofday(&FullTime, NULL);
-#line 88
-	(gl->trackstart) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 88
-};
+                CLOCK(gl->trackstart);
             }
             gl->VIR = 0.0;
             gl->POTA = 0.0;
@@ -131,77 +96,29 @@ double MDMAIN(long NSTEP, long NPRINT, long NSAVE, long NORD1, long ProcID)
         }
 
         if ((ProcID == 0) && (i >= 2)) {
-            {
-#line 99
-	struct timeval	FullTime;
-#line 99
-
-#line 99
-	gettimeofday(&FullTime, NULL);
-#line 99
-	(gl->intrastart) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 99
-};
+            CLOCK(gl->intrastart);
         }
 
-        {
-#line 102
-	pthread_barrier_wait(&(gl->start));
-#line 102
-};
+        BARRIER(gl->start, NumProcs);
 
         PREDIC(TLC,NORD1,ProcID);
         INTRAF(&gl->VIR,ProcID);
 
-        {
-#line 107
-	pthread_barrier_wait(&(gl->start));
-#line 107
-};
+        BARRIER(gl->start, NumProcs);
 
         if ((ProcID == 0) && (i >= 2)) {
-            {
-#line 110
-	struct timeval	FullTime;
-#line 110
-
-#line 110
-	gettimeofday(&FullTime, NULL);
-#line 110
-	(gl->intraend) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 110
-};
+            CLOCK(gl->intraend);
             gl->intratime += gl->intraend - gl->intrastart;
         }
 
         if ((ProcID == 0) && (i >= 2)) {
-            {
-#line 115
-	struct timeval	FullTime;
-#line 115
-
-#line 115
-	gettimeofday(&FullTime, NULL);
-#line 115
-	(gl->interstart) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 115
-};
+            CLOCK(gl->interstart);
         }
 
         INTERF(FORCES,&gl->VIR,ProcID);
 
         if ((ProcID == 0) && (i >= 2)) {
-            {
-#line 121
-	struct timeval	FullTime;
-#line 121
-
-#line 121
-	gettimeofday(&FullTime, NULL);
-#line 121
-	(gl->interend) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 121
-};
+            CLOCK(gl->interend);
             gl->intertime += gl->interend - gl->interstart;
         }
 
@@ -211,24 +128,10 @@ double MDMAIN(long NSTEP, long NPRINT, long NSAVE, long NORD1, long ProcID)
 
         KINETI(gl->SUM,HMAS,OMAS,ProcID);
 
-        {
-#line 131
-	pthread_barrier_wait(&(gl->start));
-#line 131
-};
+        BARRIER(gl->start, NumProcs);
 
         if ((ProcID == 0) && (i >= 2)) {
-            {
-#line 134
-	struct timeval	FullTime;
-#line 134
-
-#line 134
-	gettimeofday(&FullTime, NULL);
-#line 134
-	(gl->intraend) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 134
-};
+            CLOCK(gl->intraend);
             gl->intratime += gl->intraend - gl->interend;
         }
 
@@ -244,39 +147,15 @@ double MDMAIN(long NSTEP, long NPRINT, long NSAVE, long NORD1, long ProcID)
                computation although some of it is intramolecular (see poteng.C) */
 
             if ((ProcID == 0) && (i >= 2)) {
-                {
-#line 150
-	struct timeval	FullTime;
-#line 150
-
-#line 150
-	gettimeofday(&FullTime, NULL);
-#line 150
-	(gl->interstart) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 150
-};
+                CLOCK(gl->interstart);
             }
 
             POTENG(&gl->POTA,&gl->POTR,&gl->POTRF,ProcID);
 
-            {
-#line 155
-	pthread_barrier_wait(&(gl->start));
-#line 155
-};
+            BARRIER(gl->start, NumProcs);
 
             if ((ProcID == 0) && (i >= 2)) {
-                {
-#line 158
-	struct timeval	FullTime;
-#line 158
-
-#line 158
-	gettimeofday(&FullTime, NULL);
-#line 158
-	(gl->interend) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 158
-};
+                CLOCK(gl->interend);
                 gl->intertime += gl->interend - gl->interstart;
             }
 
@@ -290,34 +169,20 @@ double MDMAIN(long NSTEP, long NPRINT, long NSAVE, long NORD1, long ProcID)
 
             /* if it is time to print output as well ... */
             if ((i % NPRINT) == 0 && ProcID == 0) {
-                {pthread_mutex_lock(&(gl->IOLock));};
+                LOCK(gl->IOLock);
                 fprintf(six,"     %5ld %14.5lf %12.5lf %12.5lf %12.5lf \n"
                         ,i,TEN,POTA,POTR,POTRF);
                 fprintf(six," %16.3lf %16.5lf %16.5lf\n",XTT,AVGT,XVIR);
                 fflush(six);
-                {pthread_mutex_unlock(&(gl->IOLock));};
+                UNLOCK(gl->IOLock);
             }
 
         }
 
-        {
-#line 182
-	pthread_barrier_wait(&(gl->start));
-#line 182
-};
+        BARRIER(gl->start, NumProcs);
 
         if ((ProcID == 0) && (i >= 2)) {
-            {
-#line 185
-	struct timeval	FullTime;
-#line 185
-
-#line 185
-	gettimeofday(&FullTime, NULL);
-#line 185
-	(gl->trackend) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 185
-};
+            CLOCK(gl->trackend);
             gl->tracktime += gl->trackend - gl->trackstart;
         }
 

@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "multi.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -68,34 +65,18 @@ void multig(long my_id)
 /* before proceeding with relaxation                               */
 
 #if defined(MULTIPLE_BARRIERS)
-     {
-#line 68
-	pthread_barrier_wait(&(bars->error_barrier));
-#line 68
-}
+     BARRIER(bars->error_barrier,nprocs)
 #else
-     {
-#line 70
-	pthread_barrier_wait(&(bars->barrier));
-#line 70
-}
+     BARRIER(bars->barrier,nprocs)
 #endif
      relax(k,&red_local_err,RED_ITER,my_num);
 
 /* barrier to make sure all red computations have been performed   */
 
 #if defined(MULTIPLE_BARRIERS)
-     {
-#line 77
-	pthread_barrier_wait(&(bars->error_barrier));
-#line 77
-}
+     BARRIER(bars->error_barrier,nprocs)
 #else
-     {
-#line 79
-	pthread_barrier_wait(&(bars->barrier));
-#line 79
-}
+     BARRIER(bars->barrier,nprocs)
 #endif
      relax(k,&black_local_err,BLACK_ITER,my_num);
 
@@ -109,11 +90,11 @@ void multig(long my_id)
 
 /* update the global error if necessary                            */
 
-     {pthread_mutex_lock(&(locks->error_lock));}
+     LOCK(locks->error_lock)
      if (local_err > multi->err_multi) {
        multi->err_multi = local_err;
      }
-     {pthread_mutex_unlock(&(locks->error_lock));}
+     UNLOCK(locks->error_lock)
 
 /* a single relaxation sweep at the finest level is one unit of    */
 /* work                                                            */
@@ -123,17 +104,9 @@ void multig(long my_id)
 /* barrier to make sure all processors have checked local error    */
 
 #if defined(MULTIPLE_BARRIERS)
-     {
-#line 107
-	pthread_barrier_wait(&(bars->error_barrier));
-#line 107
-}
+     BARRIER(bars->error_barrier,nprocs)
 #else
-     {
-#line 109
-	pthread_barrier_wait(&(bars->barrier));
-#line 109
-}
+     BARRIER(bars->barrier,nprocs)
 #endif
      g_error = multi->err_multi;
 
@@ -141,17 +114,9 @@ void multig(long my_id)
 /* and reset global->err before we read it and decide what to do   */
 
 #if defined(MULTIPLE_BARRIERS)
-     {
-#line 117
-	pthread_barrier_wait(&(bars->error_barrier));
-#line 117
-}
+     BARRIER(bars->error_barrier,nprocs)
 #else
-     {
-#line 119
-	pthread_barrier_wait(&(bars->barrier));
-#line 119
-}
+     BARRIER(bars->barrier,nprocs)
 #endif
      if (g_error >= lev_tol[k]) {
        if (wu > wmax) {

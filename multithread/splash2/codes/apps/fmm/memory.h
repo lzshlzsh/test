@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "memory.H"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -26,37 +23,19 @@
 
 #define MAX_LOCKS 2048
 
-
-#line 26
-#include <pthread.h>
-#line 26
-#include <sys/time.h>
-#line 26
-#include <unistd.h>
-#line 26
-#include <stdlib.h>
-#line 26
-#include <malloc.h>
-#line 26
-extern pthread_t PThreadTable[];
-#line 26
-
+EXTERN_ENV
 
 typedef struct _G_Mem g_mem;
 
 struct _G_Mem
 {
-   pthread_mutex_t (io_lock);
-   pthread_mutex_t (mal_lock);
-   pthread_mutex_t (single_lock);
-   pthread_mutex_t (count_lock);
+   LOCKDEC(io_lock)
+   LOCKDEC(mal_lock)
+   LOCKDEC(single_lock)
+   LOCKDEC(count_lock)
    long count;
-   pthread_mutex_t lock_array[MAX_LOCKS];
-   
-#line 38
-pthread_barrier_t	(synch);
-#line 38
-
+   ALOCKDEC(lock_array, MAX_LOCKS)
+   BARDEC(synch)
    volatile long *i_array;
    volatile double *d_array;
    real f_array[MAX_PROCS][NUM_DIM_POW_2];

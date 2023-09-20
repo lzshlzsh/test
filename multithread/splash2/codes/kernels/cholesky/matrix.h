@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "matrix.H"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -78,13 +75,9 @@ struct Task {
   };
 
 struct GlobalMemory {
-	
-#line 78
-pthread_barrier_t	(start);
-#line 78
-
-	pthread_mutex_t (waitLock);
-	pthread_mutex_t (memLock);
+	BARDEC(start)
+	LOCKDEC(waitLock)
+	LOCKDEC(memLock)
 	unsigned long runtime[MAX_PROC];
 	};
 

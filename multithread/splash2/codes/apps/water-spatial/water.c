@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "water.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -17,23 +14,7 @@
 /*                                                                       */
 /*************************************************************************/
 
-
-#line 17
-#include <pthread.h>
-#line 17
-#include <sys/time.h>
-#line 17
-#include <unistd.h>
-#line 17
-#include <stdlib.h>
-#line 17
-#include <malloc.h>
-#line 17
-#define MAX_THREADS 32
-#line 17
-pthread_t PThreadTable[MAX_THREADS];
-#line 17
-
+MAIN_ENV
 
 /*  Usage:   water < infile,
     where infile has 10 fields which can be described in order as
@@ -193,7 +174,7 @@ int main(int argc, char **argv)
         double proccbrt;
         long gmem_size = sizeof(struct GlobalMemory);
 
-        {;};  /* macro call to initialize
+        MAIN_INITENV(,40000000,);  /* macro call to initialize
                                       shared memory etc. */
 
 
@@ -202,10 +183,10 @@ int main(int argc, char **argv)
          */
 
         start_end = (first_last_array **)
-            valloc(sizeof(first_last_array *) * NumProcs);;
+            G_MALLOC(sizeof(first_last_array *) * NumProcs);
         for (i=0; i < NumProcs; i++) {
             start_end[i] = (first_last_array *)
-                valloc(sizeof(first_last_array));;
+                G_MALLOC(sizeof(first_last_array));
         }
 
         /* Calculate start and finish box numbers for processors */
@@ -292,7 +273,7 @@ int main(int argc, char **argv)
 
         /* Allocate space for my_boxes array */
 
-        my_boxes = (box_list **) valloc(NumProcs * sizeof(box_list *));;
+        my_boxes = (box_list **) G_MALLOC(NumProcs * sizeof(box_list *));
 
         /* Set all box ptrs to null */
 
@@ -307,43 +288,31 @@ int main(int argc, char **argv)
 
         /* Allocate space for BOX array */
 
-        BOX = (box_type ***) valloc(BOX_PER_SIDE * sizeof(box_type **));;
+        BOX = (box_type ***) G_MALLOC(BOX_PER_SIDE * sizeof(box_type **));
         for (i=0; i < BOX_PER_SIDE; i++) {
-            BOX[i] = (box_type **) valloc(BOX_PER_SIDE * sizeof(box_type *));;
+            BOX[i] = (box_type **) G_MALLOC( BOX_PER_SIDE * sizeof(box_type *));
             for (j=0; j < BOX_PER_SIDE; j++) {
-                BOX[i][j] = (box_type *) valloc(BOX_PER_SIDE * sizeof(box_type));;
+                BOX[i][j] = (box_type *) G_MALLOC(BOX_PER_SIDE * sizeof(box_type));
                 for (k=0; k < BOX_PER_SIDE; k++) {
                     BOX[i][j][k].list = NULL;
-                    {pthread_mutex_init(&(BOX[i][j][k].boxlock), NULL);};
+                    LOCKINIT(BOX[i][j][k].boxlock);
                 }
             }
         } /* for i */
 
-        gl = (struct GlobalMemory *) valloc(gmem_size);;
+        gl = (struct GlobalMemory *) G_MALLOC(gmem_size);
 
         /* macro calls to initialize synch variables  */
 
-        {
-#line 307
-	pthread_barrier_init(&(gl->start), NULL, NumProcs);
-#line 307
-};
-        {
-#line 308
-	pthread_barrier_init(&(gl->InterfBar), NULL, NumProcs);
-#line 308
-};
-        {
-#line 309
-	pthread_barrier_init(&(gl->PotengBar), NULL, NumProcs);
-#line 309
-};
-        {pthread_mutex_init(&(gl->IOLock), NULL);};
-        {pthread_mutex_init(&(gl->IndexLock), NULL);};
-        {pthread_mutex_init(&(gl->IntrafVirLock), NULL);};
-        {pthread_mutex_init(&(gl->InterfVirLock), NULL);};
-        {pthread_mutex_init(&(gl->KinetiSumLock), NULL);};
-        {pthread_mutex_init(&(gl->PotengSumLock), NULL);};
+        BARINIT(gl->start, NumProcs);
+        BARINIT(gl->InterfBar, NumProcs);
+        BARINIT(gl->PotengBar, NumProcs);
+        LOCKINIT(gl->IOLock);
+        LOCKINIT(gl->IndexLock);
+        LOCKINIT(gl->IntrafVirLock);
+        LOCKINIT(gl->InterfVirLock);
+        LOCKINIT(gl->KinetiSumLock);
+        LOCKINIT(gl->PotengSumLock);
     }
 
     fprintf(six,"SPHERICAL CUTOFF RADIUS    = %8.4f ANGSTROM\n",CUTOFF);
@@ -369,74 +338,12 @@ int main(int argc, char **argv)
     }
 
     /* spawn helper processes */
-    {
-#line 341
-	struct timeval	FullTime;
-#line 341
-
-#line 341
-	gettimeofday(&FullTime, NULL);
-#line 341
-	(gl->computestart) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 341
-};
-    {
-#line 342
-	long	i, Error;
-#line 342
-
-#line 342
-	for (i = 0; i < (NumProcs) - 1; i++) {
-#line 342
-		Error = pthread_create(&PThreadTable[i], NULL, (void * (*)(void *))(WorkStart), NULL);
-#line 342
-		if (Error != 0) {
-#line 342
-			printf("Error in pthread_create().\n");
-#line 342
-			exit(-1);
-#line 342
-		}
-#line 342
-	}
-#line 342
-
-#line 342
-	WorkStart();
-#line 342
-};
+    CLOCK(gl->computestart);
+    CREATE(WorkStart, NumProcs);
 
     /* macro to make main process wait for all others to finish */
-    {
-#line 345
-	long	i, Error;
-#line 345
-	for (i = 0; i < (NumProcs) - 1; i++) {
-#line 345
-		Error = pthread_join(PThreadTable[i], NULL);
-#line 345
-		if (Error != 0) {
-#line 345
-			printf("Error in pthread_join().\n");
-#line 345
-			exit(-1);
-#line 345
-		}
-#line 345
-	}
-#line 345
-};
-    {
-#line 346
-	struct timeval	FullTime;
-#line 346
-
-#line 346
-	gettimeofday(&FullTime, NULL);
-#line 346
-	(gl->computeend) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 346
-};
+    WAIT_FOR_END(NumProcs);
+    CLOCK(gl->computeend);
 
     printf("COMPUTESTART (after initialization) = %lu\n",gl->computestart);
     printf("COMPUTEEND = %lu\n",gl->computeend);
@@ -448,7 +355,7 @@ int main(int argc, char **argv)
 
     printf("\nExited Happily with XTT = %g (note: XTT value is garbage if NPRINT > NSTEP)\n", XTT);
 
-    {exit(0);};
+    MAIN_END;
 } /* main.c */
 
 void WorkStart() /* routine that each created process starts at;
@@ -457,13 +364,13 @@ void WorkStart() /* routine that each created process starts at;
     long ProcID;
     double LocalXTT;
 
-    {pthread_mutex_lock(&(gl->IndexLock));};
+    LOCK(gl->IndexLock);
     ProcID = gl->Index++;
-    {pthread_mutex_unlock(&(gl->IndexLock));};
+    UNLOCK(gl->IndexLock);
 
-    {;};
-    {;};
-    {;};
+    BARINCLUDE(gl->start);
+    BARINCLUDE(gl->InterfBar);
+    BARINCLUDE(gl->PotengBar);
 
     ProcID = ProcID % NumProcs;
 

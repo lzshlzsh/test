@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "box.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -37,8 +34,8 @@ CreateBoxes (long my_id, long num_boxes)
 {
    long i;
 
-   {pthread_mutex_lock(&(G_Memory->mal_lock));};
-   Local[my_id].B_Heap = (box *) valloc(num_boxes * sizeof(box));;
+   LOCK(G_Memory->mal_lock);
+   Local[my_id].B_Heap = (box *) G_MALLOC(num_boxes * sizeof(box));
 
 /* POSSIBLE ENHANCEMENT:  Here is where one might distribute the
    B_Heap data across physically distributed memories as desired.
@@ -57,7 +54,7 @@ CreateBoxes (long my_id, long num_boxes)
 
 */
 
-   {pthread_mutex_unlock(&(G_Memory->mal_lock));};
+   UNLOCK(G_Memory->mal_lock);
    Local[my_id].Max_B_Heap = num_boxes;
    Local[my_id].Index_B_Heap = 0;
 
@@ -158,7 +155,7 @@ InitBox (long my_id, real x_center, real y_center, real length, box *parent)
 void
 PrintBox (box *b)
 {
-   {pthread_mutex_lock(&(G_Memory->io_lock));};
+   LOCK(G_Memory->io_lock);
    fflush(stdout);
    if (b != NULL) {
       printf("Info for B%f :\n", b->id);
@@ -199,7 +196,7 @@ PrintBox (box *b)
    }
    else
       printf("Box has not been initialized yet.\n\n");
-   {pthread_mutex_unlock(&(G_Memory->io_lock));};
+   UNLOCK(G_Memory->io_lock);
 }
 
 

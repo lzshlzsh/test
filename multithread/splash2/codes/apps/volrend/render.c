@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "render.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -29,21 +26,7 @@
 float obslight[NM];	        /*   observer transformed light vector       */
 float obshighlight[NM];		/*   observer transformed highlight vector   */
 
-
-#line 29
-#include <pthread.h>
-#line 29
-#include <sys/time.h>
-#line 29
-#include <unistd.h>
-#line 29
-#include <stdlib.h>
-#line 29
-#include <malloc.h>
-#line 29
-extern pthread_t PThreadTable[];
-#line 29
-
+EXTERN_ENV
 
 void Render(long my_node)           /* assumes direction is +Z */
 {

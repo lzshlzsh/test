@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "getparam.H"
 #ifndef _GETPARAM_H_
 #define _GETPARAM_H_
 

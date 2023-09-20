@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "global.H"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -22,27 +19,15 @@ structure and the maximum number of molecules allowed
 by the program. */
 
 struct GlobalMemory {
-    pthread_mutex_t (IOLock);
-    pthread_mutex_t (IndexLock);
-    pthread_mutex_t (IntrafVirLock);
-    pthread_mutex_t (InterfVirLock);
-    pthread_mutex_t (KinetiSumLock);
-    pthread_mutex_t (PotengSumLock);
-    
-#line 28
-pthread_barrier_t	(start);
-#line 28
-
-    
-#line 29
-pthread_barrier_t	(InterfBar);
-#line 29
-
-    
-#line 30
-pthread_barrier_t	(PotengBar);
-#line 30
-
+    LOCKDEC(IOLock)
+    LOCKDEC(IndexLock)
+    LOCKDEC(IntrafVirLock)
+    LOCKDEC(InterfVirLock)
+    LOCKDEC(KinetiSumLock)
+    LOCKDEC(PotengSumLock)
+    BARDEC(start)
+    BARDEC(InterfBar)
+    BARDEC(PotengBar)
     long Index;
     double VIR;
     double SUM[3];

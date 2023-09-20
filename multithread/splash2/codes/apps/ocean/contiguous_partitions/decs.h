@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "decs.H"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -75,124 +72,40 @@ extern double ****q_multi;
 extern double ****rhs_multi;
 
 struct locks_struct {
-   pthread_mutex_t (idlock);
-   pthread_mutex_t (psiailock);
-   pthread_mutex_t (psibilock);
-   pthread_mutex_t (donelock);
-   pthread_mutex_t (error_lock);
-   pthread_mutex_t (bar_lock);
+   LOCKDEC(idlock)
+   LOCKDEC(psiailock)
+   LOCKDEC(psibilock)
+   LOCKDEC(donelock)
+   LOCKDEC(error_lock)
+   LOCKDEC(bar_lock)
 };
 
 extern struct locks_struct *locks;
 
 struct bars_struct {
 #if defined(MULTIPLE_BARRIERS)
-   
-#line 87
-pthread_barrier_t	(iteration);
-#line 87
-
-   
-#line 88
-pthread_barrier_t	(gsudn);
-#line 88
-
-   
-#line 89
-pthread_barrier_t	(p_setup);
-#line 89
-
-   
-#line 90
-pthread_barrier_t	(p_redph);
-#line 90
-
-   
-#line 91
-pthread_barrier_t	(p_soln);
-#line 91
-
-   
-#line 92
-pthread_barrier_t	(p_subph);
-#line 92
-
-   
-#line 93
-pthread_barrier_t	(sl_prini);
-#line 93
-
-   
-#line 94
-pthread_barrier_t	(sl_psini);
-#line 94
-
-   
-#line 95
-pthread_barrier_t	(sl_onetime);
-#line 95
-
-   
-#line 96
-pthread_barrier_t	(sl_phase_1);
-#line 96
-
-   
-#line 97
-pthread_barrier_t	(sl_phase_2);
-#line 97
-
-   
-#line 98
-pthread_barrier_t	(sl_phase_3);
-#line 98
-
-   
-#line 99
-pthread_barrier_t	(sl_phase_4);
-#line 99
-
-   
-#line 100
-pthread_barrier_t	(sl_phase_5);
-#line 100
-
-   
-#line 101
-pthread_barrier_t	(sl_phase_6);
-#line 101
-
-   
-#line 102
-pthread_barrier_t	(sl_phase_7);
-#line 102
-
-   
-#line 103
-pthread_barrier_t	(sl_phase_8);
-#line 103
-
-   
-#line 104
-pthread_barrier_t	(sl_phase_9);
-#line 104
-
-   
-#line 105
-pthread_barrier_t	(sl_phase_10);
-#line 105
-
-   
-#line 106
-pthread_barrier_t	(error_barrier);
-#line 106
-
+   BARDEC(iteration)
+   BARDEC(gsudn)
+   BARDEC(p_setup)
+   BARDEC(p_redph)
+   BARDEC(p_soln)
+   BARDEC(p_subph)
+   BARDEC(sl_prini)
+   BARDEC(sl_psini)
+   BARDEC(sl_onetime)
+   BARDEC(sl_phase_1)
+   BARDEC(sl_phase_2)
+   BARDEC(sl_phase_3)
+   BARDEC(sl_phase_4)
+   BARDEC(sl_phase_5)
+   BARDEC(sl_phase_6)
+   BARDEC(sl_phase_7)
+   BARDEC(sl_phase_8)
+   BARDEC(sl_phase_9)
+   BARDEC(sl_phase_10)
+   BARDEC(error_barrier)
 #else
-   
-#line 108
-pthread_barrier_t	(barrier);
-#line 108
-
+   BARDEC(barrier)
 #endif
 };
 

@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "radiosity.H"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -25,658 +22,10 @@ of the program, as well as lobal data structure declarations */
 #define _RADIOSITY_H
 
 #include <math.h>
-#line 1 "parallel.h"
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "parallel.H"
-/*************************************************************************/
-/*                                                                       */
-/*  Copyright (c) 1994 Stanford University                               */
-/*                                                                       */
-/*  All rights reserved.                                                 */
-/*                                                                       */
-/*  Permission is given to use, copy, and modify this software for any   */
-/*  non-commercial purpose as long as this copyright notice is not       */
-/*  removed.  All other uses, including redistribution in whole or in    */
-/*  part, are forbidden without prior written permission.                */
-/*                                                                       */
-/*  This software is provided with absolutely no warranty and no         */
-/*  support.                                                             */
-/*                                                                       */
-/*************************************************************************/
-
-/**************************************************************
-*
-*       Definitions relevant to parallel processing
-*
-***************************************************************/
-
-#ifndef _PARALLEL_H
-#define _PARALLEL_H
-
-
-
-/***************************************************************************
-*
-*    Shared lock variable
-*
-*    Some machines provide only a limited number of lock variables. This
-*    data structure allows sharing of these lock variables.
-*    The shared locks are divided into 2 segments so that different types of
-*    objects are given different locks.
-*
-****************************************************************************/
-
-typedef struct
-{
-    pthread_mutex_t (lock);
-} Shared_Lock ;
-
-#define SHARED_LOCK_SEG_SIZE (MAX_SHARED_LOCK / 2)
-
-#define SHARED_LOCK_SEG0 (0)
-#define SHARED_LOCK_SEG1 (1)
-#define SHARED_LOCK_SEGANY (2)
-
-/****************************************************************************
-*
-*    Memory Consistency Model of the machine
-*
-*    Some macro changes its behavior based on the memory consistency model
-*
-*
-*****************************************************************************/
-
-/* Set one(1) to the model used in the machine.  Set only one of these
-at a time */
-
-#define MEM_CONSISTENCY_RELEASE    (0)
-#define MEM_CONSISTENCY_WEAK       (0)
-#define MEM_CONSISTENCY_PROCESSOR  (1)
-
-#endif
-
-#line 25 "radiosity.H"
-
-#line 1 "patch.h"
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "patch.H"
-/*************************************************************************/
-/*                                                                       */
-/*  Copyright (c) 1994 Stanford University                               */
-/*                                                                       */
-/*  All rights reserved.                                                 */
-/*                                                                       */
-/*  Permission is given to use, copy, and modify this software for any   */
-/*  non-commercial purpose as long as this copyright notice is not       */
-/*  removed.  All other uses, including redistribution in whole or in    */
-/*  part, are forbidden without prior written permission.                */
-/*                                                                       */
-/*  This software is provided with absolutely no warranty and no         */
-/*  support.                                                             */
-/*                                                                       */
-/*************************************************************************/
-
-
-#ifndef _PATCH_H
-#define _PATCH_H
-
-#include "structs.H"
-
-/************************************************************************
-*
-*     Constants
-*
-*************************************************************************/
-
-#define F_COPLANAR  (5.0e-2)     /* H(P) < F_COPLANAR then P is on the plane */
-#define N_VISIBILITY_TEST_RAYS  (10)	/* number of "random", "magic" rays fired
-between patches to test visibility */
-
-#define FF_GEOMETRY_ERROR (1.0)		/* FF relative error due to Fdf approx
-and cosine approx of angle */
-#define FF_GEOMETRY_VARIANCE (1.0)	/* FF relative varance with in elem */
-#define FF_VISIBILITY_ERROR (1.0 / N_VISIBILITY_TEST_RAYS)
-
-
-
-/************************************************************************
-*
-*     Intersection code
-*
-*************************************************************************/
-
-#define POINT_POSITIVE_SIDE   (1)
-#define POINT_NEGATIVE_SIDE   (2)
-#define POINT_ON_PLANE        (0)
-
-#define P1_POSITIVE    (1)
-#define P1_NEGATIVE    (2)
-#define P2_POSITIVE    (4)
-#define P2_NEGATIVE    (8)
-#define P3_POSITIVE    (16)
-#define P3_NEGATIVE    (32)
-#define ANY_POSITIVE   (P1_POSITIVE | P2_POSITIVE | P3_POSITIVE)
-#define ANY_NEGATIVE   (P1_NEGATIVE | P2_NEGATIVE | P3_NEGATIVE)
-#define POSITIVE_SIDE(code) (((code) & ANY_NEGATIVE) == 0)
-#define NEGATIVE_SIDE(code) (((code) & ANY_POSITIVE) == 0)
-#define INTERSECTING(code)  (   ((code) & ANY_NEGATIVE) \
-&& ((code) & ANY_POSITIVE) )
-#define P1_CODE(code)  (code & 3)
-#define P2_CODE(code)  ((code >> 2) & 3)
-#define P3_CODE(code)  ((code >> 4) & 3)
-
-/************************************************************************
-*
-*     Visibility Testing
-*
-*************************************************************************/
-
-#define      VISIBILITY_UNDEF      ((float)-1.0)
-#define      PATCH_CACHE_SIZE      (2)        /* The first two cache entries
-covers about 95% of the total cache hits, so using
-more doesn't help too much. */
-
-/************************************************************************
-*
-*     Refinement Advice
-*
-*************************************************************************/
-
-#define _NO_INTERACTION          (1)
-#define _NO_REFINEMENT_NECESSARY (2)
-#define _REFINE_PATCH_1          (4)
-#define _REFINE_PATCH_2          (8)
-#define _NO_VISIBILITY_NECESSARY (16)
-
-#define NO_INTERACTION(c)          ((c) & _NO_INTERACTION)
-#define NO_REFINEMENT_NECESSARY(c) ((c) & _NO_REFINEMENT_NECESSARY)
-#define REFINE_PATCH_1(c)          ((c) & _REFINE_PATCH_1)
-#define REFINE_PATCH_2(c)          ((c) & _REFINE_PATCH_2)
-#define NO_VISIBILITY_NECESSARY(c) ((c) & _NO_VISIBILITY_NECESSARY)
-
-
-/************************************************************************
-*
-*     Element Vertex
-*
-*     ElementVertex represents a vertex of an element. A vertex structure
-*     is shared by those elements which contain the vertex as part of their
-*     vertex list.
-*
-*************************************************************************/
-
-typedef struct _elemvertex {
-    Vertex p ;			  /* Coordinate of the vertex */
-    Rgb    col ;			  /* Color of the vertex */
-    float  weight ;			  /* weight */
-    Shared_Lock *ev_lock ;
-} ElemVertex ;
-
-
-#define N_ELEMVERTEX_ALLOCATE (16)
-
-/************************************************************************
-*
-*     Edge
-*
-*     Edge represents each edge of the element. Two adjacent elements
-*     share the same edge. As an element is subdivided, the edge is also
-*     subdivided. The edges form a binary tree, which can be viewed as a
-*     projection of the element subdivision along an edge of the element.
-*     In other words, the edge structure binds elements at the same height.
-*     Note that the vertices may appear in reverse order in the edge structure
-*     with respect to the order in the patch/element definition.
-*
-*************************************************************************/
-
-typedef struct _edge {
-    ElemVertex   *pa, *pb ;
-    struct _edge *ea, *eb ;		  /* Edge (A-center) and (center-B) */
-    Shared_Lock  *edge_lock ;	          /* Use segment0 */
-} Edge ;
-
-
-#define N_EDGE_ALLOCATE (16)
-
-#define _LEAF_EDGE(e) ((e)->ea == 0)
-#define EDGE_REVERSE(e,a,b) ((e)->pa == (b))
-
-
-/************************************************************************
-*
-*     Planar equation
-*
-*     Plane equation (in implicit form) of the triangle patch.
-*     A point P on the plane satisfies
-*         (N.P) + C = 0
-*     where N is the normal vector of the patch, C is a constant which
-*     is the distance of the plane from the origin scaled by -|N|.
-*
-*************************************************************************/
-
-typedef struct {
-    Vertex  n ;		          /* Normal vector (normalized) */
-    float  c ;			  /* Constant */
-    /* Nx*x + Ny*y + Nz*z + C = 0 */
-} PlaneEqu ;
-
-
-/************************************************************************
-*
-*     Patch (also a node of the BSP tree)
-*
-*     The Patch represents a triangular patch (input polygon) of the given
-*     geometric model (i.e., room scene). The Patch contains 'per-patch'
-*     information such as the plane equation, area, and color. The Patch also
-*     serves as a node of the BSP tree which is used to test patch-patch
-*     visibility. The Patch points to the root level of the element quad-tree.
-*     Geometrically speaking, the Patch and the root represent the same
-*     triangle.
-*     Although coordinates of the vertices are given by the Edge structure,
-*     copies are stored in the Patch to allow fast access to the coordinates
-*     during the visibility test.
-*     For cost based task distribution another structure, Patch_Cost, is
-*     also used. This structure is made separate from the Patch structure
-*     since gathering cost statistics is a frequently read/write operation.
-*     If it were in the Patch structure, updating a cost would result in
-*     invalidation of the Patch structure and cause cache misses during
-*     BSP traversal.
-*
-*************************************************************************/
-
-struct _element ;
-
-typedef struct _patch {
-    ElemVertex *ev1, *ev2, *ev3 ;	  /* ElemVertecies of the patch */
-    Edge    *e12, *e23, *e31 ;          /* Edges of the patch */
-    Vertex   p1, p2, p3 ;		  /* Vertices of the patch */
-    PlaneEqu plane_equ ;		  /* Plane equation H(x,y,z) */
-    float    area ;			  /* Area of the patch */
-    Rgb      color ;			  /* Diffuse color of the patch */
-    /*       (reflectance) */
-    Rgb      emittance ;	          /* Radiant emmitence */
-
-    struct _patch  *bsp_positive ;	  /* BSP tree H(x,y,z) >= 0 */
-    struct _patch  *bsp_negative ;	  /*          H(x,y,z) <  0 */
-    struct _patch  *bsp_parent ;        /* BSP backpointer to the parent*/
-
-    struct _element *el_root ;	  /* Root of the element tree */
-    long      seq_no ;		          /* Patch sequence number */
-} Patch ;
-
-
-typedef struct {
-    Patch    *patch ;
-    Shared_Lock *cost_lock ;		  /* Cost variable lock */
-    long      n_bsp_node ;	          /* Number of BSP nodes visited */
-    long      n_total_inter ;	          /* Total number of interactions */
-    long      cost_estimate ;            /* Cost estimate */
-    long      cost_history[11] ;	  /* Cost history */
-} Patch_Cost ;
-
-/* Patch cost:
-Visiting a node in BSP tree:  150 cyc (overall)
-Gathering ray per interaction: 50 cyc (overall avg) */
-
-#define PATCH_COST(p)          ((p)->n_bsp_node * 3 + (p)->n_total_inter)
-#define PATCH_COST_ESTIMATE(p)  ((p)->cost_history[0] \
-+ ((p)->cost_history[1] >> 1)\
-+ ((p)->cost_history[2] >> 2) )
-
-
-/************************************************************************
-*
-*     Element
-*
-*     The Element represents each node of the quad-tree generated by the
-*     hierarchical subdivision. The Element structure consists of:
-*      - pointers to maintain the tree structure
-*      - a linear list of interacting elements
-*      - radiosity value of the element
-*      - pointer to the vertex and edge data structures
-*
-*     To allow smooth radiosity interpolation across elements, an element
-*     shares edges and vertices with adjacent elements.
-*
-*************************************************************************/
-
-struct _interact ;
-
-typedef struct _element {
-    Shared_Lock *elem_lock ;	          /* Element lock variable (seg 1) */
-    Patch *patch ;			  /* Original patch of the element */
-
-    struct _element *parent ;		  /* Quad tree (parent)          */
-    struct _element *center ;		  /*           (center triangle) */
-    struct _element *top ;		  /*           (top)             */
-    struct _element *left ;		  /*           (left)            */
-    struct _element *right ;		  /*           (right)           */
-
-    struct _interact *interactions ;	  /* Top of light interaction list */
-    long  n_interactions ;		  /* Total # of interactions */
-    struct _interact *vis_undef_inter ; /* Top of visibility undef list */
-    long  n_vis_undef_inter ;		  /* # of interactions whose visibility
-    is not yet calculated */
-    Rgb  rad ;			  /* Radiosity of this element
-    (new guess of B) */
-    Rgb  rad_in ;			  /* Sum of anscestor's radiosity */
-    Rgb  rad_subtree ;		  /* Area weighted sum of subtree's
-    radiosity (includes this elem) */
-    long  join_counter ;		  /* # of unfinished subprocesses */
-
-    ElemVertex *ev1, *ev2, *ev3 ;	  /* Vertices of the element */
-    Edge       *e12, *e23, *e31 ;	  /* Edges of the element */
-    float area ;		          /* Area of the element */
-} Element ;
-
-
-#define _LEAF_ELEMENT(e) ((e)->center == 0)
-
-#if MEM_CONSISTENCY_PROCESSOR
-#define LEAF_ELEMENT(e)  _LEAF_ELEMENT((e))
-#endif
-
-#if (MEM_CONSISTENCY_RELEASE || MEM_CONSISTENCY_WEAK)
-extern long leaf_element() ;
-#define LEAF_ELEMENT(e) (leaf_element((e)))
-#endif
-
-
-/************************************************************************
-*
-*     Interaction
-*
-*************************************************************************/
-
-typedef struct _interact {
-    struct _interact *next ;		  /* Next entry of the list */
-    Element *destination ;	          /* Partner of the interaction */
-    float   formfactor_out ;		  /* Form factor from this patch  */
-    float   formfactor_err ;            /* Error of FF */
-    float   area_ratio ;		  /* Area(this) / Area(dest) */
-    float   visibility ;		  /* Visibility (0 - 1.0) */
-} Interaction ;
-
-
-void foreach_patch_in_bsp(void (*func)(), long arg1, long process_id);
-void foreach_depth_sorted_patch(Vertex *sort_vec, void (*func)(), long arg1, long process_id);
-void define_patch(Patch *patch, Patch *root, long process_id);
-void split_patch(Patch *patch, Patch *node, long xing_code, long process_id);
-void attach_element(Patch *patch, long process_id);
-void refine_newpatch(Patch *patch, long newpatch, long process_id);
-Patch *get_patch(long process_id);
-void init_patchlist(long process_id);
-void print_patch(Patch *patch, long process_id);
-void print_bsp_tree(long process_id);
-void _pr_patch(Patch *patch, long dummy, long process_id);
-float plane_equ(PlaneEqu *plane, Vertex *point, long process_id);
-float comp_plane_equ(PlaneEqu *pln, Vertex *p1, Vertex *p2, Vertex *p3, long process_id);
-long point_intersection(PlaneEqu *plane, Vertex *point, long process_id);
-long patch_intersection(PlaneEqu *plane, Vertex *p1, Vertex *p2, Vertex *p3, long process_id);
-void print_plane_equ(PlaneEqu *peq, long process_id);
-
-#endif
-#line 26 "radiosity.H"
-
-#line 1 "model.h"
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "model.H"
-/*************************************************************************/
-/*                                                                       */
-/*  Copyright (c) 1994 Stanford University                               */
-/*                                                                       */
-/*  All rights reserved.                                                 */
-/*                                                                       */
-/*  Permission is given to use, copy, and modify this software for any   */
-/*  non-commercial purpose as long as this copyright notice is not       */
-/*  removed.  All other uses, including redistribution in whole or in    */
-/*  part, are forbidden without prior written permission.                */
-/*                                                                       */
-/*  This software is provided with absolutely no warranty and no         */
-/*  support.                                                             */
-/*                                                                       */
-/*************************************************************************/
-
-/* Header file for model data structures and definitions */
-
-#ifndef _MODEL_H
-#define _MODEL_H
-
-
-/************************************************************************
-*
-*     Constants
-*
-*************************************************************************/
-
-#define MODEL_TRIANGLE  (0)
-#define MODEL_RECTANGLE (1)
-#define MODEL_NULL      (-1)
-
-#define MODEL_TEST_DATA (0)
-#define MODEL_ROOM_DATA (1)
-#define MODEL_LARGEROOM_DATA (2)
-
-
-/************************************************************************
-*
-*     Model descriptor
-*
-*************************************************************************/
-
-/* General structure of the model descriptor */
-typedef struct {
-    Rgb   color ;			/* Diffuse color */
-    Rgb   emittance ;		        /* Radiant emittance */
-    Vertex _dummy[4] ;
-} Model ;
-
-/* Triangle */
-typedef struct {
-    Rgb   color ;			/* Diffuse color */
-    Rgb   emittance ;		        /* Radiant emittance */
-    Vertex p1, p2, p3 ;
-} Model_Triangle ;
-
-typedef Model_Triangle Model_Rectangle ;
-
-
-typedef struct {
-    long type ;
-    Model model ;
-} ModelDataBase ;
-
-/*
- * modelman.C
- */
-void init_modeling_tasks(long process_id);
-void process_model(Model *model, long type, long process_id);
-
-extern long model_selector ;
-
-#endif
-
-
-#line 27 "radiosity.H"
-
-#line 1 "task.h"
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "task.H"
-/*************************************************************************/
-/*                                                                       */
-/*  Copyright (c) 1994 Stanford University                               */
-/*                                                                       */
-/*  All rights reserved.                                                 */
-/*                                                                       */
-/*  Permission is given to use, copy, and modify this software for any   */
-/*  non-commercial purpose as long as this copyright notice is not       */
-/*  removed.  All other uses, including redistribution in whole or in    */
-/*  part, are forbidden without prior written permission.                */
-/*                                                                       */
-/*  This software is provided with absolutely no warranty and no         */
-/*  support.                                                             */
-/*                                                                       */
-/*************************************************************************/
-
-
-#ifndef _TASK_H
-#define _TASK_H
-
-
-/************************************************************************
-*
-*     Constants
-*
-*************************************************************************/
-
-#define PAGE_SIZE 4096   /* page size of system, used for padding to
-allow page placement of some logically
-per-process data structures */
-
-/*** Task types ***/
-#define TASK_MODELING      (1)
-#define TASK_BSP           (2)
-#define TASK_FF_REFINEMENT (4)
-#define TASK_RAY           (8)
-#define TASK_RAD_AVERAGE   (16)
-#define TASK_VISIBILITY    (32)
-
-
-/*** Controling parallelism ***/
-
-#define MAX_TASKGET_RETRY (32)	    /* Max # of retry get_task() can make */
-#define N_ALLOCATE_LOCAL_TASK (8)   /* get_task() and free_task() transfer
-this # of task objects to/from the
-global shared queue at a time */
-
-
-/************************************************************************
-*
-*     Task Descriptors
-*
-*************************************************************************/
-
-/* Decompose modeling object into patches (B-reps) */
-typedef struct {
-    long   type ;		     /* Object type */
-    Model *model ;		     /* Object to be decomposed */
-} Modeling_Task ;
-
-
-/* Insert a new patch to the BSP tree */
-typedef struct {
-    Patch *patch ;                 /* Patch to be inserted */
-    Patch *parent ;		     /* Parent node in the BSP tree */
-} BSP_Task ;
-
-
-/* Refine element interaction based on FF value or BF value */
-typedef struct {
-    Element *e1, *e2 ;	     /* Interacting elements */
-    float   visibility ;           /* Visibility of parent */
-    long level ;		     /* Path length from the root element */
-} Refinement_Task ;
-
-
-typedef struct {
-    long  ray_type ;
-    Element *e ;		     /* The element we are interested in */
-} Ray_Task ;
-
-
-typedef struct {
-    Element *e ;		     /* The element we are interested in */
-    Interaction *inter ;	     /* Top of interactions */
-    long   n_inter ;		     /* Number of interactions */
-    void  (*k)() ;		     /* Continuation */
-} Visibility_Task ;
-
-/* Radiosity averaging task */
-
-#define RAD_AVERAGING_MODE (0)
-#define RAD_NORMALIZING_MODE (1)
-
-typedef struct {
-    Element *e ;
-    long level ;
-    long mode ;
-} RadAvg_Task ;
-
-
-
-/************************************************************************
-*
-*     Task Definition
-*
-*************************************************************************/
-
-
-typedef struct _task {
-    long task_type ;
-    struct _task *next ;
-    union {
-        Modeling_Task   model ;
-        BSP_Task        bsp ;
-        Refinement_Task ref ;
-        Ray_Task        ray ;
-        Visibility_Task vis ;
-        RadAvg_Task     rad ;
-    } task ;
-} Task ;
-
-
-typedef struct {
-    char pad1[PAGE_SIZE];	 	/* padding to avoid false-sharing
-    and allow page-placement */
-    pthread_mutex_t (q_lock);
-    Task  *top, *tail ;
-    long   n_tasks ;
-    pthread_mutex_t (f_lock);
-    long   n_free ;
-    Task  *free ;
-    char pad2[PAGE_SIZE];	 	/* padding to avoid false-sharing
-    and allow page-placement */
-} Task_Queue ;
-
-
-#define TASK_APPEND (0)
-#define TASK_INSERT (1)
-
-#define taskq_length(q)   (q->n_tasks)
-#define taskq_top(q)      (q->top)
-#define taskq_too_long(q)  ((q)->n_tasks > n_tasks_per_queue)
-
-/*
- * taskman.C
- */
-void process_tasks(long process_id);
-long _process_task_wait_loop(void);
-void create_modeling_task(Model *model, long type, long process_id);
-void create_bsp_task(Patch *patch, Patch *parent, long process_id);
-void create_ff_refine_task(Element *e1, Element *e2, long level, long process_id);
-void create_ray_task(Element *e, long process_id);
-void enqueue_ray_task(long qid, Element *e, long mode, long process_id);
-void create_visibility_tasks(Element *e, void (*k)(), long process_id);
-void create_radavg_task(Element *e, long mode, long process_id);
-void enqueue_radavg_task(long qid, Element *e, long mode, long process_id);
-void enqueue_task(long qid, Task *task, long mode);
-Task *dequeue_task(long qid, long max_visit, long process_id);
-Task *get_task(long process_id);
-void free_task(Task *task, long process_id);
-void init_taskq(long process_id);
-long check_task_counter(void);
-long assign_taskq(long process_id);
-void print_task(Task *task);
-void print_taskq(Task_Queue *tq);
-
-#endif
-
-#line 28 "radiosity.H"
-
+include(parallel.h)
+include(patch.h)
+include(model.h)
+include(task.h)
 #include "glib.h"
 #include "pslib.h"
 
@@ -904,16 +253,16 @@ typedef struct
 
     /* Task queue */
     /* ***** */ long index;
-    /* ***** */	pthread_mutex_t (index_lock);
+    /* ***** */	LOCKDEC(index_lock)
     Task_Queue task_queue[ MAX_TASKQUEUES ] ;
     Task task_buf[ MAX_TASKS ] ;
 
     /* BSP tree root */
-    pthread_mutex_t (bsp_tree_lock);
+    LOCKDEC(bsp_tree_lock)
     Patch *bsp_root ;
 
     /* Average radiosity value */
-    pthread_mutex_t (avg_radiosity_lock);
+    LOCKDEC(avg_radiosity_lock)
     long   converged ;
     Rgb   prev_total_energy ;
     Rgb   total_energy ;
@@ -921,48 +270,44 @@ typedef struct
     long   iteration_count ;
 
     /* Computation cost estimate */
-    pthread_mutex_t (cost_sum_lock);
+    LOCKDEC(cost_sum_lock)
     long cost_sum ;
     long cost_estimate_sum ;
     Patch_Cost patch_cost[ MAX_PATCHES ] ;
 
     /* Barrier */
-    
-#line 279
-pthread_barrier_t	(barrier);
-#line 279
-
+    BARDEC(barrier)
 
     /* Private varrier */
     long pbar_count ;
-    pthread_mutex_t (pbar_lock);
+    LOCKDEC(pbar_lock)
 
     /* Task initializer counter */
     long task_counter ;
-    pthread_mutex_t (task_counter_lock);
+    LOCKDEC(task_counter_lock)
 
     /* Resource buffers */
-    pthread_mutex_t (free_patch_lock);
+    LOCKDEC(free_patch_lock)
     Patch *free_patch ;
     long   n_total_patches ;
     long   n_free_patches ;
     Patch patch_buf[ MAX_PATCHES ] ;
 
-    pthread_mutex_t (free_element_lock);
+    LOCKDEC(free_element_lock)
     Element *free_element ;
     long     n_free_elements ;
     Element element_buf[ MAX_ELEMENTS ] ;
 
-    pthread_mutex_t (free_interaction_lock);
+    LOCKDEC(free_interaction_lock)
     Interaction *free_interaction ;
     long         n_free_interactions ;
     Interaction interaction_buf[ MAX_INTERACTIONS ] ;
 
-    pthread_mutex_t (free_elemvertex_lock);
+    LOCKDEC(free_elemvertex_lock)
     long         free_elemvertex ;
     ElemVertex  elemvertex_buf[ MAX_ELEMVERTICES ] ;
 
-    pthread_mutex_t (free_edge_lock);
+    LOCKDEC(free_edge_lock)
     long   free_edge ;
     Edge  edge_buf[ MAX_EDGES ] ;
 

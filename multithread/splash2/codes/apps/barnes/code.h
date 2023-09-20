@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "code.H"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -51,7 +48,7 @@ global long maxmyleaf;		/* max num. of leaves to be allocated */
 global bodyptr bodytab; 	/* array size is exactly nbody bodies */
 
 global struct CellLockType {
-    pthread_mutex_t CL[MAXLOCK];        /* locks on the cells*/
+    ALOCKDEC(CL,MAXLOCK)        /* locks on the cells*/
 } *CellLock;
 
 struct GlobalMemory  {	/* all this info is for the whole system */
@@ -69,15 +66,11 @@ struct GlobalMemory  {	/* all this info is for the whole system */
     vector min;        /* temporary lower-left corner of the box  */
     vector max;        /* temporary upper right corner of the box */
     real rsize;        /* side-length of integer coordinate box   */
-    
-#line 69
-pthread_barrier_t	(Barrier);
-#line 69
-   /* barrier at the beginning of stepsystem  */
-    pthread_mutex_t (CountLock); /* Lock on the shared variables            */
-    pthread_mutex_t (NcellLock); /* Lock on the counter of array of cells for loadtree */
-    pthread_mutex_t (NleafLock);/* Lock on the counter of array of leaves for loadtree */
-    pthread_mutex_t (io_lock);
+    BARDEC(Barrier)   /* barrier at the beginning of stepsystem  */
+    LOCKDEC(CountLock) /* Lock on the shared variables            */
+    LOCKDEC(NcellLock) /* Lock on the counter of array of cells for loadtree */
+    LOCKDEC(NleafLock)/* Lock on the counter of array of leaves for loadtree */
+    LOCKDEC(io_lock)
     unsigned long createstart,createend,computestart,computeend;
     unsigned long trackstart, trackend, tracktime;
     unsigned long partitionstart, partitionend, partitiontime;

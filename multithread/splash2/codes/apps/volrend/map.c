@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "map.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -55,21 +52,7 @@ DENSITY *map_address;		/* Pointer to map                            */
 
 /* End of layout of .den file.                                               */
 
-
-#line 55
-#include <pthread.h>
-#line 55
-#include <sys/time.h>
-#line 55
-#include <unistd.h>
-#line 55
-#include <stdlib.h>
-#line 55
-#include <malloc.h>
-#line 55
-extern pthread_t PThreadTable[];
-#line 55
-
+EXTERN_ENV
 
 
 void Load_Map(filename)
@@ -118,7 +101,7 @@ void Allocate_Map(address, length)
   printf("    Allocating density map of %ld bytes...\n",
 	 length*sizeof(DENSITY));
 
-  *address = (DENSITY *)valloc(length*sizeof(DENSITY));;
+  *address = (DENSITY *)NU_MALLOC(length*sizeof(DENSITY),0);
 
   if (*address == NULL)
     Error("    No space available for map.\n");
@@ -133,7 +116,7 @@ DENSITY **address;
 {
   printf("    Deallocating density map...\n");
 
-/*  ;;  */
+/*  G_FREE(*address);  */
 
   *address = NULL;
 }

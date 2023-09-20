@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "slave1.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -21,21 +18,7 @@
       subroutine slave
       ****************  */
 
-
-#line 21
-#include <pthread.h>
-#line 21
-#include <sys/time.h>
-#line 21
-#include <unistd.h>
-#line 21
-#include <stdlib.h>
-#line 21
-#include <malloc.h>
-#line 21
-extern pthread_t PThreadTable[];
-#line 21
-
+EXTERN_ENV
 
 #include <stdio.h>
 #include <math.h>
@@ -92,23 +75,15 @@ void slave()
 
    ressqr = lev_res[numlev-1] * lev_res[numlev-1];
 
-   {pthread_mutex_lock(&(locks->idlock));}
+   LOCK(locks->idlock)
      procid = global->id;
      global->id = global->id+1;
-   {pthread_mutex_unlock(&(locks->idlock));}
+   UNLOCK(locks->idlock)
 
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 84
-	pthread_barrier_wait(&(bars->sl_prini));
-#line 84
-}
+   BARRIER(bars->sl_prini,nprocs)
 #else
-   {
-#line 86
-	pthread_barrier_wait(&(bars->barrier));
-#line 86
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration. */
@@ -360,17 +335,9 @@ eof(double) +
 
 /* wait until all processes have completed the above initialization  */
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 338
-	pthread_barrier_wait(&(bars->sl_prini));
-#line 338
-}
+   BARRIER(bars->sl_prini,nprocs)
 #else
-   {
-#line 340
-	pthread_barrier_wait(&(bars->barrier));
-#line 340
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 /* compute psib array (one-time computation) and integrate into psibi */
 
@@ -431,17 +398,9 @@ eof(double) +
      }
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 401
-	pthread_barrier_wait(&(bars->sl_psini));
-#line 401
-}
+   BARRIER(bars->sl_psini,nprocs)
 #else
-   {
-#line 403
-	pthread_barrier_wait(&(bars->barrier));
-#line 403
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
    t2a = (double **) psib[procid];
    j = gp[procid].neighbors[UP];
@@ -499,17 +458,9 @@ eof(double) +
      }
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 461
-	pthread_barrier_wait(&(bars->sl_prini));
-#line 461
-}
+   BARRIER(bars->sl_prini,nprocs)
 #else
-   {
-#line 463
-	pthread_barrier_wait(&(bars->barrier));
-#line 463
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 /* update the local running sum psibipriv by summing all the resulting
    values in that process's share of the psib matrix   */
@@ -562,9 +513,9 @@ eof(double) +
    private and shared sum method avoids accessing the shared
    variable psibi once for every element of the matrix.  */
 
-   {pthread_mutex_lock(&(locks->psibilock));}
+   LOCK(locks->psibilock)
      global->psibi = global->psibi + psibipriv;
-   {pthread_mutex_unlock(&(locks->psibilock));}
+   UNLOCK(locks->psibilock)
 
 /* initialize psim matrices
 
@@ -724,17 +675,9 @@ eof(double) +
      }
    }
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 678
-	pthread_barrier_wait(&(bars->sl_onetime));
-#line 678
-}
+   BARRIER(bars->sl_onetime,nprocs)
 #else
-   {
-#line 680
-	pthread_barrier_wait(&(bars->barrier));
-#line 680
-}
+   BARRIER(bars->barrier,nprocs)
 #endif
 
 /***************************************************************
@@ -747,30 +690,10 @@ eof(double) +
        dhourflag = 0;
        if (nstep == 1) {
          if (procid == MASTER) {
-            {
-#line 693
-	struct timeval	FullTime;
-#line 693
-
-#line 693
-	gettimeofday(&FullTime, NULL);
-#line 693
-	(global->trackstart) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 693
-}
+            CLOCK(global->trackstart)
          }
 	 if ((procid == MASTER) || (do_stats)) {
-	   {
-#line 696
-	struct timeval	FullTime;
-#line 696
-
-#line 696
-	gettimeofday(&FullTime, NULL);
-#line 696
-	(t1) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 696
-};
+	   CLOCK(t1);
            gp[procid].total_time = t1;
            gp[procid].multi_time = 0;
 	 }
@@ -900,17 +823,7 @@ eof(double) +
      }
   }
   if ((procid == MASTER) || (do_stats)) {
-    {
-#line 826
-	struct timeval	FullTime;
-#line 826
-
-#line 826
-	gettimeofday(&FullTime, NULL);
-#line 826
-	(t1) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 826
-};
+    CLOCK(t1);
     gp[procid].total_time = t1-gp[procid].total_time;
   }
 }

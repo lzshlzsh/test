@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "file.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -25,21 +22,7 @@
 #define	PMODE	0644		/* RW for owner, R for group, R for others */
 #define	RWMODE	0		/* Read-only                               */
 
-
-#line 25
-#include <pthread.h>
-#line 25
-#include <sys/time.h>
-#line 25
-#include <unistd.h>
-#line 25
-#include <stdlib.h>
-#line 25
-#include <malloc.h>
-#line 25
-extern pthread_t PThreadTable[];
-#line 25
-
+EXTERN_ENV
 
 int Create_File(char filename[])
 {

@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "fft.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -55,34 +52,14 @@
 #define DEFAULT_M                 10
 #define DEFAULT_P                  1
 
-
-#line 55
-#include <pthread.h>
-#line 55
-#include <sys/time.h>
-#line 55
-#include <unistd.h>
-#line 55
-#include <stdlib.h>
-#line 55
-#include <malloc.h>
-#line 55
-#define MAX_THREADS 32
-#line 55
-pthread_t PThreadTable[MAX_THREADS];
-#line 55
-
+MAIN_ENV
 
 #define SWAP_VALS(a,b) {double tmp; tmp=a; a=b; b=tmp;}
 
 struct GlobalMemory {
   long id;
-  pthread_mutex_t (idlock);
-  
-#line 62
-pthread_barrier_t	(start);
-#line 62
-
+  LOCKDEC(idlock)
+  BARDEC(start)
   long *transtimes;
   long *totaltimes;
   unsigned long starttime;
@@ -154,17 +131,7 @@ int main(int argc, char *argv[])
   long pages;
   unsigned long start;
 
-  {
-#line 134
-	struct timeval	FullTime;
-#line 134
-
-#line 134
-	gettimeofday(&FullTime, NULL);
-#line 134
-	(start) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 134
-};
+  CLOCK(start);
 
   while ((c = getopt(argc, argv, "p:m:n:l:stoh")) != -1) {
     switch(c) {
@@ -223,7 +190,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  {;};
+  MAIN_INITENV(,80000000);
 
   N = 1<<M;
   rootN = 1<<(M/2);
@@ -264,14 +231,14 @@ int main(int argc, char *argv[])
     }
   }
 
-  Global = (struct GlobalMemory *) valloc(sizeof(struct GlobalMemory));;
-  x = (double *) valloc(2*(N+rootN*pad_length)*sizeof(double)+PAGE_SIZE);;
-  trans = (double *) valloc(2*(N+rootN*pad_length)*sizeof(double)+PAGE_SIZE);;
-  umain = (double *) valloc(2*rootN*sizeof(double));;  
-  umain2 = (double *) valloc(2*(N+rootN*pad_length)*sizeof(double)+PAGE_SIZE);;
+  Global = (struct GlobalMemory *) G_MALLOC(sizeof(struct GlobalMemory));
+  x = (double *) G_MALLOC(2*(N+rootN*pad_length)*sizeof(double)+PAGE_SIZE);
+  trans = (double *) G_MALLOC(2*(N+rootN*pad_length)*sizeof(double)+PAGE_SIZE);
+  umain = (double *) G_MALLOC(2*rootN*sizeof(double));  
+  umain2 = (double *) G_MALLOC(2*(N+rootN*pad_length)*sizeof(double)+PAGE_SIZE);
 
-  Global->transtimes = (long *) valloc(P*sizeof(long));;  
-  Global->totaltimes = (long *) valloc(P*sizeof(long));;  
+  Global->transtimes = (long *) G_MALLOC(P*sizeof(long));  
+  Global->totaltimes = (long *) G_MALLOC(P*sizeof(long));  
   if (Global == NULL) {
     printerr("Could not malloc memory for Global\n");
     exit(-1);
@@ -334,12 +301,8 @@ int main(int argc, char *argv[])
   printf("   %d Bytes per page\n",PAGE_SIZE);
   printf("\n");
 
-  {
-#line 304
-	pthread_barrier_init(&(Global->start), NULL, P);
-#line 304
-};
-  {pthread_mutex_init(&(Global->idlock), NULL);};
+  BARINIT(Global->start, P);
+  LOCKINIT(Global->idlock);
   Global->id = 0;
   InitX(x);                  /* place random values in x */
 
@@ -356,50 +319,8 @@ int main(int argc, char *argv[])
 
   /* fire off P processes */
 
-  {
-#line 322
-	long	i, Error;
-#line 322
-
-#line 322
-	for (i = 0; i < (P) - 1; i++) {
-#line 322
-		Error = pthread_create(&PThreadTable[i], NULL, (void * (*)(void *))(SlaveStart), NULL);
-#line 322
-		if (Error != 0) {
-#line 322
-			printf("Error in pthread_create().\n");
-#line 322
-			exit(-1);
-#line 322
-		}
-#line 322
-	}
-#line 322
-
-#line 322
-	SlaveStart();
-#line 322
-};
-  {
-#line 323
-	long	i, Error;
-#line 323
-	for (i = 0; i < (P) - 1; i++) {
-#line 323
-		Error = pthread_join(PThreadTable[i], NULL);
-#line 323
-		if (Error != 0) {
-#line 323
-			printf("Error in pthread_join().\n");
-#line 323
-			exit(-1);
-#line 323
-		}
-#line 323
-	}
-#line 323
-};
+  CREATE(SlaveStart, P);
+  WAIT_FOR_END(P);
 
   if (doprint) {
     if (test_result) {
@@ -491,7 +412,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  {exit(0);};
+  MAIN_END;
 }
 
 
@@ -506,21 +427,17 @@ void SlaveStart()
   long MyFirst; 
   long MyLast;
 
-  {pthread_mutex_lock(&(Global->idlock));};
+  LOCK(Global->idlock);
     MyNum = Global->id;
     Global->id++;
-  {pthread_mutex_unlock(&(Global->idlock));}; 
+  UNLOCK(Global->idlock); 
 
-  {;};
+  BARINCLUDE(Global->start);
 
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration */
 
-  {
-#line 440
-	pthread_barrier_wait(&(Global->start));
-#line 440
-};
+  BARRIER(Global->start, P);
 
   upriv = (double *) malloc(2*(rootN-1)*sizeof(double));  
   if (upriv == NULL) {
@@ -536,27 +453,13 @@ void SlaveStart()
 
   TouchArray(x, trans, umain2, upriv, MyFirst, MyLast);
 
-  {
-#line 456
-	pthread_barrier_wait(&(Global->start));
-#line 456
-};
+  BARRIER(Global->start, P);
 
 /* POSSIBLE ENHANCEMENT:  Here is where one might reset the
    statistics that one is measuring about the parallel execution */
 
   if ((MyNum == 0) || (dostats)) {
-    {
-#line 462
-	struct timeval	FullTime;
-#line 462
-
-#line 462
-	gettimeofday(&FullTime, NULL);
-#line 462
-	(initdone) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 462
-};
+    CLOCK(initdone);
   }
 
   /* perform forward FFT */
@@ -570,17 +473,7 @@ void SlaveStart()
   }  
 
   if ((MyNum == 0) || (dostats)) {
-    {
-#line 476
-	struct timeval	FullTime;
-#line 476
-
-#line 476
-	gettimeofday(&FullTime, NULL);
-#line 476
-	(finish) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 476
-};
+    CLOCK(finish);
     Global->transtimes[MyNum] = l_transtime;
     Global->totaltimes[MyNum] = finish-initdone;
   }
@@ -707,41 +600,17 @@ void FFT1D(long direction, long M, long N, double *x, double *scratch, double *u
   m1 = M/2;
   n1 = 1<<m1;
 
-  {
-#line 603
-	pthread_barrier_wait(&(Global->start));
-#line 603
-};
+  BARRIER(Global->start, P);
 
   if ((MyNum == 0) || (dostats)) {
-    {
-#line 606
-	struct timeval	FullTime;
-#line 606
-
-#line 606
-	gettimeofday(&FullTime, NULL);
-#line 606
-	(clocktime1) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 606
-};
+    CLOCK(clocktime1);
   }
 
   /* transpose from x into scratch */
   Transpose(n1, x, scratch, MyNum, MyFirst, MyLast, pad_length);
   
   if ((MyNum == 0) || (dostats)) {
-    {
-#line 613
-	struct timeval	FullTime;
-#line 613
-
-#line 613
-	gettimeofday(&FullTime, NULL);
-#line 613
-	(clocktime2) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 613
-};
+    CLOCK(clocktime2);
     *l_transtime += (clocktime2-clocktime1);
   }
 
@@ -751,40 +620,16 @@ void FFT1D(long direction, long M, long N, double *x, double *scratch, double *u
     TwiddleOneCol(direction, n1, j, umain2, &scratch[2*j*(n1+pad_length)], pad_length);
   }  
 
-  {
-#line 623
-	pthread_barrier_wait(&(Global->start));
-#line 623
-};
+  BARRIER(Global->start, P);
 
   if ((MyNum == 0) || (dostats)) {
-    {
-#line 626
-	struct timeval	FullTime;
-#line 626
-
-#line 626
-	gettimeofday(&FullTime, NULL);
-#line 626
-	(clocktime1) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 626
-};
+    CLOCK(clocktime1);
   }
   /* transpose */
   Transpose(n1, scratch, x, MyNum, MyFirst, MyLast, pad_length);
 
   if ((MyNum == 0) || (dostats)) {
-    {
-#line 632
-	struct timeval	FullTime;
-#line 632
-
-#line 632
-	gettimeofday(&FullTime, NULL);
-#line 632
-	(clocktime2) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 632
-};
+    CLOCK(clocktime2);
     *l_transtime += (clocktime2-clocktime1);
   }
 
@@ -795,49 +640,21 @@ void FFT1D(long direction, long M, long N, double *x, double *scratch, double *u
       Scale(n1, N, &x[2*j*(n1+pad_length)]);
   }
 
-  {
-#line 643
-	pthread_barrier_wait(&(Global->start));
-#line 643
-};
+  BARRIER(Global->start, P);
 
   if ((MyNum == 0) || (dostats)) {
-    {
-#line 646
-	struct timeval	FullTime;
-#line 646
-
-#line 646
-	gettimeofday(&FullTime, NULL);
-#line 646
-	(clocktime1) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 646
-};
+    CLOCK(clocktime1);
   }
 
   /* transpose back */
   Transpose(n1, x, scratch, MyNum, MyFirst, MyLast, pad_length);
 
   if ((MyNum == 0) || (dostats)) {
-    {
-#line 653
-	struct timeval	FullTime;
-#line 653
-
-#line 653
-	gettimeofday(&FullTime, NULL);
-#line 653
-	(clocktime2) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 653
-};
+    CLOCK(clocktime2);
     *l_transtime += (clocktime2-clocktime1);
   }
 
-  {
-#line 657
-	pthread_barrier_wait(&(Global->start));
-#line 657
-};
+  BARRIER(Global->start, P);
 
   /* copy columns from scratch to x */
   if ((test_result) || (doprint)) {  
@@ -846,11 +663,7 @@ void FFT1D(long direction, long M, long N, double *x, double *scratch, double *u
     }  
   }  
 
-  {
-#line 666
-	pthread_barrier_wait(&(Global->start));
-#line 666
-};
+  BARRIER(Global->start, P);
 }
 
 

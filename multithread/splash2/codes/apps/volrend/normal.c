@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "normal.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -45,21 +42,7 @@ NORMAL *norm_address;		/* Pointer to normal map                     */
 
 float nmag_epsilon;
 
-
-#line 45
-#include <pthread.h>
-#line 45
-#include <sys/time.h>
-#line 45
-#include <unistd.h>
-#line 45
-#include <stdlib.h>
-#line 45
-#include <malloc.h>
-#line 45
-extern pthread_t PThreadTable[];
-#line 45
-
+EXTERN_ENV
 
 #include "anl.h"
 
@@ -80,31 +63,7 @@ void Compute_Normal()
   Global->Index = NODE0;
 
 #ifndef SERIAL_PREPROC
-  for (i=1; i<num_nodes; i++) {
-#line 66
-	long	i, Error;
-#line 66
-
-#line 66
-	for (i = 0; i < () - 1; i++) {
-#line 66
-		Error = pthread_create(&PThreadTable[i], NULL, (void * (*)(void *))(Normal_Compute), NULL);
-#line 66
-		if (Error != 0) {
-#line 66
-			printf("Error in pthread_create().\n");
-#line 66
-			exit(-1);
-#line 66
-		}
-#line 66
-	}
-#line 66
-
-#line 66
-	Normal_Compute();
-#line 66
-}
+  for (i=1; i<num_nodes; i++) CREATE(Normal_Compute)
 #endif
 
   Normal_Compute();
@@ -120,7 +79,7 @@ void Allocate_Normal(address, length)
   printf("    Allocating normal map of %ld bytes...\n",
 	 length*sizeof(NORMAL));
 
-  *address = (NORMAL *)valloc(length*sizeof(NORMAL));;
+  *address = (NORMAL *)NU_MALLOC(length*sizeof(NORMAL),0);
 
   if (*address == NULL)
     Error("    No space available for map.\n");
@@ -146,9 +105,9 @@ void Normal_Compute()
   long xstart,xstop,ystart,ystop;
   long my_node;
 
-  {pthread_mutex_lock(&(Global->IndexLock));};
+  LOCK(Global->IndexLock);
   my_node = Global->Index++;
-  {pthread_mutex_unlock(&(Global->IndexLock));};
+  UNLOCK(Global->IndexLock);
   my_node = my_node%num_nodes;
 
 /*  POSSIBLE ENHANCEMENT:  Here's where one might bind the process to a
@@ -215,11 +174,7 @@ void Normal_Compute()
   }
 
 #ifndef SERIAL_PREPROC
-  {
-#line 177
-	pthread_barrier_wait(&(Global->SlaveBarrier));
-#line 177
-};
+  BARRIER(Global->SlaveBarrier,num_nodes);
 #endif
 }
 
@@ -281,7 +236,7 @@ NORMAL **address;
 {
   printf("    Deallocating normal map...\n");
 
-/*  ;;  */
+/*  G_FREE(*address);  */
 
   *address = NULL;
 }

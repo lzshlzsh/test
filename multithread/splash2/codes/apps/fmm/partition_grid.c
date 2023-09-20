@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "partition_grid.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -274,98 +271,98 @@ CheckBox (long my_id, box *b, long partition_level)
    num_errors = 0;
    if (b->type == CHILDLESS) {
       if (partition_level != -1) {
-	 {pthread_mutex_lock(&(G_Memory->io_lock));};
+	 LOCK(G_Memory->io_lock);
 	 printf("ERROR : CHILDLESS box in parent partition (B%f P%ld %ld)\n", b->id, my_id, b->proc);
 	 fflush(stdout);
-	 {pthread_mutex_unlock(&(G_Memory->io_lock));};
+	 UNLOCK(G_Memory->io_lock);
 	 num_errors += 1;
       }
       if (b->num_children != 0) {
-	 {pthread_mutex_lock(&(G_Memory->io_lock));};
+	 LOCK(G_Memory->io_lock);
 	 printf("ERROR : CHILDLESS box has children (B%f P%ld)\n", b->id, my_id);
 	 fflush(stdout);
-	 {pthread_mutex_unlock(&(G_Memory->io_lock));};
+	 UNLOCK(G_Memory->io_lock);
 	 num_errors += 1;
       }
       if (b->num_particles == 0) {
-	 {pthread_mutex_lock(&(G_Memory->io_lock));};
+	 LOCK(G_Memory->io_lock);
 	 printf("ERROR : CHILDLESS box has no particles (B%f P%ld)\n", b->id, my_id);
 	 fflush(stdout);
-	 {pthread_mutex_unlock(&(G_Memory->io_lock));};
+	 UNLOCK(G_Memory->io_lock);
 	 num_errors += 1;
       }
       if (b->particles[b->num_particles - 1] == NULL) {
-	 {pthread_mutex_lock(&(G_Memory->io_lock));};
+	 LOCK(G_Memory->io_lock);
 	 printf("ERROR : CHILDLESS box has fewer particles than expected ");
 	 printf("(B%f P%ld)\n", b->id, my_id);
 	 fflush(stdout);
-	 {pthread_mutex_unlock(&(G_Memory->io_lock));};
+	 UNLOCK(G_Memory->io_lock);
 	 num_errors += 1;
       }
       if (b->particles[b->num_particles] != NULL) {
-	 {pthread_mutex_lock(&(G_Memory->io_lock));};
+	 LOCK(G_Memory->io_lock);
 	 printf("ERROR : CHILDLESS box has more particles than expected ");
 	 printf("(B%f P%ld)\n", b->id, my_id);
 	 fflush(stdout);
-	 {pthread_mutex_unlock(&(G_Memory->io_lock));};
+	 UNLOCK(G_Memory->io_lock);
 	 num_errors += 1;
       }
    }
    else {
       if (partition_level == -1) {
-	 {pthread_mutex_lock(&(G_Memory->io_lock));};
+	 LOCK(G_Memory->io_lock);
 	 printf("ERROR : PARENT box in childless partition (B%f P%ld %ld)\n",
 		b->id, my_id, b->proc);
 	 fflush(stdout);
-	 {pthread_mutex_unlock(&(G_Memory->io_lock));};
+	 UNLOCK(G_Memory->io_lock);
 	 num_errors += 1;
       }
       else {
 	 if (partition_level != b->level) {
-	    {pthread_mutex_lock(&(G_Memory->io_lock));};
+	    LOCK(G_Memory->io_lock);
 	    printf("ERROR : PARENT box in wrong partition level ");
 	    printf("(%ld vs %ld) (B%f P%ld)\n", b->level, partition_level, b->id, my_id);
 	    fflush(stdout);
-	    {pthread_mutex_unlock(&(G_Memory->io_lock));};
+	    UNLOCK(G_Memory->io_lock);
 	    num_errors += 1;
 	 }
       }
       if (b->num_children == 0) {
-	 {pthread_mutex_lock(&(G_Memory->io_lock));};
+	 LOCK(G_Memory->io_lock);
 	 printf("ERROR : PARENT box has no children (B%f P%ld)\n", b->id, my_id);
 	 fflush(stdout);
-	 {pthread_mutex_unlock(&(G_Memory->io_lock));};
+	 UNLOCK(G_Memory->io_lock);
 	 num_errors += 1;
       }
       if (b->num_particles != 0) {
-	 {pthread_mutex_lock(&(G_Memory->io_lock));};
+	 LOCK(G_Memory->io_lock);
 	 printf("ERROR : PARENT box has particles (B%f P%ld)\n", b->id, my_id);
 	 fflush(stdout);
-	 {pthread_mutex_unlock(&(G_Memory->io_lock));};
+	 UNLOCK(G_Memory->io_lock);
 	 num_errors += 1;
       }
    }
    if (b->parent == NULL) {
       if (b != Grid) {
-	 {pthread_mutex_lock(&(G_Memory->io_lock));};
+	 LOCK(G_Memory->io_lock);
 	 if (b->type == CHILDLESS)
 	    printf("ERROR : Extra CHILDLESS box in partition (B%f P%ld)\n", b->id, my_id);
 	 else
 	    printf("ERROR : Extra PARENT box in partition (B%f P%ld)\n", b->id, my_id);
 	 fflush(stdout);
-	 {pthread_mutex_unlock(&(G_Memory->io_lock));};
+	 UNLOCK(G_Memory->io_lock);
 	 num_errors += 1;
       }
    }
    else {
       if (b->parent->children[b->child_num] != b) {
-	 {pthread_mutex_lock(&(G_Memory->io_lock));};
+	 LOCK(G_Memory->io_lock);
 	 if (b->type == CHILDLESS)
 	    printf("ERROR : Extra CHILDLESS box in partition (B%f P%ld)\n", b->id, my_id);
 	 else
 	    printf("ERROR : Extra PARENT box in partition (B%f P%ld)\n", b->id, my_id);
 	 fflush(stdout);
-	 {pthread_mutex_unlock(&(G_Memory->io_lock));};
+	 UNLOCK(G_Memory->io_lock);
 	 num_errors += 1;
       }
    }

@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "octree.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -68,21 +65,7 @@ long pyr_offset1,		/* Bit offset of desired bit within pyramid  */
      pyr_offset2;		/* Bit offset of bit within byte             */
 BYTE *pyr_address2;		/* Pointer to byte containing bit            */
 
-
-#line 68
-#include <pthread.h>
-#line 68
-#include <sys/time.h>
-#line 68
-#include <unistd.h>
-#line 68
-#include <stdlib.h>
-#line 68
-#include <malloc.h>
-#line 68
-extern pthread_t PThreadTable[];
-#line 68
-
+EXTERN_ENV
 
 #include "anl.h"
 
@@ -116,31 +99,7 @@ on all processors, don't do this create.
 */
 
 #ifndef SERIAL_PREPROC
-  for (i=1; i<num_nodes; i++) {
-#line 102
-	long	i, Error;
-#line 102
-
-#line 102
-	for (i = 0; i < () - 1; i++) {
-#line 102
-		Error = pthread_create(&PThreadTable[i], NULL, (void * (*)(void *))(Compute_Base), NULL);
-#line 102
-		if (Error != 0) {
-#line 102
-			printf("Error in pthread_create().\n");
-#line 102
-			exit(-1);
-#line 102
-		}
-#line 102
-	}
-#line 102
-
-#line 102
-	Compute_Base();
-#line 102
-}
+  for (i=1; i<num_nodes; i++) CREATE(Compute_Base)
 #endif
 
   Compute_Base();
@@ -155,31 +114,7 @@ on all processors, don't do this create.
 */
 
 #ifndef SERIAL_PREPROC
-  for (i=1; i<num_nodes; i++) {
-#line 117
-	long	i, Error;
-#line 117
-
-#line 117
-	for (i = 0; i < () - 1; i++) {
-#line 117
-		Error = pthread_create(&PThreadTable[i], NULL, (void * (*)(void *))(Or_Neighbors_In_Base), NULL);
-#line 117
-		if (Error != 0) {
-#line 117
-			printf("Error in pthread_create().\n");
-#line 117
-			exit(-1);
-#line 117
-		}
-#line 117
-	}
-#line 117
-
-#line 117
-	Or_Neighbors_In_Base();
-#line 117
-}
+  for (i=1; i<num_nodes; i++) CREATE(Or_Neighbors_In_Base)
 #endif
 
   Or_Neighbors_In_Base();
@@ -215,9 +150,9 @@ void Compute_Base()
   long xstart,xstop,ystart,ystop;
   long my_node;
 
-  {pthread_mutex_lock(&(Global->IndexLock));};
+  LOCK(Global->IndexLock);
   my_node = Global->Index++;
-  {pthread_mutex_unlock(&(Global->IndexLock));};
+  UNLOCK(Global->IndexLock);
   my_node = my_node%num_nodes;
 
 /*  POSSIBLE ENHANCEMENT:  Here's where one might bind the process to a
@@ -265,11 +200,7 @@ this barrier either.
 */
 
 #ifndef SERIAL_PREPROC
-  {
-#line 203
-	pthread_barrier_wait(&(Global->SlaveBarrier));
-#line 203
-};
+  BARRIER(Global->SlaveBarrier,num_nodes);
 #endif
 }
 
@@ -282,9 +213,9 @@ void Or_Neighbors_In_Base()
   long pmap_partition,zstart,zstop;
   long my_node;
 
-  {pthread_mutex_lock(&(Global->IndexLock));};
+  LOCK(Global->IndexLock);
   my_node = Global->Index++;
-  {pthread_mutex_unlock(&(Global->IndexLock));};
+  UNLOCK(Global->IndexLock);
   my_node = my_node%num_nodes;
 
 /*  POSSIBLE ENHANCEMENT:  Here's where one might bind the process to a
@@ -333,11 +264,7 @@ need this barrier either.
 */
 
 #ifndef SERIAL_PREPROC
-  {
-#line 267
-	pthread_barrier_wait(&(Global->SlaveBarrier));
-#line 267
-};
+  BARRIER(Global->SlaveBarrier,num_nodes);
 #endif
 }
 
@@ -355,7 +282,7 @@ void Allocate_Pyramid_Level(address, length)
 on all processors, then replace the macro below with a regular malloc.
 */
 
-  *address = (BYTE *)valloc(length*sizeof(BYTE));;
+  *address = (BYTE *)NU_MALLOC(length*sizeof(BYTE),0);
 
   if (*address == NULL)
     Error("    No space available for pyramid level.\n");

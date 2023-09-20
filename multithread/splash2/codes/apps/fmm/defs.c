@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "defs.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -73,11 +70,11 @@ LockedPrint (char *format_str, ...)
    va_list ap;
 
    va_start(ap, format_str);
-   {pthread_mutex_lock(&(G_Memory->io_lock));};
+   LOCK(G_Memory->io_lock);
    fflush(stdout);
    vfprintf(stdout, format_str, ap);
    fflush(stdout);
-   {pthread_mutex_unlock(&(G_Memory->io_lock));};
+   UNLOCK(G_Memory->io_lock);
    va_end(ap);
 }
 

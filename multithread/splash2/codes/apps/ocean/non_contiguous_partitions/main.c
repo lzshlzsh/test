@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "main.C"
 /*************************************************************************/
 /*                                                                       */
 /*  SPLASH Ocean Code                                                    */
@@ -32,23 +29,7 @@
 #include <stdlib.h>
 #include "decs.h"
 
-
-#line 32
-#include <pthread.h>
-#line 32
-#include <sys/time.h>
-#line 32
-#include <unistd.h>
-#line 32
-#include <stdlib.h>
-#line 32
-#include <malloc.h>
-#line 32
-#define MAX_THREADS 32
-#line 32
-pthread_t PThreadTable[MAX_THREADS];
-#line 32
-
+MAIN_ENV
 
 #define DEFAULT_N      258
 #define DEFAULT_P        1
@@ -148,17 +129,7 @@ int main(int argc, char *argv[])
    long ch;
    unsigned long start;
 
-   {
-#line 132
-	struct timeval	FullTime;
-#line 132
-
-#line 132
-	gettimeofday(&FullTime, NULL);
-#line 132
-	(start) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 132
-}
+   CLOCK(start)
 
    while ((ch = getopt(argc, argv, "n:p:e:r:t:soh")) != -1) {
      switch(ch) {
@@ -204,7 +175,7 @@ int main(int argc, char *argv[])
      }
    }
 
-   {;}
+   MAIN_INITENV(,60000000)
 
    logtest = im-2;
    numlev = 1;
@@ -232,141 +203,57 @@ int main(int argc, char *argv[])
    printf("    Error tolerance                    : %0.7g\n",tolerance);
    printf("\n");
 
-   gp = (struct Global_Private *) valloc((nprocs+1)*sizeof(struct Global_Private));;
+   gp = (struct Global_Private *) G_MALLOC((nprocs+1)*sizeof(struct Global_Private));
    for (i=0;i<nprocs;i++) {
      gp[i].multi_time = 0;
      gp[i].total_time = 0;
    }
-   global = (struct global_struct *) valloc(sizeof(struct global_struct));;
-   fields = (struct fields_struct *) valloc(sizeof(struct fields_struct));;
-   fields2 = (struct fields2_struct *) valloc(sizeof(struct fields2_struct));;
-   wrk1 = (struct wrk1_struct *) valloc(sizeof(struct wrk1_struct));;
-   wrk3 = (struct wrk3_struct *) valloc(sizeof(struct wrk3_struct));;
-   wrk2 = (struct wrk2_struct *) valloc(sizeof(struct wrk2_struct));;
-   wrk4 = (struct wrk4_struct *) valloc(sizeof(struct wrk4_struct));;
-   wrk6 = (struct wrk6_struct *) valloc(sizeof(struct wrk6_struct));;
-   wrk5 = (struct wrk5_struct *) valloc(sizeof(struct wrk5_struct));;
-   frcng = (struct frcng_struct *) valloc(sizeof(struct frcng_struct));;
-   iter = (struct iter_struct *) valloc(sizeof(struct iter_struct));;
-   guess = (struct guess_struct *) valloc(sizeof(struct guess_struct));;
-   multi = (struct multi_struct *) valloc(sizeof(struct multi_struct));;
-   locks = (struct locks_struct *) valloc(sizeof(struct locks_struct));;
-   bars = (struct bars_struct *) valloc(sizeof(struct bars_struct));;
+   global = (struct global_struct *) G_MALLOC(sizeof(struct global_struct));
+   fields = (struct fields_struct *) G_MALLOC(sizeof(struct fields_struct));
+   fields2 = (struct fields2_struct *) G_MALLOC(sizeof(struct fields2_struct));
+   wrk1 = (struct wrk1_struct *) G_MALLOC(sizeof(struct wrk1_struct));
+   wrk3 = (struct wrk3_struct *) G_MALLOC(sizeof(struct wrk3_struct));
+   wrk2 = (struct wrk2_struct *) G_MALLOC(sizeof(struct wrk2_struct));
+   wrk4 = (struct wrk4_struct *) G_MALLOC(sizeof(struct wrk4_struct));
+   wrk6 = (struct wrk6_struct *) G_MALLOC(sizeof(struct wrk6_struct));
+   wrk5 = (struct wrk5_struct *) G_MALLOC(sizeof(struct wrk5_struct));
+   frcng = (struct frcng_struct *) G_MALLOC(sizeof(struct frcng_struct));
+   iter = (struct iter_struct *) G_MALLOC(sizeof(struct iter_struct));
+   guess = (struct guess_struct *) G_MALLOC(sizeof(struct guess_struct));
+   multi = (struct multi_struct *) G_MALLOC(sizeof(struct multi_struct));
+   locks = (struct locks_struct *) G_MALLOC(sizeof(struct locks_struct));
+   bars = (struct bars_struct *) G_MALLOC(sizeof(struct bars_struct));
 
-   {pthread_mutex_init(&(locks->idlock), NULL);}
-   {pthread_mutex_init(&(locks->psiailock), NULL);}
-   {pthread_mutex_init(&(locks->psibilock), NULL);}
-   {pthread_mutex_init(&(locks->donelock), NULL);}
-   {pthread_mutex_init(&(locks->error_lock), NULL);}
-   {pthread_mutex_init(&(locks->bar_lock), NULL);}
+   LOCKINIT(locks->idlock)
+   LOCKINIT(locks->psiailock)
+   LOCKINIT(locks->psibilock)
+   LOCKINIT(locks->donelock)
+   LOCKINIT(locks->error_lock)
+   LOCKINIT(locks->bar_lock)
 
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 235
-	pthread_barrier_init(&(bars->iteration), NULL, nprocs);
-#line 235
-}
-   {
-#line 236
-	pthread_barrier_init(&(bars->gsudn), NULL, nprocs);
-#line 236
-}
-   {
-#line 237
-	pthread_barrier_init(&(bars->p_setup), NULL, nprocs);
-#line 237
-}
-   {
-#line 238
-	pthread_barrier_init(&(bars->p_redph), NULL, nprocs);
-#line 238
-}
-   {
-#line 239
-	pthread_barrier_init(&(bars->p_soln), NULL, nprocs);
-#line 239
-}
-   {
-#line 240
-	pthread_barrier_init(&(bars->p_subph), NULL, nprocs);
-#line 240
-}
-   {
-#line 241
-	pthread_barrier_init(&(bars->sl_prini), NULL, nprocs);
-#line 241
-}
-   {
-#line 242
-	pthread_barrier_init(&(bars->sl_psini), NULL, nprocs);
-#line 242
-}
-   {
-#line 243
-	pthread_barrier_init(&(bars->sl_onetime), NULL, nprocs);
-#line 243
-}
-   {
-#line 244
-	pthread_barrier_init(&(bars->sl_phase_1), NULL, nprocs);
-#line 244
-}
-   {
-#line 245
-	pthread_barrier_init(&(bars->sl_phase_2), NULL, nprocs);
-#line 245
-}
-   {
-#line 246
-	pthread_barrier_init(&(bars->sl_phase_3), NULL, nprocs);
-#line 246
-}
-   {
-#line 247
-	pthread_barrier_init(&(bars->sl_phase_4), NULL, nprocs);
-#line 247
-}
-   {
-#line 248
-	pthread_barrier_init(&(bars->sl_phase_5), NULL, nprocs);
-#line 248
-}
-   {
-#line 249
-	pthread_barrier_init(&(bars->sl_phase_6), NULL, nprocs);
-#line 249
-}
-   {
-#line 250
-	pthread_barrier_init(&(bars->sl_phase_7), NULL, nprocs);
-#line 250
-}
-   {
-#line 251
-	pthread_barrier_init(&(bars->sl_phase_8), NULL, nprocs);
-#line 251
-}
-   {
-#line 252
-	pthread_barrier_init(&(bars->sl_phase_9), NULL, nprocs);
-#line 252
-}
-   {
-#line 253
-	pthread_barrier_init(&(bars->sl_phase_10), NULL, nprocs);
-#line 253
-}
-   {
-#line 254
-	pthread_barrier_init(&(bars->error_barrier), NULL, nprocs);
-#line 254
-}
+   BARINIT(bars->iteration, nprocs)
+   BARINIT(bars->gsudn, nprocs)
+   BARINIT(bars->p_setup, nprocs)
+   BARINIT(bars->p_redph, nprocs)
+   BARINIT(bars->p_soln, nprocs)
+   BARINIT(bars->p_subph, nprocs)
+   BARINIT(bars->sl_prini, nprocs)
+   BARINIT(bars->sl_psini, nprocs)
+   BARINIT(bars->sl_onetime, nprocs)
+   BARINIT(bars->sl_phase_1, nprocs)
+   BARINIT(bars->sl_phase_2, nprocs)
+   BARINIT(bars->sl_phase_3, nprocs)
+   BARINIT(bars->sl_phase_4, nprocs)
+   BARINIT(bars->sl_phase_5, nprocs)
+   BARINIT(bars->sl_phase_6, nprocs)
+   BARINIT(bars->sl_phase_7, nprocs)
+   BARINIT(bars->sl_phase_8, nprocs)
+   BARINIT(bars->sl_phase_9, nprocs)
+   BARINIT(bars->sl_phase_10, nprocs)
+   BARINIT(bars->error_barrier, nprocs)
 #else
-   {
-#line 256
-	pthread_barrier_init(&(bars->barrier), NULL, nprocs);
-#line 256
-}
+   BARINIT(bars->barrier, nprocs)
 #endif
 
    imx[numlev-1] = im;
@@ -557,61 +444,9 @@ int main(int argc, char *argv[])
      printf("                       MULTIGRID OUTPUTS\n");
    }
 
-   {
-#line 447
-	long	i, Error;
-#line 447
-
-#line 447
-	for (i = 0; i < (nprocs) - 1; i++) {
-#line 447
-		Error = pthread_create(&PThreadTable[i], NULL, (void * (*)(void *))(slave), NULL);
-#line 447
-		if (Error != 0) {
-#line 447
-			printf("Error in pthread_create().\n");
-#line 447
-			exit(-1);
-#line 447
-		}
-#line 447
-	}
-#line 447
-
-#line 447
-	slave();
-#line 447
-};
-   {
-#line 448
-	long	i, Error;
-#line 448
-	for (i = 0; i < (nprocs) - 1; i++) {
-#line 448
-		Error = pthread_join(PThreadTable[i], NULL);
-#line 448
-		if (Error != 0) {
-#line 448
-			printf("Error in pthread_join().\n");
-#line 448
-			exit(-1);
-#line 448
-		}
-#line 448
-	}
-#line 448
-};
-   {
-#line 449
-	struct timeval	FullTime;
-#line 449
-
-#line 449
-	gettimeofday(&FullTime, NULL);
-#line 449
-	(computeend) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 449
-}
+   CREATE(slave, nprocs);
+   WAIT_FOR_END(nprocs);
+   CLOCK(computeend)
 
    printf("\n");
    printf("                       PROCESS STATISTICS\n");
@@ -668,7 +503,7 @@ int main(int argc, char *argv[])
    printf("    (excludes first timestep)\n");
    printf("\n");
 
-   {exit(0);}
+   MAIN_END
 }
 
 long log_2(long number)

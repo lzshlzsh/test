@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "load.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -17,21 +14,7 @@
 /*                                                                       */
 /*************************************************************************/
 
-
-#line 17
-#include <pthread.h>
-#line 17
-#include <sys/time.h>
-#line 17
-#include <unistd.h>
-#line 17
-#include <stdlib.h>
-#line 17
-#include <malloc.h>
-#line 17
-extern pthread_t PThreadTable[];
-#line 17
-
+EXTERN_ENV
 #define global extern
 
 #include "stdinc.h"
@@ -59,23 +42,15 @@ void maketree(long ProcessId)
 				 ProcessId);
       }
       else {
-	 {pthread_mutex_lock(&(Global->io_lock));};
+	 LOCK(Global->io_lock);
 	 fprintf(stderr, "Process %ld found body %ld to have zero mass\n",
 		 ProcessId, (long) p);
-	 {pthread_mutex_unlock(&(Global->io_lock));};
+	 UNLOCK(Global->io_lock);
       }
    }
-   {
-#line 51
-	pthread_barrier_wait(&(Global->Barrier));
-#line 51
-};
+   BARRIER(Global->Barrier,NPROC);
    hackcofm(ProcessId );
-   {
-#line 53
-	pthread_barrier_wait(&(Global->Barrier));
-#line 53
-};
+   BARRIER(Global->Barrier,NPROC);
 }
 
 cellptr InitCell(cellptr parent, long ProcessId)
@@ -239,7 +214,7 @@ nodeptr loadtree(bodyptr p, cellptr root, long ProcessId)
       }
       if (*qptr == NULL) {
 	 /* lock the parent cell */
-	 {pthread_mutex_lock(&CellLock->CL[((cellptr) mynode)->seqnum % MAXLOCK]);};
+	 ALOCK(CellLock->CL, ((cellptr) mynode)->seqnum % MAXLOCK);
 	 if (*qptr == NULL) {
 	    le = InitLeaf((cellptr) mynode, ProcessId);
 	    Parent(p) = (nodeptr) le;
@@ -250,12 +225,12 @@ nodeptr loadtree(bodyptr p, cellptr root, long ProcessId)
 	    *qptr = (nodeptr) le;
 	    flag = FALSE;
 	 }
-	 {pthread_mutex_unlock(&CellLock->CL[((cellptr) mynode)->seqnum % MAXLOCK]);};
+	 AULOCK(CellLock->CL, ((cellptr) mynode)->seqnum % MAXLOCK);
 	 /* unlock the parent cell */
       }
       if (flag && *qptr && (Type(*qptr) == LEAF)) {
 	 /*   reached a "leaf"?      */
-	 {pthread_mutex_lock(&CellLock->CL[((cellptr) mynode)->seqnum % MAXLOCK]);};
+	 ALOCK(CellLock->CL, ((cellptr) mynode)->seqnum % MAXLOCK);
 	 /* lock the parent cell */
 	 if (Type(*qptr) == LEAF) {             /* still a "leaf"?      */
 	    le = (leafptr) *qptr;
@@ -271,7 +246,7 @@ nodeptr loadtree(bodyptr p, cellptr root, long ProcessId)
 	       flag = FALSE;
 	    }
 	 }
-	 {pthread_mutex_unlock(&CellLock->CL[((cellptr) mynode)->seqnum % MAXLOCK]);};
+	 AULOCK(CellLock->CL, ((cellptr) mynode)->seqnum % MAXLOCK);
 	 /* unlock the node           */
       }
       if (flag) {

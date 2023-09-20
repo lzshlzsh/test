@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "option.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -79,21 +76,7 @@ long pyr_lowest_level;  		/*   lowest level of pyramid to look at      */
 float angle[NM];                /* initial viewing angle                     */
 
 
-
-#line 79
-#include <pthread.h>
-#line 79
-#include <sys/time.h>
-#line 79
-#include <unistd.h>
-#line 79
-#include <stdlib.h>
-#line 79
-#include <malloc.h>
-#line 79
-extern pthread_t PThreadTable[];
-#line 79
-
+EXTERN_ENV
 
 void Init_Options()
 {

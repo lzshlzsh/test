@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "main.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -42,23 +39,7 @@
 /*                                                                       */
 /*************************************************************************/
 
-
-#line 42
-#include <pthread.h>
-#line 42
-#include <sys/time.h>
-#line 42
-#include <unistd.h>
-#line 42
-#include <stdlib.h>
-#line 42
-#include <malloc.h>
-#line 42
-#define MAX_THREADS 32
-#line 42
-pthread_t PThreadTable[MAX_THREADS];
-#line 42
-
+MAIN_ENV
 
 #define DEFAULT_N      258
 #define DEFAULT_P        1
@@ -177,17 +158,7 @@ int main(int argc, char *argv[])
    unsigned long computeend;
    unsigned long start;
 
-   {
-#line 161
-	struct timeval	FullTime;
-#line 161
-
-#line 161
-	gettimeofday(&FullTime, NULL);
-#line 161
-	(start) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 161
-}
+   CLOCK(start)
 
    while ((ch = getopt(argc, argv, "n:p:e:r:t:soh")) != -1) {
      switch(ch) {
@@ -229,7 +200,7 @@ int main(int argc, char *argv[])
      }
    }
 
-   {;}
+   MAIN_INITENV(,60000000)
 
    jm = im;
    printf("\n");
@@ -281,14 +252,14 @@ int main(int argc, char *argv[])
      exit(-1);
    }
 
-   imx = (long *) valloc(numlev*sizeof(long));;
-   jmx = (long *) valloc(numlev*sizeof(long));;
-   lev_res = (double *) valloc(numlev*sizeof(double));;
-   lev_tol = (double *) valloc(numlev*sizeof(double));;
-   i_int_coeff = (double *) valloc(numlev*sizeof(double));;
-   j_int_coeff = (double *) valloc(numlev*sizeof(double));;
-   xpts_per_proc = (long *) valloc(numlev*sizeof(long));;
-   ypts_per_proc = (long *) valloc(numlev*sizeof(long));;
+   imx = (long *) G_MALLOC(numlev*sizeof(long));
+   jmx = (long *) G_MALLOC(numlev*sizeof(long));
+   lev_res = (double *) G_MALLOC(numlev*sizeof(double));
+   lev_tol = (double *) G_MALLOC(numlev*sizeof(double));
+   i_int_coeff = (double *) G_MALLOC(numlev*sizeof(double));
+   j_int_coeff = (double *) G_MALLOC(numlev*sizeof(double));
+   xpts_per_proc = (long *) G_MALLOC(numlev*sizeof(long));
+   ypts_per_proc = (long *) G_MALLOC(numlev*sizeof(long));
 
    imx[numlev-1] = im;
    jmx[numlev-1] = jm;
@@ -325,50 +296,50 @@ int main(int argc, char *argv[])
    }
 
    d_size = nprocs*sizeof(double ***);
-   psi = (double ****) valloc(d_size);;
-   psim = (double ****) valloc(d_size);;
-   work1 = (double ****) valloc(d_size);;
-   work4 = (double ****) valloc(d_size);;
-   work5 = (double ****) valloc(d_size);;
-   work7 = (double ****) valloc(d_size);;
-   temparray = (double ****) valloc(d_size);;
+   psi = (double ****) G_MALLOC(d_size);
+   psim = (double ****) G_MALLOC(d_size);
+   work1 = (double ****) G_MALLOC(d_size);
+   work4 = (double ****) G_MALLOC(d_size);
+   work5 = (double ****) G_MALLOC(d_size);
+   work7 = (double ****) G_MALLOC(d_size);
+   temparray = (double ****) G_MALLOC(d_size);
 
    d_size = 2*sizeof(double **);
    for (i=0;i<nprocs;i++) {
-     psi[i] = (double ***) valloc(d_size);;
-     psim[i] = (double ***) valloc(d_size);;
-     work1[i] = (double ***) valloc(d_size);;
-     work4[i] = (double ***) valloc(d_size);;
-     work5[i] = (double ***) valloc(d_size);;
-     work7[i] = (double ***) valloc(d_size);;
-     temparray[i] = (double ***) valloc(d_size);;
+     psi[i] = (double ***) G_MALLOC(d_size);
+     psim[i] = (double ***) G_MALLOC(d_size);
+     work1[i] = (double ***) G_MALLOC(d_size);
+     work4[i] = (double ***) G_MALLOC(d_size);
+     work5[i] = (double ***) G_MALLOC(d_size);
+     work7[i] = (double ***) G_MALLOC(d_size);
+     temparray[i] = (double ***) G_MALLOC(d_size);
    }
 
    d_size = nprocs*sizeof(double **);
-   psium = (double ***) valloc(d_size);;
-   psilm = (double ***) valloc(d_size);;
-   psib = (double ***) valloc(d_size);;
-   ga = (double ***) valloc(d_size);;
-   gb = (double ***) valloc(d_size);;
-   work2 = (double ***) valloc(d_size);;
-   work3 = (double ***) valloc(d_size);;
-   work6 = (double ***) valloc(d_size);;
-   tauz = (double ***) valloc(d_size);;
-   oldga = (double ***) valloc(d_size);;
-   oldgb = (double ***) valloc(d_size);;
+   psium = (double ***) G_MALLOC(d_size);
+   psilm = (double ***) G_MALLOC(d_size);
+   psib = (double ***) G_MALLOC(d_size);
+   ga = (double ***) G_MALLOC(d_size);
+   gb = (double ***) G_MALLOC(d_size);
+   work2 = (double ***) G_MALLOC(d_size);
+   work3 = (double ***) G_MALLOC(d_size);
+   work6 = (double ***) G_MALLOC(d_size);
+   tauz = (double ***) G_MALLOC(d_size);
+   oldga = (double ***) G_MALLOC(d_size);
+   oldgb = (double ***) G_MALLOC(d_size);
 
-   gp = (struct Global_Private *) valloc((nprocs+1)*sizeof(struct Global_Private));;
+   gp = (struct Global_Private *) G_MALLOC((nprocs+1)*sizeof(struct Global_Private));
    for (i=0;i<nprocs;i++) {
-     gp[i].rel_num_x = (long *) valloc(numlev*sizeof(long));;
-     gp[i].rel_num_y = (long *) valloc(numlev*sizeof(long));;
-     gp[i].eist = (long *) valloc(numlev*sizeof(long));;
-     gp[i].ejst = (long *) valloc(numlev*sizeof(long));;
-     gp[i].oist = (long *) valloc(numlev*sizeof(long));;
-     gp[i].ojst = (long *) valloc(numlev*sizeof(long));;
-     gp[i].rlist = (long *) valloc(numlev*sizeof(long));;
-     gp[i].rljst = (long *) valloc(numlev*sizeof(long));;
-     gp[i].rlien = (long *) valloc(numlev*sizeof(long));;
-     gp[i].rljen = (long *) valloc(numlev*sizeof(long));;
+     gp[i].rel_num_x = (long *) G_MALLOC(numlev*sizeof(long));
+     gp[i].rel_num_y = (long *) G_MALLOC(numlev*sizeof(long));
+     gp[i].eist = (long *) G_MALLOC(numlev*sizeof(long));
+     gp[i].ejst = (long *) G_MALLOC(numlev*sizeof(long));
+     gp[i].oist = (long *) G_MALLOC(numlev*sizeof(long));
+     gp[i].ojst = (long *) G_MALLOC(numlev*sizeof(long));
+     gp[i].rlist = (long *) G_MALLOC(numlev*sizeof(long));
+     gp[i].rljst = (long *) G_MALLOC(numlev*sizeof(long));
+     gp[i].rlien = (long *) G_MALLOC(numlev*sizeof(long));
+     gp[i].rljen = (long *) G_MALLOC(numlev*sizeof(long));
      gp[i].multi_time = 0;
      gp[i].total_time = 0;
    }
@@ -380,37 +351,37 @@ int main(int argc, char *argv[])
 
    d_size = x_part*y_part*sizeof(double) + y_part*sizeof(double *);
 
-   global = (struct global_struct *) valloc(sizeof(struct global_struct));;
+   global = (struct global_struct *) G_MALLOC(sizeof(struct global_struct));
    for (i=0;i<nprocs;i++) {
-     psi[i][0] = (double **) valloc(d_size);;
-     psi[i][1] = (double **) valloc(d_size);;
-     psim[i][0] = (double **) valloc(d_size);;
-     psim[i][1] = (double **) valloc(d_size);;
-     psium[i] = (double **) valloc(d_size);;
-     psilm[i] = (double **) valloc(d_size);;
-     psib[i] = (double **) valloc(d_size);;
-     ga[i] = (double **) valloc(d_size);;
-     gb[i] = (double **) valloc(d_size);;
-     work1[i][0] = (double **) valloc(d_size);;
-     work1[i][1] = (double **) valloc(d_size);;
-     work2[i] = (double **) valloc(d_size);;
-     work3[i] = (double **) valloc(d_size);;
-     work4[i][0] = (double **) valloc(d_size);;
-     work4[i][1] = (double **) valloc(d_size);;
-     work5[i][0] = (double **) valloc(d_size);;
-     work5[i][1] = (double **) valloc(d_size);;
-     work6[i] = (double **) valloc(d_size);;
-     work7[i][0] = (double **) valloc(d_size);;
-     work7[i][1] = (double **) valloc(d_size);;
-     temparray[i][0] = (double **) valloc(d_size);;
-     temparray[i][1] = (double **) valloc(d_size);;
-     tauz[i] = (double **) valloc(d_size);;
-     oldga[i] = (double **) valloc(d_size);;
-     oldgb[i] = (double **) valloc(d_size);;
+     psi[i][0] = (double **) G_MALLOC(d_size);
+     psi[i][1] = (double **) G_MALLOC(d_size);
+     psim[i][0] = (double **) G_MALLOC(d_size);
+     psim[i][1] = (double **) G_MALLOC(d_size);
+     psium[i] = (double **) G_MALLOC(d_size);
+     psilm[i] = (double **) G_MALLOC(d_size);
+     psib[i] = (double **) G_MALLOC(d_size);
+     ga[i] = (double **) G_MALLOC(d_size);
+     gb[i] = (double **) G_MALLOC(d_size);
+     work1[i][0] = (double **) G_MALLOC(d_size);
+     work1[i][1] = (double **) G_MALLOC(d_size);
+     work2[i] = (double **) G_MALLOC(d_size);
+     work3[i] = (double **) G_MALLOC(d_size);
+     work4[i][0] = (double **) G_MALLOC(d_size);
+     work4[i][1] = (double **) G_MALLOC(d_size);
+     work5[i][0] = (double **) G_MALLOC(d_size);
+     work5[i][1] = (double **) G_MALLOC(d_size);
+     work6[i] = (double **) G_MALLOC(d_size);
+     work7[i][0] = (double **) G_MALLOC(d_size);
+     work7[i][1] = (double **) G_MALLOC(d_size);
+     temparray[i][0] = (double **) G_MALLOC(d_size);
+     temparray[i][1] = (double **) G_MALLOC(d_size);
+     tauz[i] = (double **) G_MALLOC(d_size);
+     oldga[i] = (double **) G_MALLOC(d_size);
+     oldgb[i] = (double **) G_MALLOC(d_size);
    }
-   f = (double *) valloc(im*sizeof(double));;
+   f = (double *) G_MALLOC(im*sizeof(double));
 
-   multi = (struct multi_struct *) valloc(sizeof(struct multi_struct));;
+   multi = (struct multi_struct *) G_MALLOC(sizeof(struct multi_struct));
 
    d_size = numlev*sizeof(double **);
    if (numlev%2 == 1) {         /* To make sure that the actual data
@@ -432,126 +403,42 @@ int main(int argc, char *argv[])
    }
 
    d_size += nprocs*sizeof(double ***);
-   q_multi = (double ****) valloc(d_size);;
-   rhs_multi = (double ****) valloc(d_size);;
+   q_multi = (double ****) G_MALLOC(d_size);
+   rhs_multi = (double ****) G_MALLOC(d_size);
 
-   locks = (struct locks_struct *) valloc(sizeof(struct locks_struct));;
-   bars = (struct bars_struct *) valloc(sizeof(struct bars_struct));;
+   locks = (struct locks_struct *) G_MALLOC(sizeof(struct locks_struct));
+   bars = (struct bars_struct *) G_MALLOC(sizeof(struct bars_struct));
 
-   {pthread_mutex_init(&(locks->idlock), NULL);}
-   {pthread_mutex_init(&(locks->psiailock), NULL);}
-   {pthread_mutex_init(&(locks->psibilock), NULL);}
-   {pthread_mutex_init(&(locks->donelock), NULL);}
-   {pthread_mutex_init(&(locks->error_lock), NULL);}
-   {pthread_mutex_init(&(locks->bar_lock), NULL);}
+   LOCKINIT(locks->idlock)
+   LOCKINIT(locks->psiailock)
+   LOCKINIT(locks->psibilock)
+   LOCKINIT(locks->donelock)
+   LOCKINIT(locks->error_lock)
+   LOCKINIT(locks->bar_lock)
 
 #if defined(MULTIPLE_BARRIERS)
-   {
-#line 420
-	pthread_barrier_init(&(bars->iteration), NULL, nprocs);
-#line 420
-}
-   {
-#line 421
-	pthread_barrier_init(&(bars->gsudn), NULL, nprocs);
-#line 421
-}
-   {
-#line 422
-	pthread_barrier_init(&(bars->p_setup), NULL, nprocs);
-#line 422
-}
-   {
-#line 423
-	pthread_barrier_init(&(bars->p_redph), NULL, nprocs);
-#line 423
-}
-   {
-#line 424
-	pthread_barrier_init(&(bars->p_soln), NULL, nprocs);
-#line 424
-}
-   {
-#line 425
-	pthread_barrier_init(&(bars->p_subph), NULL, nprocs);
-#line 425
-}
-   {
-#line 426
-	pthread_barrier_init(&(bars->sl_prini), NULL, nprocs);
-#line 426
-}
-   {
-#line 427
-	pthread_barrier_init(&(bars->sl_psini), NULL, nprocs);
-#line 427
-}
-   {
-#line 428
-	pthread_barrier_init(&(bars->sl_onetime), NULL, nprocs);
-#line 428
-}
-   {
-#line 429
-	pthread_barrier_init(&(bars->sl_phase_1), NULL, nprocs);
-#line 429
-}
-   {
-#line 430
-	pthread_barrier_init(&(bars->sl_phase_2), NULL, nprocs);
-#line 430
-}
-   {
-#line 431
-	pthread_barrier_init(&(bars->sl_phase_3), NULL, nprocs);
-#line 431
-}
-   {
-#line 432
-	pthread_barrier_init(&(bars->sl_phase_4), NULL, nprocs);
-#line 432
-}
-   {
-#line 433
-	pthread_barrier_init(&(bars->sl_phase_5), NULL, nprocs);
-#line 433
-}
-   {
-#line 434
-	pthread_barrier_init(&(bars->sl_phase_6), NULL, nprocs);
-#line 434
-}
-   {
-#line 435
-	pthread_barrier_init(&(bars->sl_phase_7), NULL, nprocs);
-#line 435
-}
-   {
-#line 436
-	pthread_barrier_init(&(bars->sl_phase_8), NULL, nprocs);
-#line 436
-}
-   {
-#line 437
-	pthread_barrier_init(&(bars->sl_phase_9), NULL, nprocs);
-#line 437
-}
-   {
-#line 438
-	pthread_barrier_init(&(bars->sl_phase_10), NULL, nprocs);
-#line 438
-}
-   {
-#line 439
-	pthread_barrier_init(&(bars->error_barrier), NULL, nprocs);
-#line 439
-}
+   BARINIT(bars->iteration, nprocs)
+   BARINIT(bars->gsudn, nprocs)
+   BARINIT(bars->p_setup, nprocs)
+   BARINIT(bars->p_redph, nprocs)
+   BARINIT(bars->p_soln, nprocs)
+   BARINIT(bars->p_subph, nprocs)
+   BARINIT(bars->sl_prini, nprocs)
+   BARINIT(bars->sl_psini, nprocs)
+   BARINIT(bars->sl_onetime, nprocs)
+   BARINIT(bars->sl_phase_1, nprocs)
+   BARINIT(bars->sl_phase_2, nprocs)
+   BARINIT(bars->sl_phase_3, nprocs)
+   BARINIT(bars->sl_phase_4, nprocs)
+   BARINIT(bars->sl_phase_5, nprocs)
+   BARINIT(bars->sl_phase_6, nprocs)
+   BARINIT(bars->sl_phase_7, nprocs)
+   BARINIT(bars->sl_phase_8, nprocs)
+   BARINIT(bars->sl_phase_9, nprocs)
+   BARINIT(bars->sl_phase_10, nprocs)
+   BARINIT(bars->error_barrier, nprocs)
 #else
-   {
-#line 441
-	pthread_barrier_init(&(bars->barrier), NULL, nprocs);
-#line 441
-}
+   BARINIT(bars->barrier, nprocs)
 #endif
 
    link_all();
@@ -588,61 +475,9 @@ int main(int argc, char *argv[])
      printf("                       MULTIGRID OUTPUTS\n");
    }
 
-   {
-#line 478
-	long	i, Error;
-#line 478
-
-#line 478
-	for (i = 0; i < (nprocs) - 1; i++) {
-#line 478
-		Error = pthread_create(&PThreadTable[i], NULL, (void * (*)(void *))(slave), NULL);
-#line 478
-		if (Error != 0) {
-#line 478
-			printf("Error in pthread_create().\n");
-#line 478
-			exit(-1);
-#line 478
-		}
-#line 478
-	}
-#line 478
-
-#line 478
-	slave();
-#line 478
-};
-   {
-#line 479
-	long	i, Error;
-#line 479
-	for (i = 0; i < (nprocs) - 1; i++) {
-#line 479
-		Error = pthread_join(PThreadTable[i], NULL);
-#line 479
-		if (Error != 0) {
-#line 479
-			printf("Error in pthread_join().\n");
-#line 479
-			exit(-1);
-#line 479
-		}
-#line 479
-	}
-#line 479
-};
-   {
-#line 480
-	struct timeval	FullTime;
-#line 480
-
-#line 480
-	gettimeofday(&FullTime, NULL);
-#line 480
-	(computeend) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 480
-}
+   CREATE(slave, nprocs);
+   WAIT_FOR_END(nprocs);
+   CLOCK(computeend)
 
    printf("\n");
    printf("                       PROCESS STATISTICS\n");
@@ -699,7 +534,7 @@ int main(int argc, char *argv[])
    printf("    (excludes first timestep)\n");
    printf("\n");
 
-   {exit(0);}
+   MAIN_END
 }
 
 long log_2(long number)

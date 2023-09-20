@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "construct_grid.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -68,32 +65,12 @@ ConstructGrid (long my_id, time_info *local_time, long time_all)
    unsigned long init = 0, start = 0, finish;
 
    if (time_all)
-      {
-#line 68
-	struct timeval	FullTime;
-#line 68
-
-#line 68
-	gettimeofday(&FullTime, NULL);
-#line 68
-	(init) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 68
-};
+      CLOCK(init);
    DetermineGridSize(my_id);   /* Finds the four corners of the grid. */
    FreeBoxes(my_id);
    InitPartition(my_id);
    if (time_all)
-      {
-#line 73
-	struct timeval	FullTime;
-#line 73
-
-#line 73
-	gettimeofday(&FullTime, NULL);
-#line 73
-	(start) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 73
-};
+      CLOCK(start);
    if (MY_NUM_PARTICLES > 0) {
       ConstructLocalGrid(my_id);  /* Each processor constructs their own tree
 				     based on only their particles */
@@ -101,24 +78,10 @@ ConstructGrid (long my_id, time_info *local_time, long time_all)
 				  global tree. This step contains
 				  communication between processors. */
    }
-   {
-#line 81
-	pthread_barrier_wait(&(G_Memory->synch));
-#line 81
-};
+   BARRIER(G_Memory->synch, Number_Of_Processors);
    CleanupGrid(my_id);
    if (time_all)
-      {
-#line 84
-	struct timeval	FullTime;
-#line 84
-
-#line 84
-	gettimeofday(&FullTime, NULL);
-#line 84
-	(finish) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 84
-};
+      CLOCK(finish);
 
    if (time_all) {
       local_time[MY_TIME_STEP].other_time = start - init;
@@ -133,36 +96,12 @@ ConstructLists (long my_id, time_info *local_time, long time_all)
    unsigned long start, finish;
 
    if (time_all)
-      {
-#line 99
-	struct timeval	FullTime;
-#line 99
-
-#line 99
-	gettimeofday(&FullTime, NULL);
-#line 99
-	(start) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 99
-};
+      CLOCK(start);
    PartitionIterate(my_id, ConstructGridLists, TOP);
-   {
-#line 101
-	pthread_barrier_wait(&(G_Memory->synch));
-#line 101
-};
+   BARRIER(G_Memory->synch, Number_Of_Processors);
    PartitionIterate(my_id, ConstructInteractionLists, BOTTOM);
    if (time_all)
-      {
-#line 104
-	struct timeval	FullTime;
-#line 104
-
-#line 104
-	gettimeofday(&FullTime, NULL);
-#line 104
-	(finish) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 104
-};
+      CLOCK(finish);
 
    if (time_all) {
       local_time[MY_TIME_STEP].list_time = finish - start;
@@ -180,17 +119,7 @@ DestroyGrid (long my_id, time_info *local_time, long time_all)
    unsigned long start = 0, finish;
 
    if (time_all)
-      {
-#line 122
-	struct timeval	FullTime;
-#line 122
-
-#line 122
-	gettimeofday(&FullTime, NULL);
-#line 122
-	(start) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 122
-};
+      CLOCK(start);
    b_scan = Local[my_id].Childless_Partition;
    MY_NUM_PARTICLES = 0;
    while (b_scan != NULL) {
@@ -210,17 +139,7 @@ DestroyGrid (long my_id, time_info *local_time, long time_all)
    if (my_id == 0)
       Grid = NULL;
    if (time_all) {
-      {
-#line 142
-	struct timeval	FullTime;
-#line 142
-
-#line 142
-	gettimeofday(&FullTime, NULL);
-#line 142
-	(finish) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 142
-};
+      CLOCK(finish);
       local_time[MY_TIME_STEP].other_time += finish - start;
    }
 }
@@ -245,26 +164,14 @@ PrintGrid (long my_id)
 	 printf("Boxes :\n\n");
       }
       fflush(stdout);
-      {
-#line 167
-	pthread_barrier_wait(&(G_Memory->synch));
-#line 167
-};
+      BARRIER(G_Memory->synch, Number_Of_Processors);
       PartitionIterate(my_id, PrintBox, TOP);
-      {
-#line 169
-	pthread_barrier_wait(&(G_Memory->synch));
-#line 169
-};
+      BARRIER(G_Memory->synch, Number_Of_Processors);
       if (my_id == 0) {
 	 printf("\n");
       }
       fflush(stdout);
-      {
-#line 174
-	pthread_barrier_wait(&(G_Memory->synch));
-#line 174
-};
+      BARRIER(G_Memory->synch, Number_Of_Processors);
    }
    else
       printf("Adaptive grid has not been initialized yet.\n");
@@ -358,11 +265,7 @@ MergeLocalGridSize (long my_id)
    my_f_array[1] = Local[my_id].Local_X_Min;
    my_f_array[2] = Local[my_id].Local_Y_Max;
    my_f_array[3] = Local[my_id].Local_Y_Min;
-   {
-#line 268
-	pthread_barrier_wait(&(G_Memory->synch));
-#line 268
-};
+   BARRIER(G_Memory->synch, Number_Of_Processors);
 
    for (i = 0; i < Number_Of_Processors; i++) {
       their_f_array = G_Memory->f_array[i];
@@ -837,17 +740,17 @@ InsertBoxInGrid (long my_id, box *b, box *pb)
    long success;
 
    if (pb == NULL) {
-      {pthread_mutex_lock(&(G_Memory->single_lock));};
+      LOCK(G_Memory->single_lock);
       if (Grid == NULL) {
 	 Grid = b;
 	 success = TRUE;
       }
       else
 	 success = FALSE;
-      {pthread_mutex_unlock(&(G_Memory->single_lock));};
+      UNLOCK(G_Memory->single_lock);
    }
    else {
-      {pthread_mutex_lock(&G_Memory->lock_array[pb->particle_lock_index]);};
+      ALOCK(G_Memory->lock_array, pb->particle_lock_index);
       if (pb->children[b->child_num] == NULL) {
 	 pb->children[b->child_num] = b;
 	 pb->num_children += 1;
@@ -856,7 +759,7 @@ InsertBoxInGrid (long my_id, box *b, box *pb)
       }
       else
 	 success = FALSE;
-      {pthread_mutex_unlock(&G_Memory->lock_array[pb->particle_lock_index]);};
+      AULOCK(G_Memory->lock_array, pb->particle_lock_index);
    }
    if (success == TRUE)
       InsertSubtreeInPartition(my_id, b);
@@ -870,17 +773,17 @@ RemoveBoxFromGrid (box *b, box *pb)
    long success;
 
    if (pb == NULL) {
-      {pthread_mutex_lock(&(G_Memory->single_lock));};
+      LOCK(G_Memory->single_lock);
       if (Grid == b) {
 	 Grid = NULL;
 	 success = TRUE;
       }
       else
 	 success = FALSE;
-      {pthread_mutex_unlock(&(G_Memory->single_lock));};
+      UNLOCK(G_Memory->single_lock);
    }
    else {
-      {pthread_mutex_lock(&G_Memory->lock_array[pb->particle_lock_index]);};
+      ALOCK(G_Memory->lock_array, pb->particle_lock_index);
       if (pb->children[b->child_num] == b) {
 	 pb->children[b->child_num] = NULL;
 	 b->parent = NULL;
@@ -889,7 +792,7 @@ RemoveBoxFromGrid (box *b, box *pb)
       }
       else
 	 success = FALSE;
-      {pthread_mutex_unlock(&G_Memory->lock_array[pb->particle_lock_index]);};
+      AULOCK(G_Memory->lock_array, pb->particle_lock_index);
    }
    return success;
 }

@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "main.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -38,23 +35,7 @@
 
 #define SH_MEM_AMT 60000000
 
-
-#line 38
-#include <pthread.h>
-#line 38
-#include <sys/time.h>
-#line 38
-#include <unistd.h>
-#line 38
-#include <stdlib.h>
-#line 38
-#include <malloc.h>
-#line 38
-#define MAX_THREADS 32
-#line 38
-pthread_t PThreadTable[MAX_THREADS];
-#line 38
-
+MAIN_ENV
 
 #include "anl.h"
 
@@ -92,7 +73,7 @@ int main(int argc, char *argv[])
     exit(-1);
   }
 
-  {;};
+  MAIN_INITENV(, SH_MEM_AMT);
 
   num_nodes = atol(argv[1]);
 
@@ -110,46 +91,10 @@ int main(int argc, char *argv[])
   Frame();
 
 /*  if (num_nodes > 1)
-    {
-#line 94
-	long	i, Error;
-#line 94
-	for (i = 0; i < (num_nodes-1) - 1; i++) {
-#line 94
-		Error = pthread_join(PThreadTable[i], NULL);
-#line 94
-		if (Error != 0) {
-#line 94
-			printf("Error in pthread_join().\n");
-#line 94
-			exit(-1);
-#line 94
-		}
-#line 94
-	}
-#line 94
-};*/
+    WAIT_FOR_END(num_nodes-1);*/
   if (num_nodes > 1)
-    {
-#line 96
-	long	i, Error;
-#line 96
-	for (i = 0; i < (num_nodes) - 1; i++) {
-#line 96
-		Error = pthread_join(PThreadTable[i], NULL);
-#line 96
-		if (Error != 0) {
-#line 96
-			printf("Error in pthread_join().\n");
-#line 96
-			exit(-1);
-#line 96
-		}
-#line 96
-	}
-#line 96
-};
-  {exit(0);};
+    WAIT_FOR_END(num_nodes);
+  MAIN_END;
 }
 
 
@@ -169,81 +114,23 @@ void Frame()
 
 
 
-  Global = (struct GlobalMemory *)valloc(sizeof(struct GlobalMemory));;
-  {
-#line 118
-	pthread_barrier_init(&(Global->SlaveBarrier), NULL, num_nodes);
-#line 118
-};
-  {
-#line 119
-	pthread_barrier_init(&(Global->TimeBarrier), NULL, num_nodes);
-#line 119
-};
-  {pthread_mutex_init(&(Global->IndexLock), NULL);};
-  {pthread_mutex_init(&(Global->CountLock), NULL);};
-  {
-#line 122
-	unsigned long	i, Error;
-#line 122
-
-#line 122
-	for (i = 0; i < MAX_NUMPROC+1; i++) {
-#line 122
-		Error = pthread_mutex_init(&Global->QLock[i], NULL);
-#line 122
-		if (Error != 0) {
-#line 122
-			printf("Error while initializing array of locks.\n");
-#line 122
-			exit(-1);
-#line 122
-		}
-#line 122
-	}
-#line 122
-};
+  Global = (struct GlobalMemory *)NU_MALLOC(sizeof(struct GlobalMemory),0);
+  BARINIT(Global->SlaveBarrier, num_nodes);
+  BARINIT(Global->TimeBarrier, num_nodes);
+  LOCKINIT(Global->IndexLock);
+  LOCKINIT(Global->CountLock);
+  ALOCKINIT(Global->QLock,MAX_NUMPROC+1);
 
   /* load dataset from file to each node */
 #ifndef RENDER_ONLY
-  {
-#line 126
-	struct timeval	FullTime;
-#line 126
-
-#line 126
-	gettimeofday(&FullTime, NULL);
-#line 126
-	(starttime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 126
-};
+  CLOCK(starttime);
   Load_Map(filename);
-  {
-#line 128
-	struct timeval	FullTime;
-#line 128
-
-#line 128
-	gettimeofday(&FullTime, NULL);
-#line 128
-	(stoptime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 128
-};
+  CLOCK(stoptime);
   mclock(stoptime,starttime,&exectime);
   printf("wall clock execution time to load map:  %lu ms\n", exectime);
 #endif
 
-  {
-#line 133
-	struct timeval	FullTime;
-#line 133
-
-#line 133
-	gettimeofday(&FullTime, NULL);
-#line 133
-	(starttime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 133
-};
+  CLOCK(starttime);
 #ifndef RENDER_ONLY
   Compute_Normal();
 #ifdef PREPROCESS
@@ -252,31 +139,11 @@ void Frame()
 #else
   Load_Normal(filename);
 #endif
-  {
-#line 142
-	struct timeval	FullTime;
-#line 142
-
-#line 142
-	gettimeofday(&FullTime, NULL);
-#line 142
-	(stoptime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 142
-};
+  CLOCK(stoptime);
   mclock(stoptime,starttime,&exectime);
   printf("wall clock execution time to compute normal:  %lu ms\n", exectime);
 
-  {
-#line 146
-	struct timeval	FullTime;
-#line 146
-
-#line 146
-	gettimeofday(&FullTime, NULL);
-#line 146
-	(starttime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 146
-};
+  CLOCK(starttime);
 #ifndef RENDER_ONLY
   Compute_Opacity();
 #ifdef PREPROCESS
@@ -285,17 +152,7 @@ void Frame()
 #else
   Load_Opacity(filename);
 #endif
-  {
-#line 155
-	struct timeval	FullTime;
-#line 155
-
-#line 155
-	gettimeofday(&FullTime, NULL);
-#line 155
-	(stoptime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 155
-};
+  CLOCK(stoptime);
   mclock(stoptime,starttime,&exectime);
   printf("wall clock execution time to compute opacity:  %lu ms\n", exectime);
 
@@ -323,17 +180,7 @@ void Frame()
     Lallocate_Image(&image_block,block_xlen*block_ylen);
   }
 
-  {
-#line 183
-	struct timeval	FullTime;
-#line 183
-
-#line 183
-	gettimeofday(&FullTime, NULL);
-#line 183
-	(starttime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 183
-};
+  CLOCK(starttime);
 #ifndef RENDER_ONLY
   Compute_Octree();
 #ifdef PREPROCESS
@@ -342,17 +189,7 @@ void Frame()
 #else
   Load_Octree(filename);
 #endif
-  {
-#line 192
-	struct timeval	FullTime;
-#line 192
-
-#line 192
-	gettimeofday(&FullTime, NULL);
-#line 192
-	(stoptime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 192
-};
+  CLOCK(stoptime);
   mclock(stoptime,starttime,&exectime);
   printf("wall clock execution time to compute octree:  %lu ms\n", exectime);
 
@@ -383,31 +220,7 @@ void Frame()
   printf("\nRendering...\n");
   printf("node\tframe\ttime\titime\trays\thrays\tsamples trilirped\n");
 
-  {
-#line 223
-	long	i, Error;
-#line 223
-
-#line 223
-	for (i = 0; i < (num_nodes) - 1; i++) {
-#line 223
-		Error = pthread_create(&PThreadTable[i], NULL, (void * (*)(void *))(Render_Loop), NULL);
-#line 223
-		if (Error != 0) {
-#line 223
-			printf("Error in pthread_create().\n");
-#line 223
-			exit(-1);
-#line 223
-		}
-#line 223
-	}
-#line 223
-
-#line 223
-	Render_Loop();
-#line 223
-};
+  CREATE(Render_Loop, num_nodes);
 }
 
 
@@ -421,13 +234,13 @@ void Render_Loop()
   float inv_num_nodes;
   long my_node;
 
-  {pthread_mutex_lock(&(Global->IndexLock));};
+  LOCK(Global->IndexLock);
   my_node = Global->Index++;
-  {pthread_mutex_unlock(&(Global->IndexLock));};
+  UNLOCK(Global->IndexLock);
   my_node = my_node%num_nodes;
 
-  {;};
-  {;};
+  BARINCLUDE(Global->TimeBarrier);
+  BARINCLUDE(Global->SlaveBarrier);
 
 /*  POSSIBLE ENHANCEMENT:  Here's where one might bind the process to a
     processor, if one wanted to.
@@ -453,11 +266,7 @@ void Render_Loop()
       local_mask_image_address = mask_image_address +
 	mask_image_partition * my_node;
 
-      {
-#line 269
-	pthread_barrier_wait(&(Global->SlaveBarrier));
-#line 269
-};
+      BARRIER(Global->SlaveBarrier,num_nodes);
 
       if (my_node == num_nodes-1) {
 	for (i=image_partition*my_node; i<image_length; i++)
@@ -482,11 +291,7 @@ void Render_Loop()
 #endif
 }
 
-      {
-#line 294
-	pthread_barrier_wait(&(Global->SlaveBarrier));
-#line 294
-};
+      BARRIER(Global->SlaveBarrier,num_nodes);
 
       Global->Counter = num_nodes;
       Global->Queue[num_nodes][0] = num_nodes;
@@ -562,7 +367,7 @@ void Allocate_Image(PIXEL **address, long length)
 
   printf("    Allocating image of %ld bytes...\n", length*sizeof(PIXEL));
 
-  *address = (PIXEL *)valloc(length*sizeof(PIXEL));;
+  *address = (PIXEL *)NU_MALLOC(length*sizeof(PIXEL),0);
 
   if (*address == NULL)
 	  Error("    No space available for image.\n", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -578,7 +383,7 @@ void Allocate_MImage(MPIXEL **address, long length)
 
   printf("    Allocating image of %ld bytes...\n", length*sizeof(MPIXEL));
 
-  *address = (MPIXEL *)valloc(length*sizeof(MPIXEL));;
+  *address = (MPIXEL *)NU_MALLOC(length*sizeof(MPIXEL),0);
 
   if (*address == NULL)
     Error("    No space available for image.\n");
@@ -638,7 +443,7 @@ void Allocate_Shading_Table(PIXEL **address1, long length)
 /*  POSSIBLE ENHANCEMENT:  If you want to replicate the shade table,
     replace the macro with a simple malloc in the line below */
 
-  *address1 = (PIXEL *)valloc(length);;
+  *address1 = (PIXEL *)NU_MALLOC(length,sizeof(PIXEL),0);
 
   if (*address1 == NULL)
     Error("    No space available for table.\n");

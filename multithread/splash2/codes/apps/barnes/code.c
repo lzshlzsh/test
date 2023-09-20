@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "code.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -68,23 +65,7 @@ Command line options:
        Default is 1.
 */
 
-
-#line 68
-#include <pthread.h>
-#line 68
-#include <sys/time.h>
-#line 68
-#include <unistd.h>
-#line 68
-#include <stdlib.h>
-#line 68
-#include <malloc.h>
-#line 68
-#define MAX_THREADS 32
-#line 68
-pthread_t PThreadTable[MAX_THREADS];
-#line 68
-
+MAIN_ENV
 
 #define global  /* nada */
 
@@ -283,77 +264,15 @@ int main (int argc, string argv[])
    Global->forcecalctime = 0;
    Global->current_id = 0;
 
-   {
-#line 267
-	struct timeval	FullTime;
-#line 267
-
-#line 267
-	gettimeofday(&FullTime, NULL);
-#line 267
-	(Global->computestart) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 267
-};
+   CLOCK(Global->computestart);
 
    printf("COMPUTESTART  = %12lu\n",Global->computestart);
 
-   {
-#line 271
-	long	i, Error;
-#line 271
+   CREATE(SlaveStart, NPROC);
 
-#line 271
-	for (i = 0; i < (NPROC) - 1; i++) {
-#line 271
-		Error = pthread_create(&PThreadTable[i], NULL, (void * (*)(void *))(SlaveStart), NULL);
-#line 271
-		if (Error != 0) {
-#line 271
-			printf("Error in pthread_create().\n");
-#line 271
-			exit(-1);
-#line 271
-		}
-#line 271
-	}
-#line 271
+   WAIT_FOR_END(NPROC);
 
-#line 271
-	SlaveStart();
-#line 271
-};
-
-   {
-#line 273
-	long	i, Error;
-#line 273
-	for (i = 0; i < (NPROC) - 1; i++) {
-#line 273
-		Error = pthread_join(PThreadTable[i], NULL);
-#line 273
-		if (Error != 0) {
-#line 273
-			printf("Error in pthread_join().\n");
-#line 273
-			exit(-1);
-#line 273
-		}
-#line 273
-	}
-#line 273
-};
-
-   {
-#line 275
-	struct timeval	FullTime;
-#line 275
-
-#line 275
-	gettimeofday(&FullTime, NULL);
-#line 275
-	(Global->computeend) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 275
-};
+   CLOCK(Global->computeend);
 
    printf("COMPUTEEND    = %12lu\n",Global->computeend);
    printf("COMPUTETIME   = %12lu\n",Global->computeend - Global->computestart);
@@ -370,7 +289,7 @@ int main (int argc, string argv[])
 	  ((float)(Global->tracktime-Global->partitiontime-
 		   Global->treebuildtime-Global->forcecalctime))/
 	  Global->tracktime);
-   {exit(0);};
+   MAIN_END;
 }
 
 /*
@@ -378,20 +297,16 @@ int main (int argc, string argv[])
  */
 void ANLinit()
 {
-   {;};
+   MAIN_INITENV(,70000000,);
    /* Allocate global, shared memory */
 
-   Global = (struct GlobalMemory *) valloc(sizeof(struct GlobalMemory));;
+   Global = (struct GlobalMemory *) G_MALLOC(sizeof(struct GlobalMemory));
    if (Global==NULL) error("No initialization for Global\n");
 
-   {
-#line 306
-	pthread_barrier_init(&(Global->Barrier), NULL, NPROC);
-#line 306
-};
+   BARINIT(Global->Barrier, NPROC);
 
-   {pthread_mutex_init(&(Global->CountLock), NULL);};
-   {pthread_mutex_init(&(Global->io_lock), NULL);};
+   LOCKINIT(Global->CountLock);
+   LOCKINIT(Global->io_lock);
 }
 
 /*
@@ -443,13 +358,13 @@ void tab_init()
    maxleaf = (long) ((double) fleaves * nbody);
    maxcell = fcells * maxleaf;
    for (i = 0; i < NPROC; ++i) {
-      Local[i].ctab = (cellptr) valloc((maxcell / NPROC) * sizeof(cell));;
-      Local[i].ltab = (leafptr) valloc((maxleaf / NPROC) * sizeof(leaf));;
+      Local[i].ctab = (cellptr) G_MALLOC((maxcell / NPROC) * sizeof(cell));
+      Local[i].ltab = (leafptr) G_MALLOC((maxleaf / NPROC) * sizeof(leaf));
    }
 
    /*allocate space for personal lists of body pointers */
    maxmybody = (nbody+maxleaf*MAX_BODIES_PER_LEAF)/NPROC;
-   Local[0].mybodytab = (bodyptr*) valloc(NPROC*maxmybody*sizeof(bodyptr));;
+   Local[0].mybodytab = (bodyptr*) G_MALLOC(NPROC*maxmybody*sizeof(bodyptr));
    /* space is allocated so that every */
    /* process can have a maximum of maxmybody pointers to bodies */
    /* then there is an array of bodies called bodytab which is  */
@@ -457,31 +372,11 @@ void tab_init()
    /* file is read */
    maxmycell = maxcell / NPROC;
    maxmyleaf = maxleaf / NPROC;
-   Local[0].mycelltab = (cellptr*) valloc(NPROC*maxmycell*sizeof(cellptr));;
-   Local[0].myleaftab = (leafptr*) valloc(NPROC*maxmyleaf*sizeof(leafptr));;
+   Local[0].mycelltab = (cellptr*) G_MALLOC(NPROC*maxmycell*sizeof(cellptr));
+   Local[0].myleaftab = (leafptr*) G_MALLOC(NPROC*maxmyleaf*sizeof(leafptr));
 
-   CellLock = (struct CellLockType *) valloc(sizeof(struct CellLockType));;
-   {
-#line 379
-	unsigned long	i, Error;
-#line 379
-
-#line 379
-	for (i = 0; i < MAXLOCK; i++) {
-#line 379
-		Error = pthread_mutex_init(&CellLock->CL[i], NULL);
-#line 379
-		if (Error != 0) {
-#line 379
-			printf("Error while initializing array of locks.\n");
-#line 379
-			exit(-1);
-#line 379
-		}
-#line 379
-	}
-#line 379
-};
+   CellLock = (struct CellLockType *) G_MALLOC(sizeof(struct CellLockType));
+   ALOCKINIT(CellLock->CL,MAXLOCK);
 }
 
 /*
@@ -492,11 +387,11 @@ void SlaveStart()
    long ProcessId;
 
    /* Get unique ProcessId */
-   {pthread_mutex_lock(&(Global->CountLock));};
+   LOCK(Global->CountLock);
      ProcessId = Global->current_id++;
-   {pthread_mutex_unlock(&(Global->CountLock));};
+   UNLOCK(Global->CountLock);
 
-   {;};
+   BARINCLUDE(Global->Barrier);
 
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration */
@@ -612,7 +507,7 @@ void testdata()
 
    headline = "Hack code: Plummer model";
    Local[0].tnow = 0.0;
-   bodytab = (bodyptr) valloc(nbody * sizeof(body));;
+   bodytab = (bodyptr) G_MALLOC(nbody * sizeof(body));
    if (bodytab == NULL) {
       error("testdata: not enough memory\n");
    }
@@ -727,17 +622,7 @@ void stepsystem(long ProcessId)
     }
 
     if ((ProcessId == 0) && (Local[ProcessId].nstep >= 2)) {
-        {
-#line 625
-	struct timeval	FullTime;
-#line 625
-
-#line 625
-	gettimeofday(&FullTime, NULL);
-#line 625
-	(trackstart) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 625
-};
+        CLOCK(trackstart);
     }
 
     if (ProcessId == 0) {
@@ -750,40 +635,16 @@ void stepsystem(long ProcessId)
 
 
     /* start at same time */
-    {
-#line 638
-	pthread_barrier_wait(&(Global->Barrier));
-#line 638
-};
+    BARRIER(Global->Barrier,NPROC);
 
     if ((ProcessId == 0) && (Local[ProcessId].nstep >= 2)) {
-        {
-#line 641
-	struct timeval	FullTime;
-#line 641
-
-#line 641
-	gettimeofday(&FullTime, NULL);
-#line 641
-	(treebuildstart) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 641
-};
+        CLOCK(treebuildstart);
     }
 
     /* load bodies into tree   */
     maketree(ProcessId);
     if ((ProcessId == 0) && (Local[ProcessId].nstep >= 2)) {
-        {
-#line 647
-	struct timeval	FullTime;
-#line 647
-
-#line 647
-	gettimeofday(&FullTime, NULL);
-#line 647
-	(treebuildend) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 647
-};
+        CLOCK(treebuildend);
         Global->treebuildtime += treebuildend - treebuildstart;
     }
 
@@ -795,17 +656,7 @@ void stepsystem(long ProcessId)
 				      + (ProcessId == (NPROC - 1)));
 
     if ((ProcessId == 0) && (Local[ProcessId].nstep >= 2)) {
-        {
-#line 659
-	struct timeval	FullTime;
-#line 659
-
-#line 659
-	gettimeofday(&FullTime, NULL);
-#line 659
-	(partitionstart) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 659
-};
+        CLOCK(partitionstart);
     }
 
     Local[ProcessId].mynbody = 0;
@@ -813,48 +664,18 @@ void stepsystem(long ProcessId)
 
 /*     B*RRIER(Global->Barcom,NPROC); */
     if ((ProcessId == 0) && (Local[ProcessId].nstep >= 2)) {
-        {
-#line 667
-	struct timeval	FullTime;
-#line 667
-
-#line 667
-	gettimeofday(&FullTime, NULL);
-#line 667
-	(partitionend) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 667
-};
+        CLOCK(partitionend);
         Global->partitiontime += partitionend - partitionstart;
     }
 
     if ((ProcessId == 0) && (Local[ProcessId].nstep >= 2)) {
-        {
-#line 672
-	struct timeval	FullTime;
-#line 672
-
-#line 672
-	gettimeofday(&FullTime, NULL);
-#line 672
-	(forcecalcstart) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 672
-};
+        CLOCK(forcecalcstart);
     }
 
     ComputeForces(ProcessId);
 
     if ((ProcessId == 0) && (Local[ProcessId].nstep >= 2)) {
-        {
-#line 678
-	struct timeval	FullTime;
-#line 678
-
-#line 678
-	gettimeofday(&FullTime, NULL);
-#line 678
-	(forcecalcend) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 678
-};
+        CLOCK(forcecalcend);
         Global->forcecalctime += forcecalcend - forcecalcstart;
     }
 
@@ -877,7 +698,7 @@ void stepsystem(long ProcessId)
 	  }
        }
     }
-    {pthread_mutex_lock(&(Global->CountLock));};
+    LOCK(Global->CountLock);
     for (i = 0; i < NDIM; i++) {
        if (Global->min[i] > Local[ProcessId].min[i]) {
 	  Global->min[i] = Local[ProcessId].min[i];
@@ -886,29 +707,15 @@ void stepsystem(long ProcessId)
 	  Global->max[i] = Local[ProcessId].max[i];
        }
     }
-    {pthread_mutex_unlock(&(Global->CountLock));};
+    UNLOCK(Global->CountLock);
 
     /* bar needed to make sure that every process has computed its min */
     /* and max coordinates, and has accumulated them into the global   */
     /* min and max, before the new dimensions are computed	       */
-    {
-#line 715
-	pthread_barrier_wait(&(Global->Barrier));
-#line 715
-};
+    BARRIER(Global->Barrier,NPROC);
 
     if ((ProcessId == 0) && (Local[ProcessId].nstep >= 2)) {
-        {
-#line 718
-	struct timeval	FullTime;
-#line 718
-
-#line 718
-	gettimeofday(&FullTime, NULL);
-#line 718
-	(trackend) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 718
-};
+        CLOCK(trackend);
         Global->tracktime += trackend - trackstart;
     }
     if (ProcessId==0) {
@@ -977,11 +784,7 @@ void find_my_initial_bodies(bodyptr btab, long nbody, long ProcessId)
   for (i=0; i < Local[ProcessId].mynbody; i++) {
      Local[ProcessId].mybodytab[i] = &(btab[offset+i]);
   }
-  {
-#line 787
-	pthread_barrier_wait(&(Global->Barrier));
-#line 787
-};
+  BARRIER(Global->Barrier,NPROC);
 }
 
 

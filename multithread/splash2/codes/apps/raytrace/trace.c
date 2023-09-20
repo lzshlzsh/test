@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "trace.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -179,9 +176,9 @@ VOID	ConvertPrimRayJobToRayMsg(RAY *ray, REAL x, REAL y)
 	ray->level  = 0;
 	ray->weight = 1.0/(REAL)NumSubRays;
 
-	{pthread_mutex_lock(&(gm->ridlock));};
+	LOCK(gm->ridlock);
 	ray->id = gm->rid++;
-	{pthread_mutex_unlock(&(gm->ridlock));};
+	UNLOCK(gm->ridlock);
 
 	ray->x = (INT)x;
 	ray->y = (INT)y;

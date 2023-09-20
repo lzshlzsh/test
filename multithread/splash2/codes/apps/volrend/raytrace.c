@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "raytrace.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -38,21 +35,7 @@ extern long traversal_time,trilirp_time,init_time,composite_time;
 #define SBIT(TA)                (*SBIT_ADDRESS(TA))
 #define SHD(TA)                 (*SHD_ADDRESS(TA))
 
-
-#line 38
-#include <pthread.h>
-#line 38
-#include <sys/time.h>
-#line 38
-#include <unistd.h>
-#line 38
-#include <stdlib.h>
-#line 38
-#include <malloc.h>
-#line 38
-extern pthread_t PThreadTable[];
-#line 38
-
+EXTERN_ENV
 
 void Trace_Ray(foutx, fouty, pixel_address)
      float foutx, fouty;

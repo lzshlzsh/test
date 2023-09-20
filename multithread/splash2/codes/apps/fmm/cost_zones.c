@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "cost_zones.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -50,11 +47,7 @@ void
 CostZones (long my_id)
 {
    PartitionIterate(my_id, ComputeSubTreeCosts, BOTTOM);
-   {
-#line 50
-	pthread_barrier_wait(&(G_Memory->synch));
-#line 50
-};
+   BARRIER(G_Memory->synch, Number_Of_Processors);
    Local[my_id].Total_Work = Grid->subtree_cost;
    Local[my_id].Min_Work = ((Local[my_id].Total_Work / Number_Of_Processors)
 			   * my_id);
@@ -66,11 +59,7 @@ CostZones (long my_id)
 				 / Number_Of_Processors));
    InitPartition(my_id);
    CostZonesHelper(my_id, Grid, 0, RIGHT);
-   {
-#line 62
-	pthread_barrier_wait(&(G_Memory->synch));
-#line 62
-};
+   BARRIER(G_Memory->synch, Number_Of_Processors);
 }
 
 
@@ -88,10 +77,10 @@ ComputeSubTreeCosts (long my_id, box *b)
    b->subtree_cost += b->cost;
    pb = b->parent;
    if (pb != NULL) {
-      {pthread_mutex_lock(&G_Memory->lock_array[pb->exp_lock_index]);};
+      ALOCK(G_Memory->lock_array, pb->exp_lock_index);
       pb->subtree_cost += b->subtree_cost;
       pb->interaction_synch += 1;
-      {pthread_mutex_unlock(&G_Memory->lock_array[pb->exp_lock_index]);};
+      AULOCK(G_Memory->lock_array, pb->exp_lock_index);
    }
 }
 

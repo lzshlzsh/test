@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "parallel.H"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -41,7 +38,7 @@
 
 typedef struct
 {
-    pthread_mutex_t (lock);
+    LOCKDEC(lock)
 } Shared_Lock ;
 
 #define SHARED_LOCK_SEG_SIZE (MAX_SHARED_LOCK / 2)

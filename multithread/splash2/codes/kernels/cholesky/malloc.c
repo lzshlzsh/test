@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "malloc.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -20,21 +17,7 @@
 /* this version guarentees that all blocks are zeroed, and it expects
    that all returned blocks are zero */
 
-
-#line 20
-#include <pthread.h>
-#line 20
-#include <sys/time.h>
-#line 20
-#include <unistd.h>
-#line 20
-#include <stdlib.h>
-#line 20
-#include <malloc.h>
-#line 20
-extern pthread_t PThreadTable[];
-#line 20
-
+EXTERN_ENV
 
 #include "matrix.h"
 
@@ -47,7 +30,7 @@ extern pthread_t PThreadTable[];
 #define NEXTFREE(block) (*((long **) block)) /* in free blocks */
 
 struct MemPool {
-	pthread_mutex_t (memoryLock);
+	LOCKDEC(memoryLock)
 	long *volatile*freeBlock;
 	long tally, touched, maxm;
 	} *mem_pool;
@@ -64,7 +47,7 @@ void MallocInit(long P)
   mallocP = P;
 
   mem_pool = (struct MemPool *)
-    valloc((mallocP+1)*sizeof(struct MemPool));;
+    G_MALLOC((mallocP+1)*sizeof(struct MemPool), 0);
   mem_pool++;
   /****** access to mem_pool[-1] is valid ******/
 
@@ -77,15 +60,15 @@ void InitOneFreeList(long p)
 {
   long j;
 
-  {pthread_mutex_init(&(mem_pool[p].memoryLock), NULL);};
+  LOCKINIT(mem_pool[p].memoryLock);
   if (p > 0) {
     mem_pool[p].freeBlock = (long **)
-      valloc((MAXFAST+1)*sizeof(long *));;
+      G_MALLOC((MAXFAST+1)*sizeof(long *), p);
     MigrateMem(mem_pool[p].freeBlock, (MAXFAST+1)*sizeof(long *), p);
   }
   else {
     mem_pool[p].freeBlock = (long **)
-      valloc((MAXFAST+1)*sizeof(long *));;
+      G_MALLOC((MAXFAST+1)*sizeof(long *), 0);
     MigrateMem(mem_pool[p].freeBlock, (MAXFAST+1)*sizeof(long *),
 	       DISTRIBUTED);
   }
@@ -152,16 +135,16 @@ char *MyMalloc(long size, long home)
 
   if (bucket < MAXFAST) {
     if (mem_pool[home].freeBlock[bucket]) {
-      {pthread_mutex_lock(&(mem_pool[home].memoryLock));}
+      LOCK(mem_pool[home].memoryLock)
       result = mem_pool[home].freeBlock[bucket];
       if (result)
 	mem_pool[home].freeBlock[bucket] = NEXTFREE(result);
-      {pthread_mutex_unlock(&(mem_pool[home].memoryLock));}
+      UNLOCK(mem_pool[home].memoryLock)
     }
   }
 
   if (!result) {
-    {pthread_mutex_lock(&(mem_pool[home].memoryLock));}
+    LOCK(mem_pool[home].memoryLock)
     prev = NULL;
     d = mem_pool[home].freeBlock[MAXFAST];
     while (d) {
@@ -199,7 +182,7 @@ char *MyMalloc(long size, long home)
       d = NEXTFREE(d);
     }
 
-    {pthread_mutex_unlock(&(mem_pool[home].memoryLock));}
+    UNLOCK(mem_pool[home].memoryLock)
 
   }
 
@@ -209,12 +192,12 @@ char *MyMalloc(long size, long home)
   else {
     /* grab a big block, free it, then retry request */
     block_size = max(alloc_size, 4*(1<<MAXFAST));
-    {pthread_mutex_lock(&(Global->memLock));};
-    freespace = (long *) valloc(block_size+2*sizeof(long));;
+    LOCK(Global->memLock);
+    freespace = (long *) G_MALLOC(block_size+2*sizeof(long), home);
     MigrateMem(freespace, block_size+2*sizeof(long), home);
 
     mem_pool[home].touched++;
-    {pthread_mutex_unlock(&(Global->memLock));};
+    UNLOCK(Global->memLock);
     freespace+=2;
     SIZE(freespace) = block_size;
     HOME(freespace) = home;
@@ -284,9 +267,9 @@ void MyFree(long *block)
   long home;
 
   home = HOME(block);
-  {pthread_mutex_lock(&(mem_pool[home].memoryLock));}
+  LOCK(mem_pool[home].memoryLock)
   MyFreeNow(block);
-  {pthread_mutex_unlock(&(mem_pool[home].memoryLock));}
+  UNLOCK(mem_pool[home].memoryLock)
 }
 
 

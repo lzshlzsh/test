@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "rt.H"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -37,39 +34,9 @@
  */
 
 #ifdef	MAIN
-
-#line 37
-#include <pthread.h>
-#line 37
-#include <sys/time.h>
-#line 37
-#include <unistd.h>
-#line 37
-#include <stdlib.h>
-#line 37
-#include <malloc.h>
-#line 37
-#define MAX_THREADS 32
-#line 37
-pthread_t PThreadTable[MAX_THREADS];
-#line 37
-
+MAIN_ENV
 #else
-
-#line 39
-#include <pthread.h>
-#line 39
-#include <sys/time.h>
-#line 39
-#include <unistd.h>
-#line 39
-#include <stdlib.h>
-#line 39
-#include <malloc.h>
-#line 39
-extern pthread_t PThreadTable[];
-#line 39
-
+EXTERN_ENV
 #endif
 
 #define M_PI_2	1.57079632679489661923
@@ -685,15 +652,11 @@ typedef struct	gmem
 					   shared work pools.  Padded to
 					   avoid false-sharing */
 
-	
-#line 655
-pthread_barrier_t	(start);
-#line 655
-			/* Barrier for startup sync.	     */
-	pthread_mutex_t (pidlock);		/* Lock to increment pid.	     */
-	pthread_mutex_t (ridlock);		/* Lock to increment rid.	     */
-	pthread_mutex_t (memlock);		/* Lock for memory manager.	     */
-	pthread_mutex_t wplock[MAX_PROCS];	/* Locks for shared work pools.      */
+	BARDEC(start)			/* Barrier for startup sync.	     */
+	LOCKDEC(pidlock)		/* Lock to increment pid.	     */
+	LOCKDEC(ridlock)		/* Lock to increment rid.	     */
+	LOCKDEC(memlock)		/* Lock for memory manager.	     */
+	ALOCKDEC(wplock, MAX_PROCS)	/* Locks for shared work pools.      */
     UINT par_start_time;
     UINT partime[MAX_PROCS];
 	}

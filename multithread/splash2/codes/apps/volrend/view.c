@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "view.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -51,21 +48,7 @@ float invmatrix[4][4];		/* Inverse of viewing matrix:                */
 /*   (orthographic projection used, so       */
 /*    matrix[][3] = 0, matrix[3][3] = 1)     */
 
-
-#line 51
-#include <pthread.h>
-#line 51
-#include <sys/time.h>
-#line 51
-#include <unistd.h>
-#line 51
-#include <stdlib.h>
-#line 51
-#include <malloc.h>
-#line 51
-extern pthread_t PThreadTable[];
-#line 51
-
+EXTERN_ENV
 
 void Compute_Pre_View()
 {

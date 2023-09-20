@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "workpool.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -60,11 +57,7 @@
  *	Pixel addresses are 0 relative.
  *
  *	Locking of workpools for job insertion is not required since a given
- *	process only inserts into its own pool and since we use a {
-#line 60
-	pthread_barrier_wait(&());
-#line 60
-}
+ *	process only inserts into its own pool and since we use a BARRIER
  *	before jobs can be removed from workpools.
  *
  * RETURNS
@@ -156,18 +149,18 @@ INT	GetJob(RAYJOB *job, INT pid)
 	{
 	WPJOB	*wpentry;			/* Work pool entry.	     */
 
-	{pthread_mutex_lock(&gm->wplock[pid]);}
+	ALOCK(gm->wplock, pid)
 	wpentry = gm->workpool[pid][0];
 
 	if (!wpentry)
 		{
 		gm->wpstat[pid][0] = WPS_EMPTY;
-		{pthread_mutex_unlock(&gm->wplock[pid]);}
+		AULOCK(gm->wplock, pid)
 		return (WPS_EMPTY);
 		}
 
 	gm->workpool[pid][0] = wpentry->next;
-	{pthread_mutex_unlock(&gm->wplock[pid]);}
+	AULOCK(gm->wplock, pid)
 
 	/* Set up ray job information. */
 

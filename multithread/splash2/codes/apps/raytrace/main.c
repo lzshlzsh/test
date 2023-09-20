@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "main.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -72,7 +69,7 @@
  *			malloc() failed for some reason.
  *
  *		Cannot allocate global memory.
- *			valloc(); failed for some reason.
+ *			G_MALLOC() failed for some reason.
  *
  *		Valid range for #processors is [1, %ld].
  *			Do not exceed the ranges shown by the message.
@@ -186,24 +183,14 @@ VOID	StartRayTrace()
 	UINT	begin;
 	UINT	end;
 
-	{pthread_mutex_lock(&(gm->pidlock));}
+	LOCK(gm->pidlock)
 	pid = gm->pid++;
-	{pthread_mutex_unlock(&(gm->pidlock));}
+	UNLOCK(gm->pidlock)
 
-	{;};
+	BARINCLUDE(gm->start);
 
 	if ((pid == 0) ||  (dostats))
-        {
-#line 193
-	struct timeval	FullTime;
-#line 193
-
-#line 193
-	gettimeofday(&FullTime, NULL);
-#line 193
-	(begin) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 193
-};
+        CLOCK(begin);
 
 	/* POSSIBLE ENHANCEMENT: Here's where one might lock processes down
 	to processors if need be */
@@ -213,20 +200,12 @@ VOID	StartRayTrace()
 
 	/*
 	 *	Wait for all processes to be created, initialize their work
-	 *	pools, and arrive at this point; then proceed.	This {
-#line 203
-	pthread_barrier_wait(&());
-#line 203
-}
+	 *	pools, and arrive at this point; then proceed.	This BARRIER
 	 *	is absolutely required.  Read comments in PutJob before
 	 *	moving this barrier.
 	 */
 
-	{
-#line 208
-	pthread_barrier_wait(&(gm->start));
-#line 208
-}
+	BARRIER(gm->start, gm->nprocs)
 
 	/* POSSIBLE ENHANCEMENT:  Here's where one would RESET STATISTICS
 	and TIMING if one wanted to measure only the parallel part */
@@ -235,17 +214,7 @@ VOID	StartRayTrace()
 
 
 	if ((pid == 0) || (dostats)) {
-          {
-#line 217
-	struct timeval	FullTime;
-#line 217
-
-#line 217
-	gettimeofday(&FullTime, NULL);
-#line 217
-	(end) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 217
-};
+          CLOCK(end);
           gm->partime[pid] = (end - begin) & 0x7FFFFFFF;
           if (pid == 0) gm->par_start_time = begin;
         }
@@ -366,8 +335,8 @@ int	main(int argc, CHAR *argv[])
 	 */
 
 	MaxGlobMem <<= 20;			/* Convert MB to bytes.      */
-	{;}
-	gm = (GMEM *)valloc(sizeof(GMEM));;
+	MAIN_INITENV(,MaxGlobMem + 512*1024)
+	gm = (GMEM *)G_MALLOC(sizeof(GMEM));
 
 
 	/*
@@ -378,35 +347,11 @@ int	main(int argc, CHAR *argv[])
 	gm->pid    = 0;
 	gm->rid    = 1;
 
-	{
-#line 350
-	pthread_barrier_init(&(gm->start), NULL, nprocs);
-#line 350
-}
-	{pthread_mutex_init(&(gm->pidlock), NULL);}
-	{pthread_mutex_init(&(gm->ridlock), NULL);}
-	{pthread_mutex_init(&(gm->memlock), NULL);}
-	{
-#line 354
-	unsigned long	i, Error;
-#line 354
-
-#line 354
-	for (i = 0; i < nprocs; i++) {
-#line 354
-		Error = pthread_mutex_init(&gm->wplock[i], NULL);
-#line 354
-		if (Error != 0) {
-#line 354
-			printf("Error while initializing array of locks.\n");
-#line 354
-			exit(-1);
-#line 354
-		}
-#line 354
-	}
-#line 354
-}
+	BARINIT(gm->start, nprocs)
+	LOCKINIT(gm->pidlock)
+	LOCKINIT(gm->ridlock)
+	LOCKINIT(gm->memlock)
+	ALOCKINIT(gm->wplock, nprocs)
 
 /* POSSIBLE ENHANCEMENT:  Here is where one might distribute the
    raystruct data structure across physically distributed memories as
@@ -459,72 +404,10 @@ int	main(int argc, CHAR *argv[])
 	 *	Now create slave processes.
 	 */
 
-	{
-#line 407
-	struct timeval	FullTime;
-#line 407
-
-#line 407
-	gettimeofday(&FullTime, NULL);
-#line 407
-	(begin) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 407
-}
-	{
-#line 408
-	long	i, Error;
-#line 408
-
-#line 408
-	for (i = 0; i < (gm->nprocs) - 1; i++) {
-#line 408
-		Error = pthread_create(&PThreadTable[i], NULL, (void * (*)(void *))(StartRayTrace), NULL);
-#line 408
-		if (Error != 0) {
-#line 408
-			printf("Error in pthread_create().\n");
-#line 408
-			exit(-1);
-#line 408
-		}
-#line 408
-	}
-#line 408
-
-#line 408
-	StartRayTrace();
-#line 408
-};
-	{
-#line 409
-	long	i, Error;
-#line 409
-	for (i = 0; i < (gm->nprocs) - 1; i++) {
-#line 409
-		Error = pthread_join(PThreadTable[i], NULL);
-#line 409
-		if (Error != 0) {
-#line 409
-			printf("Error in pthread_join().\n");
-#line 409
-			exit(-1);
-#line 409
-		}
-#line 409
-	}
-#line 409
-};
-	{
-#line 410
-	struct timeval	FullTime;
-#line 410
-
-#line 410
-	gettimeofday(&FullTime, NULL);
-#line 410
-	(end) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 410
-}
+	CLOCK(begin)
+	CREATE(StartRayTrace, gm->nprocs);
+	WAIT_FOR_END(gm->nprocs);
+	CLOCK(end)
 
 
 
@@ -571,6 +454,6 @@ int	main(int argc, CHAR *argv[])
         printf("%20s%20d\n","Avg = ",(int) (((double) totalproctime) / ((double) (1.0 * gm->nprocs))));
     }
 
-	{exit(0);}
+	MAIN_END
 	}
 

@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "opacity.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -43,21 +40,7 @@ OPACITY *opc_address;	        /* Pointer to opacity map                    */
 
 /* End of layout of .opc file.                                               */
 
-
-#line 43
-#include <pthread.h>
-#line 43
-#include <sys/time.h>
-#line 43
-#include <unistd.h>
-#line 43
-#include <stdlib.h>
-#line 43
-#include <malloc.h>
-#line 43
-extern pthread_t PThreadTable[];
-#line 43
-
+EXTERN_ENV
 
 #include "anl.h"
 
@@ -79,31 +62,7 @@ void Compute_Opacity()
   Global->Index = NODE0;
 
 #ifndef SERIAL_PREPROC
-  for (i=1; i<num_nodes; i++) {
-#line 65
-	long	i, Error;
-#line 65
-
-#line 65
-	for (i = 0; i < () - 1; i++) {
-#line 65
-		Error = pthread_create(&PThreadTable[i], NULL, (void * (*)(void *))(Opacity_Compute), NULL);
-#line 65
-		if (Error != 0) {
-#line 65
-			printf("Error in pthread_create().\n");
-#line 65
-			exit(-1);
-#line 65
-		}
-#line 65
-	}
-#line 65
-
-#line 65
-	Opacity_Compute();
-#line 65
-}
+  for (i=1; i<num_nodes; i++) CREATE(Opacity_Compute)
 #endif
 
   Opacity_Compute();
@@ -119,7 +78,7 @@ void Allocate_Opacity(address, length)
   printf("    Allocating opacity map of %ld bytes...\n",
 	 length*sizeof(OPACITY));
 
-  *address = (OPACITY *)valloc(length*sizeof(OPACITY));;
+  *address = (OPACITY *)NU_MALLOC(length*sizeof(OPACITY),0);
 
   if (*address == NULL)
     Error("    No space available for map.\n");
@@ -145,9 +104,9 @@ void Opacity_Compute()
   long xstart,xstop,ystart,ystop;
   long my_node;
 
-  {pthread_mutex_lock(&(Global->IndexLock));};
+  LOCK(Global->IndexLock);
   my_node = Global->Index++;
-  {pthread_mutex_unlock(&(Global->IndexLock));};
+  UNLOCK(Global->IndexLock);
   my_node = my_node%num_nodes;
 
 /*  POSSIBLE ENHANCEMENT:  Here's where one might bind the process to a
@@ -210,11 +169,7 @@ void Opacity_Compute()
     }
   }
 #ifndef SERIAL_PREPROC
-  {
-#line 172
-	pthread_barrier_wait(&(Global->SlaveBarrier));
-#line 172
-};
+  BARRIER(Global->SlaveBarrier,num_nodes);
 #endif
 }
 
@@ -275,7 +230,7 @@ OPACITY **address;
 {
   printf("    Deallocating opacity map...\n");
 
-/*  ;;  */
+/*  G_FREE(*address);  */
 
   *address = NULL;
 }

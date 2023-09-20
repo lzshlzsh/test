@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "fmm.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -121,17 +118,7 @@ main (int argc, char *argv[])
    long c;
    extern char *optarg;
 
-   {
-#line 121
-	struct timeval	FullTime;
-#line 121
-
-#line 121
-	gettimeofday(&FullTime, NULL);
-#line 121
-	(starttime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 121
-};
+   CLOCK(starttime);
 
    while ((c = getopt(argc, argv, "osh")) != -1) {
      switch(c) {
@@ -141,7 +128,7 @@ main (int argc, char *argv[])
      }
    }
 
-   {;};
+   MAIN_INITENV(,40000000);
 
    GetArguments();
    InitGlobalMemory();
@@ -149,103 +136,19 @@ main (int argc, char *argv[])
    CreateDistribution(Cluster, Model);
 
 /*   for (i = 1; i < Number_Of_Processors; i++) {
-      {
-#line 139
-	long	i, Error;
-#line 139
-
-#line 139
-	for (i = 0; i < () - 1; i++) {
-#line 139
-		Error = pthread_create(&PThreadTable[i], NULL, (void * (*)(void *))(ParallelExecute), NULL);
-#line 139
-		if (Error != 0) {
-#line 139
-			printf("Error in pthread_create().\n");
-#line 139
-			exit(-1);
-#line 139
-		}
-#line 139
-	}
-#line 139
-
-#line 139
-	ParallelExecute();
-#line 139
-};
+      CREATE(ParallelExecute);
    }
    ParallelExecute();
-   {
-#line 142
-	long	i, Error;
-#line 142
-	for (i = 0; i < (Number_Of_Processors - 1) - 1; i++) {
-#line 142
-		Error = pthread_join(PThreadTable[i], NULL);
-#line 142
-		if (Error != 0) {
-#line 142
-			printf("Error in pthread_join().\n");
-#line 142
-			exit(-1);
-#line 142
-		}
-#line 142
-	}
-#line 142
-};*/
-   {
-#line 143
-	long	i, Error;
-#line 143
-
-#line 143
-	for (i = 0; i < (Number_Of_Processors) - 1; i++) {
-#line 143
-		Error = pthread_create(&PThreadTable[i], NULL, (void * (*)(void *))(ParallelExecute), NULL);
-#line 143
-		if (Error != 0) {
-#line 143
-			printf("Error in pthread_create().\n");
-#line 143
-			exit(-1);
-#line 143
-		}
-#line 143
-	}
-#line 143
-
-#line 143
-	ParallelExecute();
-#line 143
-};
-   {
-#line 144
-	long	i, Error;
-#line 144
-	for (i = 0; i < (Number_Of_Processors) - 1; i++) {
-#line 144
-		Error = pthread_join(PThreadTable[i], NULL);
-#line 144
-		if (Error != 0) {
-#line 144
-			printf("Error in pthread_join().\n");
-#line 144
-			exit(-1);
-#line 144
-		}
-#line 144
-	}
-#line 144
-};
+   WAIT_FOR_END(Number_Of_Processors - 1);*/
+   CREATE(ParallelExecute, Number_Of_Processors);
+   WAIT_FOR_END(Number_Of_Processors);
 
    printf("Finished FMM\n");
    PrintTimes();
    if (do_output) {
      PrintAllParticles();
    }
-   {exit(0);};
+   MAIN_END;
 }
 
 
@@ -260,17 +163,13 @@ ParallelExecute ()
    time_info *timing;
    unsigned long local_init_done = 0;
 
-   {;};
+   BARINCLUDE(G_Memory->synch);
    local_time = (time_info *) malloc(sizeof(struct _Time_Info) * MAX_TIME_STEPS);
-   {
-#line 168
-	pthread_barrier_wait(&(G_Memory->synch));
-#line 168
-};
-   {pthread_mutex_lock(&(G_Memory->count_lock));};
+   BARRIER(G_Memory->synch, Number_Of_Processors);
+   LOCK(G_Memory->count_lock);
      my_id = G_Memory->id;
      G_Memory->id++;
-   {pthread_mutex_unlock(&(G_Memory->count_lock));};
+   UNLOCK(G_Memory->count_lock);
 
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration */
@@ -302,11 +201,7 @@ ParallelExecute ()
       LockedPrint("Starting FMM with %d processor%s\n", Number_Of_Processors,
 		  (Number_Of_Processors == 1) ? "" : "s");
    }
-   {
-#line 204
-	pthread_barrier_wait(&(G_Memory->synch));
-#line 204
-};
+   BARRIER(G_Memory->synch, Number_Of_Processors);
    Local[my_id].Time = 0.0;
    for (MY_TIME_STEP = 0; MY_TIME_STEP < Time_Steps; MY_TIME_STEP++) {
 
@@ -317,32 +212,12 @@ ParallelExecute ()
 
       if (MY_TIME_STEP == 2) {
         if (do_stats || my_id == 0) {
-          {
-#line 215
-	struct timeval	FullTime;
-#line 215
-
-#line 215
-	gettimeofday(&FullTime, NULL);
-#line 215
-	(local_init_done) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 215
-};
+          CLOCK(local_init_done);
         }
       }
 
       if (MY_TIME_STEP == 0) {
-	 {
-#line 220
-	struct timeval	FullTime;
-#line 220
-
-#line 220
-	gettimeofday(&FullTime, NULL);
-#line 220
-	(start) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 220
-};
+	 CLOCK(start);
       }
       else
 	 start = finish;
@@ -351,38 +226,14 @@ ParallelExecute ()
       PartitionGrid(my_id,local_time,time_all);
       StepSimulation(my_id,local_time,time_all);
       DestroyGrid(my_id,local_time,time_all);
-      {
-#line 229
-	struct timeval	FullTime;
-#line 229
-
-#line 229
-	gettimeofday(&FullTime, NULL);
-#line 229
-	(finish) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 229
-};
+      CLOCK(finish);
       Local[my_id].Time += Timestep_Dur;
       MY_TIMING[MY_TIME_STEP].total_time = finish - start;
    }
    if (my_id == 0) {
-      {
-#line 234
-	struct timeval	FullTime;
-#line 234
-
-#line 234
-	gettimeofday(&FullTime, NULL);
-#line 234
-	(endtime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 234
-};
+      CLOCK(endtime);
    }
-   {
-#line 236
-	pthread_barrier_wait(&(G_Memory->synch));
-#line 236
-};
+   BARRIER(G_Memory->synch, Number_Of_Processors);
    for (MY_TIME_STEP = 0; MY_TIME_STEP < Time_Steps; MY_TIME_STEP++) {
      timing = &(MY_TIMING[MY_TIME_STEP]);
      timing->other_time = local_time[MY_TIME_STEP].other_time;
@@ -395,11 +246,7 @@ ParallelExecute ()
      timing->intra_time = local_time[MY_TIME_STEP].intra_time;
    }
    Local[my_id].init_done_times = local_init_done;
-   {
-#line 249
-	pthread_barrier_wait(&(G_Memory->synch));
-#line 249
-};
+   BARRIER(G_Memory->synch, Number_Of_Processors);
 }
 
 
@@ -409,31 +256,11 @@ PartitionGrid (long my_id, time_info *local_time, long time_all)
    unsigned long start = 0, finish;
 
    if (time_all)
-      {
-#line 259
-	struct timeval	FullTime;
-#line 259
-
-#line 259
-	gettimeofday(&FullTime, NULL);
-#line 259
-	(start) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 259
-};
+      CLOCK(start);
    if (Partition_Flag == COST_ZONES)
       CostZones(my_id);
    if (time_all) {
-      {
-#line 263
-	struct timeval	FullTime;
-#line 263
-
-#line 263
-	gettimeofday(&FullTime, NULL);
-#line 263
-	(finish) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 263
-};
+      CLOCK(finish);
       local_time[MY_TIME_STEP].partition_time = finish - start;
    }
 }
@@ -446,86 +273,22 @@ StepSimulation (long my_id, time_info *local_time, long time_all)
    unsigned long upward_end, interaction_end, downward_end, barrier_end;
 
    if (time_all)
-      {
-#line 276
-	struct timeval	FullTime;
-#line 276
-
-#line 276
-	gettimeofday(&FullTime, NULL);
-#line 276
-	(start) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 276
-};
+      CLOCK(start);
    PartitionIterate(my_id, UpwardPass, BOTTOM);
    if (time_all)
-      {
-#line 279
-	struct timeval	FullTime;
-#line 279
-
-#line 279
-	gettimeofday(&FullTime, NULL);
-#line 279
-	(upward_end) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 279
-};
+      CLOCK(upward_end);
    PartitionIterate(my_id, ComputeInteractions, BOTTOM);
    if (time_all)
-      {
-#line 282
-	struct timeval	FullTime;
-#line 282
-
-#line 282
-	gettimeofday(&FullTime, NULL);
-#line 282
-	(interaction_end) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 282
-};
-   {
-#line 283
-	pthread_barrier_wait(&(G_Memory->synch));
-#line 283
-};
+      CLOCK(interaction_end);
+   BARRIER(G_Memory->synch, Number_Of_Processors);
    if (time_all)
-      {
-#line 285
-	struct timeval	FullTime;
-#line 285
-
-#line 285
-	gettimeofday(&FullTime, NULL);
-#line 285
-	(barrier_end) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 285
-};
+      CLOCK(barrier_end);
    PartitionIterate(my_id, DownwardPass, TOP);
    if (time_all)
-      {
-#line 288
-	struct timeval	FullTime;
-#line 288
-
-#line 288
-	gettimeofday(&FullTime, NULL);
-#line 288
-	(downward_end) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 288
-};
+      CLOCK(downward_end);
    PartitionIterate(my_id, ComputeParticlePositions, CHILDREN);
    if (time_all)
-      {
-#line 291
-	struct timeval	FullTime;
-#line 291
-
-#line 291
-	gettimeofday(&FullTime, NULL);
-#line 291
-	(finish) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 291
-};
+      CLOCK(finish);
 
    if (time_all) {
       local_time[MY_TIME_STEP].pass_time = upward_end - start;

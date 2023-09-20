@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "code_io.H"
 #ifndef _CODE_IO_H_
 #define _CODE_IO_H_
 

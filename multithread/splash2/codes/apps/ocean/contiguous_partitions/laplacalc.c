@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "laplacalc.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -19,21 +16,7 @@
 
 /* Performs the laplacian calculation for a subblock */
 
-
-#line 19
-#include <pthread.h>
-#line 19
-#include <sys/time.h>
-#line 19
-#include <unistd.h>
-#line 19
-#include <stdlib.h>
-#line 19
-#include <malloc.h>
-#line 19
-extern pthread_t PThreadTable[];
-#line 19
-
+EXTERN_ENV
 
 #include <stdio.h>
 #include <math.h>

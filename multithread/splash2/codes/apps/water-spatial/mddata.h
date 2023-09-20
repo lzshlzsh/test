@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "mddata.H"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -35,7 +32,7 @@ typedef struct link {
 
 typedef struct box_dummy {
       struct link *list;
-      pthread_mutex_t (boxlock);
+      LOCKDEC(boxlock)
 } box_type;
 
 extern box_type ***BOX;

@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "code_io.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -20,21 +17,7 @@
 /*
  * CODE_IO.C:
  */
-
-#line 20
-#include <pthread.h>
-#line 20
-#include <sys/time.h>
-#line 20
-#include <unistd.h>
-#line 20
-#include <stdlib.h>
-#line 20
-#include <malloc.h>
-#line 20
-extern pthread_t PThreadTable[];
-#line 20
-
+EXTERN_ENV
 #define global extern
 
 #include "stdinc.h"
@@ -69,7 +52,7 @@ void inputdata ()
    for (i = 0; i < MAX_PROC; i++) {
       Local[i].tnow = tnow;
    }
-   bodytab = (bodyptr) valloc(nbody * sizeof(body));;
+   bodytab = (bodyptr) G_MALLOC(nbody * sizeof(body));
    if (bodytab == NULL)
       error("inputdata: not enuf memory\n");
    for (p = bodytab; p < bodytab+nbody; p++) {
@@ -122,7 +105,7 @@ void output(long ProcessId)
    diagnostics(ProcessId);
 
    if (Local[ProcessId].mymtot!=0) {
-      {pthread_mutex_lock(&(Global->CountLock));};
+      LOCK(Global->CountLock);
       Global->n2bcalc += Local[ProcessId].myn2bcalc;
       Global->nbccalc += Local[ProcessId].mynbccalc;
       Global->selfint += Local[ProcessId].myselfint;
@@ -141,14 +124,10 @@ void output(long ProcessId)
       ADDV(tempv1, tempv1, tempv2);
       DIVVS(Global->cmphase[1], tempv1, Global->mtot+Local[ProcessId].mymtot);
       Global->mtot +=Local[ProcessId].mymtot;
-      {pthread_mutex_unlock(&(Global->CountLock));};
+      UNLOCK(Global->CountLock);
    }
 
-   {
-#line 130
-	pthread_barrier_wait(&(Global->Barrier));
-#line 130
-};
+   BARRIER(Global->Barrier,NPROC);
 
    if (ProcessId==0) {
       nttot = Global->n2bcalc + Global->nbccalc;

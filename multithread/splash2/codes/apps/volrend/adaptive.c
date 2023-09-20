@@ -1,6 +1,3 @@
-#line 185 "/home/lzs//programming/test/multithread/splash2/codes/null_macros/c.m4.null.POSIX_BARRIER"
-
-#line 1 "adaptive.C"
 /*************************************************************************/
 /*                                                                       */
 /*  Copyright (c) 1994 Stanford University                               */
@@ -41,21 +38,7 @@ long itest;
 #define START_RAY       1
 #define	INTERPOLATED	((MAX_PIXEL+1)/32)	/* This pixel interpolated   */
 
-
-#line 41
-#include <pthread.h>
-#line 41
-#include <sys/time.h>
-#line 41
-#include <unistd.h>
-#line 41
-#include <stdlib.h>
-#line 41
-#include <malloc.h>
-#line 41
-extern pthread_t PThreadTable[];
-#line 41
-
+EXTERN_ENV
 
 #include "anl.h"
 
@@ -103,49 +86,21 @@ void Ray_Trace(long my_node)
   /* Invoke adaptive or non-adaptive ray tracer                          */
   if (adaptive) {
 
-    {
-#line 89
-	pthread_barrier_wait(&(Global->TimeBarrier));
-#line 89
-};
+    BARRIER(Global->TimeBarrier,num_nodes);
 
-    {
-#line 91
-	struct timeval	FullTime;
-#line 91
-
-#line 91
-	gettimeofday(&FullTime, NULL);
-#line 91
-	(starttime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 91
-};
+    CLOCK(starttime);
     Pre_Shade(my_node);
 
-    {pthread_mutex_lock(&(Global->CountLock));};
+    LOCK(Global->CountLock);
     Global->Counter--;
-    {pthread_mutex_unlock(&(Global->CountLock));};
+    UNLOCK(Global->CountLock);
     while (Global->Counter);
 
     Ray_Trace_Adaptively(my_node);
 
-    {
-#line 101
-	struct timeval	FullTime;
-#line 101
+    CLOCK(stoptime);
 
-#line 101
-	gettimeofday(&FullTime, NULL);
-#line 101
-	(stoptime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 101
-};
-
-    {
-#line 103
-	pthread_barrier_wait(&(Global->TimeBarrier));
-#line 103
-};
+    BARRIER(Global->TimeBarrier,num_nodes);
 
     mclock(stoptime,starttime,&exectime);
 
@@ -156,42 +111,14 @@ void Ray_Trace(long my_node)
 
     if (highest_sampling_boxlen > 1) {
 
-      {
-#line 114
-	pthread_barrier_wait(&(Global->TimeBarrier));
-#line 114
-};
+      BARRIER(Global->TimeBarrier,num_nodes);
 
-      {
-#line 116
-	struct timeval	FullTime;
-#line 116
-
-#line 116
-	gettimeofday(&FullTime, NULL);
-#line 116
-	(starttime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 116
-};
+      CLOCK(starttime);
       Interpolate_Recursively(my_node);
 
-      {
-#line 119
-	struct timeval	FullTime;
-#line 119
+      CLOCK(stoptime);
 
-#line 119
-	gettimeofday(&FullTime, NULL);
-#line 119
-	(stoptime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 119
-};
-
-      {
-#line 121
-	pthread_barrier_wait(&(Global->TimeBarrier));
-#line 121
-};
+      BARRIER(Global->TimeBarrier,num_nodes);
 
       mclock(stoptime,starttime,&exectime1);
     }
@@ -199,67 +126,35 @@ void Ray_Trace(long my_node)
   }
   else {
 
-    {
-#line 129
-	pthread_barrier_wait(&(Global->TimeBarrier));
-#line 129
-};
+    BARRIER(Global->TimeBarrier,num_nodes);
 
-    {
-#line 131
-	struct timeval	FullTime;
-#line 131
-
-#line 131
-	gettimeofday(&FullTime, NULL);
-#line 131
-	(starttime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 131
-};
+    CLOCK(starttime);
 
     Pre_Shade(my_node);
 
-    {pthread_mutex_lock(&(Global->CountLock));};
+    LOCK(Global->CountLock);
     Global->Counter--;
-    {pthread_mutex_unlock(&(Global->CountLock));};
+    UNLOCK(Global->CountLock);
     while (Global->Counter);
 
     Ray_Trace_Non_Adaptively(my_node);
 
-    {
-#line 142
-	struct timeval	FullTime;
-#line 142
+    CLOCK(stoptime);
 
-#line 142
-	gettimeofday(&FullTime, NULL);
-#line 142
-	(stoptime) = (unsigned long)(FullTime.tv_usec + FullTime.tv_sec * 1000000);
-#line 142
-};
-
-    {
-#line 144
-	pthread_barrier_wait(&(Global->TimeBarrier));
-#line 144
-};
+    BARRIER(Global->TimeBarrier,num_nodes);
 
     mclock(stoptime,starttime,&exectime);
     exectime1 = 0;
   }
 
-    {pthread_mutex_lock(&(Global->CountLock));};
+    LOCK(Global->CountLock);
     printf("%3ld\t%3ld\t%6ld\t%6ld\t%6ld\t%6ld\t%8ld\n",my_node,frame,exectime,
 	   exectime1,num_rays_traced,num_traced_rays_hit_volume,
 	   num_samples_trilirped);
 
-    {pthread_mutex_unlock(&(Global->CountLock));};
+    UNLOCK(Global->CountLock);
 
-  {
-#line 157
-	pthread_barrier_wait(&(Global->TimeBarrier));
-#line 157
-};
+  BARRIER(Global->TimeBarrier,num_nodes);
 }
 
 
@@ -289,10 +184,10 @@ void Ray_Trace_Adaptively(long my_node)
     ystart = ROUNDUP((float)ystart/(float)highest_sampling_boxlen);
     ystart = ystart * highest_sampling_boxlen;
     ystop = MIN(ystart+num_yqueue,image_len[Y]);
-    {pthread_mutex_lock(&Global->QLock[local_node]);};
+    ALOCK(Global->QLock,local_node);
     work = Global->Queue[local_node][0];
     Global->Queue[local_node][0] += 1;
-    {pthread_mutex_unlock(&Global->QLock[local_node]);};
+    AULOCK(Global->QLock,local_node);
     while (work < lnum_blocks) {
       xindex = xstart + (work%lnum_xblocks)*block_xlen;
       yindex = ystart + (work/lnum_xblocks)*block_ylen;
@@ -306,15 +201,15 @@ void Ray_Trace_Adaptively(long my_node)
 	  Ray_Trace_Adaptive_Box(outx,outy,highest_sampling_boxlen);
 	}
       }
-      {pthread_mutex_lock(&Global->QLock[local_node]);};
+      ALOCK(Global->QLock,local_node);
       work = Global->Queue[local_node][0];
       Global->Queue[local_node][0] += 1;
-      {pthread_mutex_unlock(&Global->QLock[local_node]);};
+      AULOCK(Global->QLock,local_node);
     }
     if (my_node == local_node) {
-      {pthread_mutex_lock(&Global->QLock[num_nodes]);};
+      ALOCK(Global->QLock,num_nodes);
       Global->Queue[num_nodes][0]--;
-      {pthread_mutex_unlock(&Global->QLock[num_nodes]);};
+      AULOCK(Global->QLock,num_nodes);
     }
     local_node = (local_node+1)%num_nodes;
     while (Global->Queue[local_node][0] >= lnum_blocks &&
@@ -452,9 +347,9 @@ void Ray_Trace_Non_Adaptively(long my_node)
     xstop = MIN(xstart+num_xqueue,image_len[X]);
     ystart = (local_node / image_section[X]) * num_yqueue;
     ystop = MIN(ystart+num_yqueue,image_len[Y]);
-    {pthread_mutex_lock(&Global->QLock[local_node]);};
+    ALOCK(Global->QLock,local_node);
     work = Global->Queue[local_node][0]++;
-    {pthread_mutex_unlock(&Global->QLock[local_node]);};
+    AULOCK(Global->QLock,local_node);
     while (work < lnum_blocks) {
       xindex = xstart + (work%lnum_xblocks)*block_xlen;
       yindex = ystart + (work/lnum_xblocks)*block_ylen;
@@ -469,14 +364,14 @@ void Ray_Trace_Non_Adaptively(long my_node)
 	  Trace_Ray(foutx,fouty,pixel_address);
 	}
       }
-      {pthread_mutex_lock(&Global->QLock[local_node]);};
+      ALOCK(Global->QLock,local_node);
       work = Global->Queue[local_node][0]++;
-      {pthread_mutex_unlock(&Global->QLock[local_node]);};
+      AULOCK(Global->QLock,local_node);
     }
     if (my_node == local_node) {
-      {pthread_mutex_lock(&Global->QLock[num_nodes]);};
+      ALOCK(Global->QLock,num_nodes);
       Global->Queue[num_nodes][0]--;
-      {pthread_mutex_unlock(&Global->QLock[num_nodes]);};
+      AULOCK(Global->QLock,num_nodes);
     }
     local_node = (local_node+1)%num_nodes;
     while (Global->Queue[local_node][0] >= lnum_blocks &&
